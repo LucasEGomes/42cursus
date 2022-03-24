@@ -1,13 +1,16 @@
 export ROOT_DIR = $(shell pwd)
 export TEST_SUMMARY = $(ROOT_DIR)/tests/tests.summary
 TESTS_DIR = tests
-EXERCISES = ex00
+EXERCISES = ex00 ex01
 
-ex00 : ex00/exo.tar
-	@echo -n "" > $(TEST_SUMMARY)
+$(TEST_SUMMARY) :
+	echo -n "" > $(TEST_SUMMARY)
+
+$(EXERCISES) : $(TEST_SUMMARY)
+	echo "$@" >> $(TEST_SUMMARY)
 	$(MAKE) -C $(TESTS_DIR)/$@ check
-	@cat $(TEST_SUMMARY)
 
 check : $(EXERCISES)
+	cat $(TEST_SUMMARY)
 
-.PHONY : $(EXERCISES) check
+.PHONY : $(EXERCISES) check $(TEST_SUMMARY)

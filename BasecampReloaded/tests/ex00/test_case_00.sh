@@ -1,3 +1,4 @@
+#!/bin/sh
 rm -rf temp test_case_00.user
 mkdir -p temp
 tar -xf $ROOT_DIR/ex00/exo.tar -C temp/
