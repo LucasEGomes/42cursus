@@ -1,7 +1,7 @@
 export ROOT_DIR = $(shell pwd)
 export TEST_SUMMARY = $(ROOT_DIR)/tests/tests.summary
 TESTS_DIR = tests
-EXERCISES = ex00 ex01 ex02 ex03 ex04
+EXERCISES = ex00 ex01 ex02 ex03 ex04 ex05
 TEST_CASES = $(wildcard \
 				$(addsuffix /test_case_*.sh,\
 					$(addprefix $(TESTS_DIR)/,$(EXERCISES))\
