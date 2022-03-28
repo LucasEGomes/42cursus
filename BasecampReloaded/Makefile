@@ -9,17 +9,13 @@ TEST_CASES = $(wildcard \
 			)
 TEST_OUTPUTS = $(TEST_CASES:%.sh=%.output)
 
-check : | $(TEST_SUMMARY) $(TEST_OUTPUTS)
-	cat $(TEST_SUMMARY)
-
-$(TEST_SUMMARY) : .FORCE
-	echo -n "" > $(TEST_SUMMARY)
+check : | $(TEST_OUTPUTS) $(EXERCISES)
 
 %.output : %.sh .FORCE
-	echo "$$(basename $$(dirname $@))" >> $(TEST_SUMMARY)
-	echo -n "\t$(@:%.output=%) " >> $(TEST_SUMMARY)
 	cd $$(dirname $@) && bash $$(basename $<) && cd $(ROOT_DIR)
-	echo "" >> $(TEST_SUMMARY)
+
+ex% : $(TESTS_DIR)/ex%/test_case_*.output .FORCE
+	bash summary.sh $@
 
 .FORCE :
 
