@@ -3,10 +3,12 @@ source run_test.sh
 PERCENT_COL=74
 DEFAULT="\e[0m"
 GREEN="\e[32m"
+YELLOW="\e[33m"
 RED="\e[31m"
 TEST_CASES=$(ls -1 tests/$1 | grep -E "^test_case_[0-9]{2}[.]output$" | sort)
 if [ -z $(echo "$TEST_CASES" | tr -d '\n') ];
 then
+    echo -e "${YELLOW}No tests found.${DEFAULT}"
     exit
 fi
 TESTS=$(echo "$TEST_CASES" | wc -l )

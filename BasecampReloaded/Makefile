@@ -1,22 +1,27 @@
+export CC = gcc
+export CFLAGS = -Wall -Wextra -Werror
 export ROOT_DIR = $(shell pwd)
-export TEST_SUMMARY = $(ROOT_DIR)/tests/tests.summary
 TESTS_DIR = tests
-EXERCISES = ex00 ex01 ex02 ex03 ex04 ex05
-TEST_CASES = $(wildcard \
-				$(addsuffix /test_case_*.sh,\
-					$(addprefix $(TESTS_DIR)/,$(EXERCISES))\
-				)\
-			)
-TEST_OUTPUTS = $(TEST_CASES:%.sh=%.output)
+EXERCISES = ex00 ex01 ex02 ex03 ex04 ex05 ex06
+SHELL_TESTS = $(wildcard $(TESTS_DIR)/*/test_case_*.sh)
+C_TESTS = $(wildcard $(TESTS_DIR)/*/test_case_*.c)
+.SECONDEXPANSION :
 
-check : | $(TEST_OUTPUTS) $(EXERCISES)
+check : $(EXERCISES)
 
-%.output : %.sh .FORCE
-	cd $$(dirname $@) && bash $$(basename $<) && cd $(ROOT_DIR)
-
-ex% : $(TESTS_DIR)/ex%/test_case_*.output .FORCE
+$(EXERCISES) : $(TESTS_DIR)/$$(@)/test_case_*.sh $(TESTS_DIR)/$$(@)/test_case_*.c
 	bash summary.sh $@
 
-.FORCE :
+$(C_TESTS) :
+	cd $(@D) && bash run.sh $(@F)
 
-.PHONY : check .FORCE
+$(SHELL_TESTS) :
+	cd $(@D) && bash $(@F)
+
+%*.c %*.sh:
+	@
+
+clean :
+	rm -rf tests/*/*.output
+
+.PHONY : check $(EXERCISES) $(C_TESTS) $(SHELL_TESTS)
