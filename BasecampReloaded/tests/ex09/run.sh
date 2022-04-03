@@ -4,7 +4,7 @@ RESULT="${NO_EXT}.user"
 OUTPUT="${NO_EXT}.output"
 EXPECTED="${NO_EXT}.expected"
 echo -n > $OUTPUT
-${CC} ${CFLAGS} $1 ${ROOT_DIR}/ex09/ft_ft.c -o $COMPILED 2>> $OUTPUT
+${CC} ${CFLAGS} $1 ${ROOT_DIR}/ex09/ft_ft.c ex09.c -o $COMPILED 2>> $OUTPUT
 ./$COMPILED > "$RESULT" 2>> $OUTPUT
 diff $EXPECTED $RESULT >> $OUTPUT 2>> $OUTPUT
 rm -f $COMPILED

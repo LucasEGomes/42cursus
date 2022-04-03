@@ -24,6 +24,6 @@ $(SHELL_TESTS) :
 	@
 
 clean :
-	rm -rf tests/*/*.output
+	rm -rf tests/*/*.output tests/*/*.user
 
 .PHONY : check $(EXERCISES) $(C_TESTS) $(SHELL_TESTS)

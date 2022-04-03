@@ -1,6 +1,4 @@
 #include "ex08.h"
-#include <limits.h>
-#include <unistd.h>
 
 void	ft_putchar(char c)
 {
