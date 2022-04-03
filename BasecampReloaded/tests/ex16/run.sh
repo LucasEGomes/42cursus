@@ -5,6 +5,11 @@ OUTPUT="${NO_EXT}.output"
 EXPECTED="${NO_EXT}.expected"
 echo -n > $OUTPUT
 ${CC} ${CFLAGS} $1 ${ROOT_DIR}/ex16/ft_strlen.c ex16.c -o $COMPILED 2>> $OUTPUT
-./$COMPILED "$(cat ${NO_EXT}.input)" > "$RESULT" 2>> $OUTPUT
+if [ ! -f ${NO_EXT}.input ]
+then
+    ./$COMPILED > "$RESULT" 2>> $OUTPUT
+else
+    ./$COMPILED "$(cat ${NO_EXT}.input)" > "$RESULT" 2>> $OUTPUT
+fi
 diff $EXPECTED $RESULT >> $OUTPUT 2>> $OUTPUT
 rm -f $COMPILED
