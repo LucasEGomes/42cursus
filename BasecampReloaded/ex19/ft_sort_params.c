@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sort_params.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 00:03:15 by mascote           #+#    #+#             */
+/*   Updated: 2022/04/06 00:04:31 by luceduar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 void	ft_putchar(char c);
 
 static void	ft_putstr(char *str)
@@ -14,16 +26,16 @@ static void	ft_putstr(char *str)
 
 static int	ft_strcmp(char *s1, char *s2)
 {
-	int				index;
+	int				i;
 	unsigned char	*u_s1;
 	unsigned char	*u_s2;
 
-	index = 0;
+	i = 0;
 	u_s1 = (unsigned char *) s1;
 	u_s2 = (unsigned char *) s2;
-	while (u_s1[index] != '\0' && u_s2[index] != '\0' && u_s1[index] == u_s2[index])
-		index++;
-	return ((int)(u_s1[index] - u_s2[index]));
+	while (u_s1[i] != '\0' && u_s2[i] != '\0' && u_s1[i] == u_s2[i])
+		i++;
+	return ((int)(u_s1[i] - u_s2[i]));
 }
 
 static void	ft_swap(char **a, char **b)
@@ -35,7 +47,7 @@ static void	ft_swap(char **a, char **b)
 	*b = aux;
 }
 
-static void	ft_strsort(char **strings, int	size)
+static void	ft_strsort(char **strings, int size)
 {
 	int	index;
 	int	is_sorted;

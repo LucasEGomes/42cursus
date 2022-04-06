@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 00:03:00 by mascote           #+#    #+#             */
+/*   Updated: 2022/04/06 00:04:25 by luceduar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_display_file.h"
 
 static int	too_many_arguments_error(void)
@@ -14,7 +26,7 @@ static int	file_is_missing_error(void)
 
 int	main(int argc, char **argv)
 {
-	int file_descriptor;
+	int	file_descriptor;
 
 	if (argc < 2)
 		return (file_is_missing_error());

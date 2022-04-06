@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_display_file.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/06 00:03:04 by mascote           #+#    #+#             */
+/*   Updated: 2022/04/06 00:04:26 by luceduar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_display_file.h"
 
 #define BUFFER_SIZE 80
@@ -12,7 +24,7 @@ void	ft_putstr(char *string)
 	write(1, string, length);
 }
 
-void	read_file(int	file_descriptor)
+void	read_file(int file_descriptor)
 {
 	char	buffer[BUFFER_SIZE];
 	int		read_bytes;
