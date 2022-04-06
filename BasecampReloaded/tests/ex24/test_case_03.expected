@@ -1,0 +1,6 @@
+test_case_03/ft_putchar.o
+test_case_03/ft_putstr.o
+test_case_03/ft_strcmp.o
+test_case_03/ft_strlen.o
+test_case_03/ft_swap.o
+test_case_03/libft.a
