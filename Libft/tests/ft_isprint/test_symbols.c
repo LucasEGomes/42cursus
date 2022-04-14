@@ -2,17 +2,17 @@
 
 int	main(void)
 {
-	char	inputs[] = "0123456789";
+	char	inputs[] = " !\"#$\%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 	int		limit;
 	int		input;
 	int		index;
 
-	index = 0;
 	limit = sizeof(inputs) - 1;
+	index = 0;
 	while (index < limit)
 	{
 		input = (int) inputs[index];
-		if (ft_isalpha(input) != 0)
+		if (ft_isprint(input) == 0)
 			return (EXIT_FAILURE);
 		index++;
 	}

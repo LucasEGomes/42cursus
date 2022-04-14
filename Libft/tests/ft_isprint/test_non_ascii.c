@@ -27,7 +27,7 @@ int	main(void)
 	while (index < limit)
 	{
 		input = inputs[index];
-		if (ft_isalnum(input) != 0)
+		if (ft_isprint(input) != 0)
 			return (EXIT_FAILURE);
 		index++;
 	}

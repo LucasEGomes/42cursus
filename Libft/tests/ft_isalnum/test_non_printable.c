@@ -3,6 +3,7 @@
 int	main(void)
 {
 	int	inputs[33];
+	int	limit;
 	int	input;
 	int	index;
 
@@ -14,7 +15,8 @@ int	main(void)
 	}
 	inputs[index] = 127;
 	index = 0;
-	while (index < 33)
+	limit = sizeof(inputs) / sizeof(*inputs);
+	while (index < limit)
 	{
 		input = inputs[index];
 		if (ft_isalnum(input) != 0)

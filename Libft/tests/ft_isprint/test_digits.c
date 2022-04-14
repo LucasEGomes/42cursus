@@ -7,12 +7,12 @@ int	main(void)
 	int		input;
 	int		index;
 
-	index = 0;
 	limit = sizeof(inputs) - 1;
+	index = 0;
 	while (index < limit)
 	{
 		input = (int) inputs[index];
-		if (ft_isalpha(input) != 0)
+		if (ft_isprint(input) == 0)
 			return (EXIT_FAILURE);
 		index++;
 	}

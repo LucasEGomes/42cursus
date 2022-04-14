@@ -3,6 +3,7 @@
 int	main(void)
 {
 	int	inputs[11];
+	int	limit;
 	int	input;
 	int	index;
 
@@ -18,7 +19,8 @@ int	main(void)
 	inputs[9] = 255;
 	inputs[10] = 1024;
 	index = 0;
-	while (index < 11)
+	limit = sizeof(inputs) / sizeof(*inputs);
+	while (index < limit)
 	{
 		input = inputs[index];
 		if (ft_isalpha(input) != 0)

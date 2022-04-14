@@ -2,12 +2,14 @@
 
 int	main(void)
 {
-	const char	*inputs = " !\"#$\%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-	int			input;
-	int			index;
+	char	inputs[] = " !\"#$\%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+	int		limit;
+	int		input;
+	int		index;
 
 	index = 0;
-	while (index < 34)
+	limit = sizeof(inputs) - 1;
+	while (index < limit)
 	{
 		input = (int) inputs[index];
 		if (ft_isascii(input) == 0)

@@ -3,6 +3,7 @@
 int	main(void)
 {
 	int	inputs[15];
+	int	limit;
 	int	input;
 	int	index;
 
@@ -22,7 +23,8 @@ int	main(void)
 	inputs[13] = 255;
 	inputs[14] = 1024;
 	index = 0;
-	while (index < 15)
+	limit = sizeof(inputs) / sizeof(*inputs);
+	while (index < limit)
 	{
 		input = inputs[index];
 		if (ft_isascii(input) != 0)

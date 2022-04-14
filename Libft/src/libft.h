@@ -16,7 +16,8 @@ int	ft_isalpha(int c);
 */
 int	ft_isdigit(int c);
 /**
- * Checks for an alphabetic or a digit 0 through 9 character using ASCII encoding
+ * Checks for an alphabetic or a digit 0 through 9 character using ASCII
+ * encoding
  * @param c Value of an unsigned char or EOF
  * @return Nonzero if c is alphabetic or a digit, and zero if not
 */
@@ -27,5 +28,11 @@ int	ft_isalnum(int c);
  * @return Nonzero if c is ascii, and zero if not
 */
 int	ft_isascii(int c);
+/**
+ * Checks for a printable character using ASCII encoding
+ * @param c Value of an unsigned char or EOF
+ * @return Nonzero if c is printable, and zero if not
+*/
+int	ft_isprint(int c);
 
 #endif

@@ -2,12 +2,14 @@
 
 int	main(void)
 {
-	const char	*inputs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	int			input;
-	int			index;
+	char	inputs[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	int		limit;
+	int		input;
+	int		index;
 
 	index = 0;
-	while (index < 26)
+	limit = sizeof(inputs) - 1;
+	while (index < limit)
 	{
 		input = (int) inputs[index];
 		if (ft_isdigit(input) != 0)

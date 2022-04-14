@@ -2,12 +2,14 @@
 
 int	main(void)
 {
-	const char	*inputs = "abcdefghijklmnopqrstuvwxyz";
-	int			input;
-	int			index;
+	char	inputs[] = "abcdefghijklmnopqrstuvwxyz";
+	int		limit;
+	int		input;
+	int		index;
 
 	index = 0;
-	while (index < 26)
+	limit = sizeof(inputs) - 1;
+	while (index < limit)
 	{
 		input = (int) inputs[index];
 		if (ft_isalnum(input) == 0)

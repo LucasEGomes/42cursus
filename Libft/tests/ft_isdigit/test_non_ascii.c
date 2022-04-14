@@ -3,6 +3,7 @@
 int	main(void)
 {
 	int	inputs[7];
+	int	limit;
 	int	input;
 	int	index;
 
@@ -14,7 +15,8 @@ int	main(void)
 	inputs[5] = 255;
 	inputs[6] = 1024;
 	index = 0;
-	while (index < 7)
+	limit = sizeof(inputs) / sizeof(*inputs);
+	while (index < limit)
 	{
 		input = inputs[index];
 		if (ft_isdigit(input) != 0)

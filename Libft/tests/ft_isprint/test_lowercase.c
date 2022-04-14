@@ -2,7 +2,7 @@
 
 int	main(void)
 {
-	char	inputs[] = "0123456789";
+	char	inputs[] = "abcdefghijklmnopqrstuvwxyz";
 	int		limit;
 	int		input;
 	int		index;
@@ -12,7 +12,7 @@ int	main(void)
 	while (index < limit)
 	{
 		input = (int) inputs[index];
-		if (ft_isalpha(input) != 0)
+		if (ft_isprint(input) == 0)
 			return (EXIT_FAILURE);
 		index++;
 	}
