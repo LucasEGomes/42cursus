@@ -48,5 +48,12 @@ size_t	ft_strlen(const char *s);
  * @return Converted letter if possible, and c if not.
 */
 int	ft_toupper(int c);
+/**
+ * Convert uppercase letter to lowercase using ASCII encoding. If c is neither 
+ * an unsigned char nor EOF, the behavior is undefined.
+ * @param c Letter to convert.
+ * @return Converted letter if possible, and c if not.
+*/
+int	ft_tolower(int c);
 
 #endif
