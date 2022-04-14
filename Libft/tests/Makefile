@@ -1,5 +1,7 @@
+SHELL := /bin/bash
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror
+TIMEOUT := 15s
 LIBFT_FOLDER := $(dir $(CURDIR))src
 INCLUDES := -I $(LIBFT_FOLDER) -I $(CURDIR)
 SOURCES := ft_isalpha.c \
@@ -34,7 +36,7 @@ all-tests : $(PROGRAMS)
 
 %.out : %.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< -o $@ -L $(LIBFT_FOLDER) -lft
-	(./$@ && echo "$* succeeded.") || echo "$* failed."
+	(timeout $(TIMEOUT) ./$@ && echo "$* succeeded.") || echo "$* failed."
 	rm -f $@
 
 .SECONDEXPANSION:
