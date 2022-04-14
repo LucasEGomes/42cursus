@@ -27,7 +27,7 @@ SOURCES := ft_isalpha.c \
 		   ft_strdup.c
 _SOURCES := $(wildcard $(addprefix $(LIBFT_FOLDER)/,$(SOURCES)))
 FUNCTIONS := $(_SOURCES:$(LIBFT_FOLDER)/%.c=%)
-TESTS := $(wildcard $(FUNCTIONS)/*.c)
+TESTS := $(wildcard $(addsuffix /*.c,$(FUNCTIONS)))
 PROGRAMS := $(TESTS:%.c=%.out)
 
 all-tests : $(PROGRAMS)
