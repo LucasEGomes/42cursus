@@ -21,5 +21,11 @@ int	ft_isdigit(int c);
  * @return Nonzero if c is alphabetic or a digit, and zero if not
 */
 int	ft_isalnum(int c);
+/**
+ * Checks for an ASCII character
+ * @param c Value of an unsigned char or EOF
+ * @return Nonzero if c is ascii, and zero if not
+*/
+int	ft_isascii(int c);
 
 #endif

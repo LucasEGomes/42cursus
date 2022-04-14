@@ -37,14 +37,12 @@ all-tests : $(PROGRAMS)
 	(./$@ && echo "$* succeeded.") || echo "$* failed."
 	rm -f $@
 
-foo :
-	echo $(FUNCTIONS)
-	echo $(TESTS)
-	echo $(PROGRAMS)
+.SECONDEXPANSION:
+$(FUNCTIONS) : $$(filter $$@/%.out,$$(PROGRAMS))
 
 $(TESTS) : $(LIBFT_FOLDER)/libft.a
 
 $(LIBFT_FOLDER)/libft.a : $(_SOURCES)
 	make -C $(LIBFT_FOLDER)
 
-.PHONY : $(FUNCTIONS)
+.PHONY : $(FUNCTIONS) foo

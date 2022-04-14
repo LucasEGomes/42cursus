@@ -25,7 +25,7 @@ int	main(void)
 	while (index < 15)
 	{
 		input = inputs[index];
-		if (ft_isalnum(input) != 0)
+		if (ft_isascii(input) != 0)
 			return (EXIT_FAILURE);
 		index++;
 	}
