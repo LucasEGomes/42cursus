@@ -2,7 +2,7 @@
 
 int	main(void)
 {
-	char	inputs[] = "abcdefghijklmnopqrstuvwxyz";
+	char	inputs[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	int		limit;
 	int		input;
 	int		index;
@@ -12,7 +12,7 @@ int	main(void)
 	while (index < limit)
 	{
 		input = (int) inputs[index];
-		if (ft_isascii(input) == 0)
+		if (input != ft_toupper(input))
 			return (EXIT_FAILURE);
 		index++;
 	}

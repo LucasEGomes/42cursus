@@ -41,5 +41,12 @@ int		ft_isprint(int c);
  * @return Number of bytes in the string.
 */
 size_t	ft_strlen(const char *s);
+/**
+ * Convert lowercase letter to uppercase using ASCII encoding. If c is neither 
+ * an unsigned char nor EOF, the behavior is undefined.
+ * @param c Letter to convert.
+ * @return Converted letter if possible, and c if not.
+*/
+int	ft_toupper(int c);
 
 #endif
