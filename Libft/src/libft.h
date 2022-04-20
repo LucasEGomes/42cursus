@@ -47,13 +47,21 @@ size_t	ft_strlen(const char *s);
  * @param c Letter to convert.
  * @return Converted letter if possible, and c if not.
 */
-int	ft_toupper(int c);
+int		ft_toupper(int c);
 /**
  * Convert uppercase letter to lowercase using ASCII encoding. If c is neither 
  * an unsigned char nor EOF, the behavior is undefined.
  * @param c Letter to convert.
  * @return Converted letter if possible, and c if not.
 */
-int	ft_tolower(int c);
+int		ft_tolower(int c);
+/**
+ * Fills the first bytes of the memory area with a constant byte.
+ * @param s Memory area.
+ * @param c Byte used to fill.
+ * @param n Bytes to be filled.
+ * @return Pointer to the memory area.
+*/
+void	*ft_memset(void *s, int c, size_t n);
 
 #endif
