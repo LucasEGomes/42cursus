@@ -63,5 +63,12 @@ int		ft_tolower(int c);
  * @return Pointer to the memory area.
 */
 void	*ft_memset(void *s, int c, size_t n);
+/**
+ * Fills the first bytes of the memory area with 0.
+ * @param s Memory area.
+ * @param n Bytes to be filled.
+ * @return Pointer to the memory area.
+*/
+void	*ft_bzero(void *s, size_t n);
 
 #endif

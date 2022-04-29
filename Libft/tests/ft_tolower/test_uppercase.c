@@ -15,7 +15,7 @@ int	main(void)
 	{
 		input = (int) inputs[index];
 		target = (int) targets[index];
-		if (target != ft_tolower(input))
+		if (strcmp(target, ft_tolower(input)))
 			return (EXIT_FAILURE);
 		index++;
 	}

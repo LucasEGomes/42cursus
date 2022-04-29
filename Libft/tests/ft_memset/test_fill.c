@@ -23,8 +23,16 @@ int	main(int argc, char **argv)
 		value = (int) (argv[index + 1][0]);
 		size = (size_t) atol(argv[index + 2]);
 		target = argv[index + 3];
-		check_size = (size_t) atol(target) + 1;
+		check_size = (size_t) atol(argv[index + 4]) + 1;
 		result = ft_memset(memory, value, size);
+		size_t i;
+		i = 0;
+		printf("%d, %zu\n", value, check_size);
+		while (i < check_size)
+		{
+			printf("%d == %d\n",((char *) result)[i], ((char *) target)[i]);
+			i++;
+		}
 		if ((memory != result) || (memcmp(target, result, check_size) != 0))
 			return (EXIT_FAILURE);
 		index += ARGS;

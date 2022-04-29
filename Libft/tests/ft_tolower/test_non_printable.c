@@ -19,7 +19,7 @@ int	main(void)
 	while (index < limit)
 	{
 		input = inputs[index];
-		if (input != ft_tolower(input))
+		if (!strcmp(input, ft_tolower(input)))
 			return (EXIT_FAILURE);
 		index++;
 	}
