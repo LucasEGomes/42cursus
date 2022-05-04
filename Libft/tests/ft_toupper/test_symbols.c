@@ -3,16 +3,12 @@
 int	main(void)
 {
 	char	inputs[] = " !\"#$\%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-	int		limit;
-	int		input;
 	int		index;
 
 	index = 0;
-	limit = sizeof(inputs) - 1;
-	while (index < limit)
+	while (index < 34)
 	{
-		input = (int) inputs[index];
-		if (!strcmp(input, ft_toupper(input)))
+		if ((int) inputs[index] != ft_toupper(inputs[index]))
 			return (EXIT_FAILURE);
 		index++;
 	}

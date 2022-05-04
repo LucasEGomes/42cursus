@@ -1,41 +1,34 @@
 #include "tests.h"
 
-#define ARGS 5
-
-int	main(int argc, char **argv)
+int	main(void)
 {
-	int		index;
+	char	*inputs[] = {
+		"@@@@@@@@@@",
+		"AAAAAAAAAA",
+		"AAAAA",
+		"ZZZZZZZ"
+	};
+	char	*chars = "aT[f";
+	size_t	sizes[] = {10, 6, 5, 2};
+	char	*targets[] = {
+		"aaaaaaaaaa",
+		"TTTTTTAAAA",
+		"[[[[[",
+		"ffZZZZZ"
+	};
 	void	*memory;
-	int		value;
-	size_t	size;
-	size_t	check_size;
-	void	*target;
 	void	*result;
+	int		index;
 
-	if (argc < ARGS + 1)
-		return (invalid_argument_error("Insufficient arguments.\n"));
-	if ((argc - 1) % ARGS != 0)
-		return (invalid_argument_error("Wrong number of arguments.\n"));
-	index = 1;
-	while (index < argc)
+	index = 0;
+	while (index < 4)
 	{
-		memory = argv[index];
-		value = (int) (argv[index + 1][0]);
-		size = (size_t) atol(argv[index + 2]);
-		target = argv[index + 3];
-		check_size = (size_t) atol(argv[index + 4]) + 1;
-		result = ft_memset(memory, value, size);
-		size_t i;
-		i = 0;
-		printf("%d, %zu\n", value, check_size);
-		while (i < check_size)
-		{
-			printf("%d == %d\n",((char *) result)[i], ((char *) target)[i]);
-			i++;
-		}
-		if ((memory != result) || (memcmp(target, result, check_size) != 0))
+		memory = strdup(inputs[index]);
+		result = ft_memset(memory, chars[index], sizes[index]);
+		if ((memory != result) ||
+			(memcmp(targets[index], result, sizes[index]) != 0))
 			return (EXIT_FAILURE);
-		index += ARGS;
+		index++;
 	}
 	return (EXIT_SUCCESS);
 }

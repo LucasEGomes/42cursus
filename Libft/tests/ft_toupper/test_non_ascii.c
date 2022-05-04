@@ -3,8 +3,6 @@
 int	main(void)
 {
 	int	inputs[9];
-	int	limit;
-	int	input;
 	int	index;
 
 	inputs[0] = 128;
@@ -17,11 +15,9 @@ int	main(void)
 	inputs[7] = 128 + 'Z';
 	inputs[8] = 255;
 	index = 0;
-	limit = sizeof(inputs) / sizeof(*inputs);
-	while (index < limit)
+	while (index < 9)
 	{
-		input = inputs[index];
-		if (!strcmp(input, ft_toupper(input)))
+		if (inputs[index] != ft_toupper(inputs[index]))
 			return (EXIT_FAILURE);
 		index++;
 	}

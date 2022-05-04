@@ -3,8 +3,6 @@
 int	main(void)
 {
 	int	inputs[33];
-	int	limit;
-	int	input;
 	int	index;
 
 	index = 0;
@@ -15,11 +13,9 @@ int	main(void)
 	}
 	inputs[index] = 127;
 	index = 0;
-	limit = sizeof(inputs) / sizeof(*inputs);
-	while (index < limit)
+	while (index < 33)
 	{
-		input = inputs[index];
-		if (!strcmp(input, ft_tolower(input)))
+		if ((int) inputs[index] != ft_tolower(inputs[index]))
 			return (EXIT_FAILURE);
 		index++;
 	}

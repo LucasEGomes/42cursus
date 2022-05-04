@@ -4,18 +4,12 @@ int	main(void)
 {
 	char	inputs[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	char	targets[] = "abcdefghijklmnopqrstuvwxyz";
-	int		limit;
-	int		input;
-	int		target;
 	int		index;
 
 	index = 0;
-	limit = sizeof(inputs) - 1;
-	while (index < limit)
+	while (index < 26)
 	{
-		input = (int) inputs[index];
-		target = (int) targets[index];
-		if (strcmp(target, ft_tolower(input)))
+		if ((int) targets[index] != ft_tolower(inputs[index]))
 			return (EXIT_FAILURE);
 		index++;
 	}

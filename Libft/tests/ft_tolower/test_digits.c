@@ -3,16 +3,12 @@
 int	main(void)
 {
 	char	inputs[] = "0123456789";
-	int		limit;
-	int		input;
 	int		index;
 
 	index = 0;
-	limit = sizeof(inputs) - 1;
-	while (index < limit)
+	while (index < 10)
 	{
-		input = (int) inputs[index];
-		if (strcmp(input, ft_tolower(input)))
+		if ((int) inputs[index] != ft_tolower(inputs[index]))
 			return (EXIT_FAILURE);
 		index++;
 	}

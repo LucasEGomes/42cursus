@@ -36,9 +36,7 @@ all-tests : $(PROGRAMS)
 
 %.out : %.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< errors.c -o $@ -L $(LIBFT_FOLDER) -lft
-	(timeout $(TIMEOUT) \
-		./$@ $(shell cat ./ft_memset/test_fill.input 2>/dev/null) \
-		&& echo "$* succeeded.") || echo "$* failed."
+	(timeout $(TIMEOUT) ./$@ && echo "$* succeeded.") || echo "$* failed."
 	rm -f $@
 
 .SECONDEXPANSION:
@@ -49,5 +47,11 @@ $(TESTS) : $(LIBFT_FOLDER)/libft.a
 $(LIBFT_FOLDER)/libft.a : $(_SOURCES)
 	make -C $(LIBFT_FOLDER)
 
-.PHONY : $(FUNCTIONS) foo
+debug : $(LIBFT_FOLDER)/libft.a
+	$(CC) $(CFLAGS) $(INCLUDES) $(FILE) errors.c -g -o $(FILE:%.c=%.out) -L $(LIBFT_FOLDER) -lft
+
+clean :
+	rm -rf */*.out
+
+.PHONY : $(FUNCTIONS)
 .DELETE_ON_ERROR :

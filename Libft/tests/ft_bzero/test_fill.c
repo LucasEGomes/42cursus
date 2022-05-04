@@ -1,7 +1,5 @@
 #include "tests.h"
 
-#define CASES 4
-
 int	main(void)
 {
 	char	*inputs[] = {
@@ -22,12 +20,12 @@ int	main(void)
 	int		index;
 
 	index = 0;
-	while (index < CASES)
+	while (index < 4)
 	{
 		memory = strdup(inputs[index]);
 		result = ft_bzero(memory, sizes[index]);
 		if ((memory != result) ||
-			(memcmp(targets[index], result, sizes[index] + 1) != 0))
+			(memcmp(targets[index], result, sizes[index]) != 0))
 			return (EXIT_FAILURE);
 		index++;
 	}

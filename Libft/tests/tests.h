@@ -14,6 +14,6 @@ typedef struct s_test_memset
 	size_t	size;
 }	t_test_memset;
 
-int	invalid_argument_error(char *message);
+int	log_error(char *message);
 
 #endif
