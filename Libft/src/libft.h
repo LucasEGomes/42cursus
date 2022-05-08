@@ -138,5 +138,25 @@ char	*ft_strrchr(const char *s, int c);
  * positive if s1 is less than s2 (s1 < s2).
 */
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
+/**
+ * Find the byte c first occurrence in the first n bytes of memory area s.
+ * Both c and the bytes of the memory area s are interpreted as unsigned char.
+ * @param s Memory area.
+ * @param c Byte to search.
+ * @param n Bytes to scan.
+ * @return Pointer to the matching byte, or NULL if not found.
+*/
+void	*ft_memchr(const void *s, int c, size_t n);
+/**
+ * Compare the first n bytes of memory areas s1 and s2, each interpreted as 
+ * unsigned char.
+ * @param s1 First memory area.
+ * @param s2 Second memory area.
+ * @param n Bytes to compare.
+ * @return If the first n bytes are equal returns 0 (s1 == s2), else return 
+ * negative if s1 is greater than s2 (s1 > s2), and 
+ * positive if s1 is less than s2 (s1 < s2).
+*/
+int	ft_memcmp(const char *s1, const char *s2, size_t n);
 
 #endif
