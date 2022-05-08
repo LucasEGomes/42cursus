@@ -112,6 +112,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 /**
  * Find the first occurrence of the byte c in the string s.
  * Do not work with wide or multibyte characters.
+ * The null byte is part of the string.
  * @param s String where to search.
  * @param c Byte to search.
  * @return Pointer to the matched byte on the string, or NULL if not found.
@@ -120,10 +121,22 @@ char	*ft_strchr(const char *s, int c);
 /**
  * Find the last occurrence of the byte c in the string s.
  * Do not work with wide or multibyte characters.
+ * The null byte is part of the string.
  * @param s String where to search.
  * @param c Byte to search.
  * @return Pointer to the matched byte on the string, or NULL if not found.
 */
-char	*ft_strchr(const char *s, int c);
+char	*ft_strrchr(const char *s, int c);
+/**
+ * Compare the first n bytes of strings s1 and s2.
+ * The locale is not taken into account.
+ * @param s1 First string.
+ * @param s2 Second string.
+ * @param n Bytes to compare.
+ * @return If the first n bytes are equal returns 0 (s1 == s2), else return 
+ * negative if s1 is greater than s2 (s1 > s2), and 
+ * positive if s1 is less than s2 (s1 < s2).
+*/
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
