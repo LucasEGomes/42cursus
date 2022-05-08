@@ -117,5 +117,13 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
  * @return Pointer to the matched byte on the string, or NULL if not found.
 */
 char	*ft_strchr(const char *s, int c);
+/**
+ * Find the last occurrence of the byte c in the string s.
+ * Do not work with wide or multibyte characters.
+ * @param s String where to search.
+ * @param c Byte to search.
+ * @return Pointer to the matched byte on the string, or NULL if not found.
+*/
+char	*ft_strchr(const char *s, int c);
 
 #endif

@@ -3,11 +3,11 @@
 char	*ft_strchr(const char *s, int c)
 {
 	size_t	index;
-	char	c_as_char;
+	char	byte;
 
 	index = 0;
-	c_as_char = (char) c;
-	while (s[index] != '\0' & s[index] != c_as_char)
+	byte = (char) c;
+	while (s[index] != '\0' & s[index] != byte)
 		index++;
 	if (s[index] == c)
 		return (&s[index]);
