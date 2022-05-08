@@ -71,7 +71,7 @@ void	*ft_memset(void *s, int c, size_t n);
 */
 void	*ft_bzero(void *s, size_t n);
 /**
- * Copies n bytes forom memory area src to memory area dest.
+ * Copies n bytes from memory area src to memory area dest.
  * The memory areas must not overlap.
  * @param dest Destiny memory area.
  * @param src Source memory area.
@@ -79,5 +79,14 @@ void	*ft_bzero(void *s, size_t n);
  * @return Returns a pointer to dest.
 */
 void	*ft_memcpy(void *dest, const void *src, size_t n);
+/**
+ * Copies n bytes from memory area src to memory area dest.
+ * The memory areas may overlap. Copy like having a temporary array.
+ * @param dest Destiny memory area.
+ * @param src Source memory area.
+ * @param n Number of bytes to copy.
+ * @return Returns a pointer to dest.
+*/
+void	*ft_memmove(void *dest, const void *src, size_t n);
 
 #endif
