@@ -89,14 +89,25 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 */
 void	*ft_memmove(void *dest, const void *src, size_t n);
 /**
- *
- * Copy size - 1 characters from the string src to dst,
+ * Copy size - 1 bytes from the string src to dst,
  * NUL-terminating the result.
  * @param dst Destiny string.
  * @param src Source string.
  * @param size Bytes to copy.
- * @return Pointer to string dst.
+ * @return Total length of the string src.
 */
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+/**
+ * Appends the string src to the end of dst. Append at most 
+ * size - ft_strlen(dst) - 1 bytes, NUL-terminating the result.
+ * NUL-terminating the result. If traverses size bytes without finding a NUL,
+ * the destination string will not be NUL-terminated.
+ * @param dst Destiny string.
+ * @param src Source string.
+ * @param size Bytes to copy.
+ * @return Total length of the appended string dest and src, or size if 
+ * traverses size bytes without finding a NUL.
+*/
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
 
 #endif
