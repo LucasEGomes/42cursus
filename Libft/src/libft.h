@@ -76,7 +76,7 @@ void	*ft_bzero(void *s, size_t n);
  * @param dest Destiny memory area.
  * @param src Source memory area.
  * @param n Number of bytes to copy.
- * @return Returns a pointer to dest.
+ * @return Pointer to memory area dest.
 */
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 /**
@@ -85,8 +85,18 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
  * @param dest Destiny memory area.
  * @param src Source memory area.
  * @param n Number of bytes to copy.
- * @return Returns a pointer to dest.
+ * @return Pointer to memory area dest.
 */
 void	*ft_memmove(void *dest, const void *src, size_t n);
+/**
+ *
+ * Copy size - 1 characters from the string src to dst,
+ * NUL-terminating the result.
+ * @param dst Destiny string.
+ * @param src Source string.
+ * @param size Bytes to copy.
+ * @return Pointer to string dst.
+*/
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
 #endif
