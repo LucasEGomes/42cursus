@@ -109,5 +109,13 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size);
  * traverses size bytes without finding a NUL.
 */
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
+/**
+ * Find the first occurrence of the byte c in the string s.
+ * Do not work with wide or multibyte characters.
+ * @param s String where to search.
+ * @param c Byte to search.
+ * @return Pointer to the matched byte on the string, or NULL if not found.
+*/
+char	*ft_strchr(const char *s, int c);
 
 #endif
