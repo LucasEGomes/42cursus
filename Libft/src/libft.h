@@ -188,10 +188,19 @@ int		ft_atoi(const char *nptr);
 */
 void	*ft_calloc(size_t nmemb, size_t size);
 /**
- * Duplicate the string s. The pointer can be freed with free.
+ * Duplicate the string s. The pointer can be freed with free(3).
  * @param s String to duplicate
  * @return Pointer to the string. NULL if the allocation fails.
 */
 char	*ft_strdup(const char *s);
+/**
+ * Allocates (with malloc(3)) and returns a substring from the string 's'.
+ * The substring begins at index 'start and is of maximum size 'len'.
+ * @param s The string from which to create the substring.
+ * @param start The start index of the substring in the string 's'.
+ * @param len The maximum length of the substring.
+ * @return The substring. NULL if the allocations fails.
+*/
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
