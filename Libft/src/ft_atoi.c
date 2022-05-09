@@ -7,7 +7,7 @@ static int is_space(int c)
 	return (1);
 }
 
-int	atoi(const char *nptr)
+int	ft_atoi(const char *nptr)
 {
 	size_t	index;
 	int		signal;

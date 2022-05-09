@@ -169,5 +169,23 @@ int	ft_memcmp(const char *s1, const char *s2, size_t n);
  * Pointer to the first byte of the first occurrence of little otherwise.
 */
 char	*ft_strnstr(const char *big, const char *little, size_t len);
+/**
+ * Converts the initial portion of the string nptr to int.
+ * The string may begin with an arbitrary amount of white space, followed by a
+ * single optional '+' or '-' sign.
+ * Stops when there is a digit that is not part of base 10.
+ * @param nptr String to convert
+ * @return Integer from string.
+*/
+int		ft_atoi(const char *nptr);
+/**
+ * Allocate memory for an array of nmemb elements of size bytes each and returns
+ * a pointer to the allocated memory. The memory is set to 0.
+ * @param nmemb Number of members
+ * @param size Size of each member
+ * @return Pointer to allocated memory. NULL if the allocation fails or if the 
+ * multiplication result in overflow.
+*/
+void	*ft_calloc(size_t nmemb, size_t size);
 
 #endif
