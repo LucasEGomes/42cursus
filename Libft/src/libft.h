@@ -158,5 +158,16 @@ void	*ft_memchr(const void *s, int c, size_t n);
  * positive if s1 is less than s2 (s1 < s2).
 */
 int	ft_memcmp(const char *s1, const char *s2, size_t n);
+/**
+ * Locates the first occurrence of the null-terminated string little in the 
+ * string big, where not more than len bytes are searched.
+ * Bytes after a '\0' are not searched.
+ * @param big String where to search.
+ * @param little String to search.
+ * @param len Bytes to search.
+ * @return big if little is an empty string; NULL if little is not in big; 
+ * Pointer to the first byte of the first occurrence of little otherwise.
+*/
+char	*ft_strnstr(const char *big, const char *little, size_t len);
 
 #endif
