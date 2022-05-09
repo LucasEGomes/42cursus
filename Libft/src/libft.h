@@ -218,5 +218,15 @@ char	*ft_strjoin(char const *s1, char const *s2);
  * @return The trimmed string. NULL if the allocation fails.
 */
 char	*ft_strtrim(char const *s1, char const *set);
+/**
+ * Allocates (with malloc(3)) and returns an array of strings obtained by 
+ * splitting ’s’ using the character ’c’ as a delimiter.
+ * The array must end with a NULL pointer.
+ * @param The string to be split.
+ * @param c The delimiter character.
+ * @return The array of new strings resulting from the split. NULL if the 
+ * allocation fails.
+*/
+char	**ft_split(char const *s, char c);
 
 #endif
