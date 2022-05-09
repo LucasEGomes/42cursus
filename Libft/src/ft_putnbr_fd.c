@@ -1,26 +1,15 @@
 #include "libft.h"
 
-char	*ft_itoa(int n)
+void	ft_putnbr_fd(int n, int fd)
 {
-	char	*number;
+	char	number[12];
 	int		digits;
-	int		temp;
 	int		is_negative;
 
-	digits = 1;
-	temp = n;
-	while (temp > 9)
-	{
-		temp /= 10;
-		digits++;
-	}
 	is_negative = 0;
 	if (n < 0)
-	{
 		is_negative = 1;
-		digits++;
-	}
-	number = malloc(sizeof(*number) * (digits + 1));
+	digits = 11;
 	number[digits] = '\0';
 	while (digits > 0 + is_negative)
 	{
@@ -28,6 +17,6 @@ char	*ft_itoa(int n)
 		number[digits] = "0123456789"[(n % 10) * (-1 * is_negative)];
 	}
 	if (is_negative)
-		number[0] = '-';
-	return (number);
+		number[digits] = '-';
+	ft_putstr_fd(number + digits, fd);
 }
