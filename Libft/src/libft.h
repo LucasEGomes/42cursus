@@ -259,5 +259,11 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
  * @param fd The file descriptor on which to write.
 */
 void	ft_putchar_fd(char c, int fd);
+/**
+ * Outputs the string ’s’ to the given file descriptor.
+ * @param The string to output.
+ * @param The file descriptor on which to write.
+*/
+void	ft_putstr_fd(char *s, int fd);
 
 #endif
