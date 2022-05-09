@@ -228,5 +228,22 @@ char	*ft_strtrim(char const *s1, char const *set);
  * allocation fails.
 */
 char	**ft_split(char const *s, char c);
+/**
+ * Allocates (with malloc(3)) and returns a string representing the integer 
+ * received as an argument. Negative numbers must be handled.
+ * @param n the integer to convert.
+ * @return The string representing the integer. NULL if the allocation fails.
+*/
+char	*ft_itoa(int n);
+/**
+ * Applies the function ’f’ to each character of the string ’s’, and passing 
+ * its index as first argument to create a new string (with malloc(3)) 
+ * resulting from successive applications of ’f’.
+ * @param s The string on which to iterate.
+ * @param f The function to apply to each character.
+ * @return The string created from the successive applications of 'f'. 
+ * Returns NULL if the allocation fails.
+*/
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 #endif
