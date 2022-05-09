@@ -14,4 +14,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcpy(new_string, s1, size1);
 	return ft_strlcat(new_string, s2, total);
 }
-
