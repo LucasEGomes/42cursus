@@ -245,5 +245,19 @@ char	*ft_itoa(int n);
  * Returns NULL if the allocation fails.
 */
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+/**
+ * Applies the function ’f’ on each character of the string passed as argument, 
+ * passing its index as first argument. Each character is passed by address to 
+ * ’f’ to be modified if necessary.
+ * @param s The string on which to iterate.
+ * @param f The function to apply to each character
+*/
+void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+/**
+ * Outputs the character ’c’ to the given file descriptor.
+ * @param c The character to output.
+ * @param fd The file descriptor on which to write.
+*/
+void	ft_putchar_fd(char c, int fd);
 
 #endif
