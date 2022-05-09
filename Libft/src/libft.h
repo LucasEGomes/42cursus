@@ -187,5 +187,11 @@ int		ft_atoi(const char *nptr);
  * multiplication result in overflow.
 */
 void	*ft_calloc(size_t nmemb, size_t size);
+/**
+ * Duplicate the string s. The pointer can be freed with free.
+ * @param s String to duplicate
+ * @return Pointer to the string. NULL if the allocation fails.
+*/
+char	*ft_strdup(const char *s);
 
 #endif
