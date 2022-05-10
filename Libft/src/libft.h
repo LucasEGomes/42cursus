@@ -185,8 +185,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 */
 int		ft_atoi(const char *nptr);
 /**
- * Allocate memory for an array of nmemb elements of size bytes each and returns
- * a pointer to the allocated memory. The memory is set to 0.
+ * Allocate memory for an array of nmemb elements of size bytes each and 
+ * returns a pointer to the allocated memory. The memory is set to 0.
  * @param nmemb Number of members
  * @param size Size of each member
  * @return Pointer to allocated memory. NULL if the allocation fails or if the 
@@ -325,7 +325,8 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
  * function 'del' and free(3). Finally, the pointer to the list must be set to 
  * NULL.
  * @param lst The address of a pointer to a node.
- * @param del the address of the function used to delete the content of the node.
+ * @param del the address of the function used to delete the content of the 
+ * node.
 */
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 /**
@@ -335,5 +336,17 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
  * @param f The address of the function used to iterate on the list.
 */
 void	ft_lstiter(t_list *lst, void (*f)(void *));
+/**
+ * Iterates the list 'lst' and applies the function 'f' on the content of each 
+ * node. Creates a new list resulting of the successive applications of the 
+ * function 'f'. The 'del' function is used to delete the content of a node if 
+ * needed.
+ * @param lst The address of a pointer to a node.
+ * @param f The address of the function used to iterate on the list.
+ * @param del The address of the function used to delete the content of a node 
+ * if needed.
+ * @return The new list. NULL if the allocation fails.
+*/
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 #endif
