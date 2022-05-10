@@ -300,5 +300,11 @@ void	ft_lstadd_front(t_list **lst, t_list *new);
  * @return The length of the list.
 */
 int	ft_lstsize(t_list *lst);
+/**
+ * Returns the last node of the list.
+ * @param lst The beginning of the list.
+ * @return Last node of the list.
+*/
+t_list	*ft_lstlast(t_list *lst);
 
 #endif
