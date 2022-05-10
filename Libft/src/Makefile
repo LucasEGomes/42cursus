@@ -63,7 +63,7 @@ bonus : $(BONUS_OBJECTS)
 $(OBJECTS) $(BONUS_OBJECTS) : libft.h
 
 clean :
-	rm -f $(OBJECTS)
+	rm -f $(OBJECTS) $(BONUS_OBJECTS)
 
 fclean : clean
 	rm -f $(NAME)
