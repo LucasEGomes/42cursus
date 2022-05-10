@@ -47,7 +47,7 @@ BONUS_SOURCES = ft_lstadd_back_bonus.c \
 				ft_lstmap_bonus.c \
 				ft_lstnew_bonus.c \
 				ft_lstsize_bonus.c
-BONUS_OBJECTS = $(SOURCES:%.c=%.o)
+BONUS_OBJECTS = $(BONUS_SOURCES:%.c=%.o)
 
 all : $(NAME)
 
@@ -60,8 +60,7 @@ bonus : $(BONUS_OBJECTS)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJECTS) : libft.h
-$(BONUS_OBJECTS) : libft.h
+$(OBJECTS) $(BONUS_OBJECTS) : libft.h
 
 clean :
 	rm -f $(OBJECTS)

@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:29:44 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/10 01:28:39 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 14:20:03 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	unsigned char	*us;
 	unsigned char	uc;
 
+	if (n == 0)
+		return (NULL);
 	us = (unsigned char *) s;
 	uc = (unsigned char) c;
 	index = 0;

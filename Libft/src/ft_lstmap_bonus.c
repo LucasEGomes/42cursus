@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:29:51 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:29:52 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:04:53 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		current->next = ft_lstnew(f(lst->content));
 		if (current == NULL)
 		{
-			ft_lstclear(new_list, del);
+			ft_lstclear(&new_list, del);
 			return (NULL);
 		}
 		current = current->next;

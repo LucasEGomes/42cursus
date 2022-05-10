@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:28:44 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/10 01:27:32 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 12:10:20 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (s1[index] != '\0')
 	{
 		if (ft_strchr(set, s1[index]) == NULL)
-			end = index;
+			end = index + 1;
 		index++;
 	}
 	return (ft_substr(s1, start, end - start));

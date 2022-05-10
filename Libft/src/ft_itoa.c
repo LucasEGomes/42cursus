@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:30:05 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/10 01:27:48 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 14:00:51 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ char	*ft_itoa(int n)
 	while (digits > 0 + is_negative)
 	{
 		digits--;
-		number[digits] = "0123456789"[(n % 10) * (-1 * is_negative)];
+		number[digits] = "0123456789"[(n % 10) * (1 - 2 * is_negative)];
+		n = n / 10;
 	}
 	if (is_negative)
 		number[0] = '-';

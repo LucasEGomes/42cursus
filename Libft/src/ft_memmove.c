@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:29:28 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:29:28 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:25:29 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	const unsigned char	*str_src;
 	size_t				index;
 
-	if (dest <= src)
+	if (dest >= src)
 		return (ft_memcpy(dest, src, n));
 	index = 0;
 	str_dest = dest;

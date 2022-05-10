@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:28:46 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 23:11:13 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 10:58:30 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*ft_strrchr(const char *s, int c)
 	char	byte;
 
 	result = NULL;
+	index = 0;
 	byte = (char) c;
 	while (s[index] != '\0')
 	{

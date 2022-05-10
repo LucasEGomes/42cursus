@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:29:10 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:29:10 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:01:51 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*ft_strdup(const char *s)
 		return (NULL);
 	while (size > 0)
 	{
-		duplicate[size] = s[size];
 		size--;
+		duplicate[size] = s[size];
 	}
 	duplicate[size] = s[size];
 	return (duplicate);

@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:28:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/10 01:25:45 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 11:27:36 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_atoi(const char *nptr)
 	result = 0;
 	while (ft_isdigit(nptr[index]))
 	{
-		result *= 10 + nptr[index] - '0';
+		result = result * 10 + nptr[index] - '0';
 		index++;
 	}
 	return (result * signal);
