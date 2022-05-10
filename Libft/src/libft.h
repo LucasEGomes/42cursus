@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:31:15 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:31:16 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/09 22:33:57 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_list
 {
-	void	*content;
+	void			*content;
 	struct s_list	*next;
 }	t_list;
 
@@ -155,7 +155,7 @@ char	*ft_strrchr(const char *s, int c);
  * negative if s1 is greater than s2 (s1 > s2), and 
  * positive if s1 is less than s2 (s1 < s2).
 */
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 /**
  * Find the byte c first occurrence in the first n bytes of memory area s.
  * Both c and the bytes of the memory area s are interpreted as unsigned char.
@@ -175,7 +175,7 @@ void	*ft_memchr(const void *s, int c, size_t n);
  * negative if s1 is greater than s2 (s1 > s2), and 
  * positive if s1 is less than s2 (s1 < s2).
 */
-int	ft_memcmp(const char *s1, const char *s2, size_t n);
+int		ft_memcmp(const char *s1, const char *s2, size_t n);
 /**
  * Locates the first occurrence of the null-terminated string little in the 
  * string big, where not more than len bytes are searched.
@@ -311,7 +311,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new);
  * @param lst The beginning of the list.
  * @return The length of the list.
 */
-int	ft_lstsize(t_list *lst);
+int		ft_lstsize(t_list *lst);
 /**
  * Returns the last node of the list.
  * @param lst The beginning of the list.

@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:29:15 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:29:16 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/09 22:33:19 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	*free_words(char **array, size_t words)
 {
 	size_t	index;
-	
+
 	index = 0;
 	while (index <= words)
 	{
