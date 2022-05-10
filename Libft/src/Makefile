@@ -1,4 +1,5 @@
 NAME = libft.a
+BONUS = $(basename $(NAME))_bonus.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
@@ -54,8 +55,11 @@ all : $(NAME)
 $(NAME) : $(OBJECTS)
 	ar -rcs $(NAME) $^
 
-bonus : $(BONUS_OBJECTS)
+bonus : $(NAME) $(BONUS)
+
+$(BONUS) : $(BONUS_OBJECTS)
 	ar -rcs $(NAME) $^
+	cp $(NAME) $(BONUS)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -66,8 +70,8 @@ clean :
 	rm -f $(OBJECTS) $(BONUS_OBJECTS)
 
 fclean : clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(BONUS)
 
 re : | fclean all
 
-.PHONY : all clean fclean re
+.PHONY : all clean fclean re bonus
