@@ -312,5 +312,13 @@ t_list	*ft_lstlast(t_list *lst);
  * @param new The address of a pointer to the node to be added to the list.
 */
 void	ft_lstadd_back(t_list **lst, t_list *new);
+/**
+ * Takes as a parameter a node and frees the memory of the node’s content using 
+ * the function ’del’ given as a parameter and free the node. The memory of 
+ * 'next' must not be freed.
+ * @param lst The node to free.
+ * @param del The address of the function used to delete the content.
+*/
+void	ft_lstdelone(t_list *lst, void (*del)(void *));
 
 #endif
