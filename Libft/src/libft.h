@@ -277,5 +277,16 @@ void	ft_putstr_fd(char *s, int fd);
  * @param fd The file descriptor on which to write.
 */
 void	ft_putnbr_fd(int n, int fd);
+/*
+	BONUS PART
+*/
+/**
+ * Allocates (with malloc(3)) and returns a new node. The member variable 
+ * ’content’ is initialized with the value of the parameter ’content’. The 
+ * variable ’next’ is initialized to NULL.
+ * @param content: The content to create the node with.
+ * @return The new node.
+*/
+t_list	*ft_lstnew(void *content);
 
 #endif
