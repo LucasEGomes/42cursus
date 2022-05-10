@@ -20,13 +20,14 @@ int	main(void)
 	index = 0;
 	while (index < 3)
 	{
-		destiny = calloc(1, sizes[index]);
+		destiny = calloc(1, sizes[index] + 1);
 		if (destiny == NULL)
 			return (log_error("Failed to allocate memory to test."));
-		result = ft_memcpy(destiny, sources[index], sizes[index]);
+		result = ft_memmove(destiny, sources[index], sizes[index]);
 		if ((result != destiny) || memcmp(targets[index], result, sizes[index] + 1))
 			return (EXIT_FAILURE);
 		free(destiny);
 		index++;
 	}
+
 }

@@ -48,10 +48,11 @@ $(LIBFT_FOLDER)/libft.a : $(_SOURCES)
 	make -C $(LIBFT_FOLDER)
 
 debug : $(LIBFT_FOLDER)/libft.a
-	$(CC) $(CFLAGS) $(INCLUDES) $(FILE) errors.c -g -o $(FILE:%.c=%.out) -L $(LIBFT_FOLDER) -lft
+	$(CC) $(CFLAGS) $(INCLUDES) $(FILE) errors.c -g -o $(FILE:%.c=%.out) \
+	-L $(LIBFT_FOLDER) -lft
 
 clean :
 	rm -rf */*.out
 
-.PHONY : $(FUNCTIONS)
+.PHONY : $(FUNCTIONS) debug clean all-tests
 .DELETE_ON_ERROR :
