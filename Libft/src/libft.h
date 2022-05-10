@@ -210,15 +210,15 @@ char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 /**
  * Allocates (with malloc(3)) and returns a new string, which is the result of 
- * the concatenation of ’s1’ and ’s2’.
+ * the concatenation of 's1' and 's2'.
  * @param s1 The prefix string.
  * @param s2 The suffix string.
  * @return The new string. NULL if the allocation fails.
 */
 char	*ft_strjoin(char const *s1, char const *s2);
 /**
- * Allocates (with malloc(3)) and returns a copy of ’s1’ with the characters 
- * specified in ’set’ removed from the beginning and the end of the string.
+ * Allocates (with malloc(3)) and returns a copy of 's1' with the characters 
+ * specified in 'set' removed from the beginning and the end of the string.
  * @param s1 The string to be trimmed.
  * @param set The reference set of characters to trim.
  * @return The trimmed string. NULL if the allocation fails.
@@ -226,7 +226,7 @@ char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 /**
  * Allocates (with malloc(3)) and returns an array of strings obtained by 
- * splitting ’s’ using the character ’c’ as a delimiter.
+ * splitting 's' using the character 'c' as a delimiter.
  * The array must end with a NULL pointer.
  * @param The string to be split.
  * @param c The delimiter character.
@@ -242,9 +242,9 @@ char	**ft_split(char const *s, char c);
 */
 char	*ft_itoa(int n);
 /**
- * Applies the function ’f’ to each character of the string ’s’, and passing 
+ * Applies the function 'f' to each character of the string 's', and passing 
  * its index as first argument to create a new string (with malloc(3)) 
- * resulting from successive applications of ’f’.
+ * resulting from successive applications of 'f'.
  * @param s The string on which to iterate.
  * @param f The function to apply to each character.
  * @return The string created from the successive applications of 'f'. 
@@ -252,27 +252,27 @@ char	*ft_itoa(int n);
 */
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 /**
- * Applies the function ’f’ on each character of the string passed as argument, 
+ * Applies the function 'f' on each character of the string passed as argument, 
  * passing its index as first argument. Each character is passed by address to 
- * ’f’ to be modified if necessary.
+ * 'f' to be modified if necessary.
  * @param s The string on which to iterate.
  * @param f The function to apply to each character
 */
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 /**
- * Outputs the character ’c’ to the given file descriptor.
+ * Outputs the character 'c' to the given file descriptor.
  * @param c The character to output.
  * @param fd The file descriptor on which to write.
 */
 void	ft_putchar_fd(char c, int fd);
 /**
- * Outputs the string ’s’ to the given file descriptor.
+ * Outputs the string 's' to the given file descriptor.
  * @param s The string to output.
  * @param fd The file descriptor on which to write.
 */
 void	ft_putstr_fd(char *s, int fd);
 /**
- * Outputs the integer ’n’ to the given file descriptor.
+ * Outputs the integer 'n' to the given file descriptor.
  * @param n The integer to output.
  * @param fd The file descriptor on which to write.
 */
@@ -282,11 +282,23 @@ void	ft_putnbr_fd(int n, int fd);
 */
 /**
  * Allocates (with malloc(3)) and returns a new node. The member variable 
- * ’content’ is initialized with the value of the parameter ’content’. The 
- * variable ’next’ is initialized to NULL.
+ * 'content' is initialized with the value of the parameter 'content'. The 
+ * variable 'next' is initialized to NULL.
  * @param content: The content to create the node with.
  * @return The new node.
 */
 t_list	*ft_lstnew(void *content);
+/**
+ * Adds the node 'new' at the beginning of the list.
+ * @param lst The address of a pointer to the first link of a list.
+ * @param new: The address of a pointer to the node to be added to the list.
+*/
+void	ft_lstadd_front(t_list **lst, t_list *new);
+/**
+ * Counts the number of nodes in a list.
+ * @param lst The beginning of the list.
+ * @return The length of the list.
+*/
+int	ft_lstsize(t_list *lst);
 
 #endif
