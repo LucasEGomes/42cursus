@@ -3,6 +3,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_list
+{
+	void	*content;
+	struct s_list	*next;
+}	t_list;
+
 /**
  * Checks for an alphabetic character using ASCII encoding.
  * @param c Value of an unsigned char or EOF.
@@ -261,9 +267,15 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 void	ft_putchar_fd(char c, int fd);
 /**
  * Outputs the string ’s’ to the given file descriptor.
- * @param The string to output.
- * @param The file descriptor on which to write.
+ * @param s The string to output.
+ * @param fd The file descriptor on which to write.
 */
 void	ft_putstr_fd(char *s, int fd);
+/**
+ * Outputs the integer ’n’ to the given file descriptor.
+ * @param n The integer to output.
+ * @param fd The file descriptor on which to write.
+*/
+void	ft_putnbr_fd(int n, int fd);
 
 #endif
