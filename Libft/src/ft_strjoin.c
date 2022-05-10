@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:29:05 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:40:26 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 01:27:18 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (new_string == NULL)
 		return (NULL);
 	ft_strlcpy(new_string, s1, size1);
-	return (ft_strlcat(new_string, s2, total));
+	ft_strlcat(new_string, s2, total);
+	return (new_string);
 }

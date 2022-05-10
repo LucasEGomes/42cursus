@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:30:16 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:30:17 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 01:25:55 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	char	*result;
 	size_t	total;
 
-	if (nmemb == 0 | size == 0)
+	if ((nmemb == 0) | (size == 0))
 		return (malloc(0));
 	if (nmemb > __SIZE_MAX__ / size)
 		return (NULL);

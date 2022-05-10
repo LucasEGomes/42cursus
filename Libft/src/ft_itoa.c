@@ -6,20 +6,20 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:30:05 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:38:49 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 01:27:48 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	get_digits(int	n)
+static int	get_digits(int n)
 {
 	int	digits;
 	int	temp;
 
 	digits = 1;
 	temp = n;
-	while (-9 > temp | temp > 9)
+	while ((-9 > temp) | (temp > 9))
 	{
 		temp /= 10;
 		digits++;
@@ -33,7 +33,6 @@ char	*ft_itoa(int n)
 	int		digits;
 	int		is_negative;
 
-	
 	digits = get_digits(n);
 	is_negative = 0;
 	if (n < 0)

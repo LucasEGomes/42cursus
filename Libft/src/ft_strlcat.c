@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:29:03 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:29:03 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/09 23:08:18 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	size_t	dst_size;
 
 	index = 0;
-	while (dst[index] != '\0' & index < size)
+	while ((dst[index] != '\0') & (index < size))
 		index++;
 	if (index == size)
 		return (index);

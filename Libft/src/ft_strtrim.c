@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:28:44 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:28:44 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 01:27:32 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	index;
 
 	index = 0;
-	while (s1[index] != '\0' & ft_strchr(set, s1[index]) != NULL)
+	while ((s1[index] != '\0') & (ft_strchr(set, s1[index]) != NULL))
 		index++;
 	start = index;
 	end = index;

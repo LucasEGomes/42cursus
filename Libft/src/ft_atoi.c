@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 22:28:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/09 22:39:20 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/10 01:25:45 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_space(int c)
 {
-	if (c != ' ' & (c < '\t' | c > '\r'))
+	if ((c != ' ') & ((c < '\t') | (c > '\r')))
 		return (0);
 	return (1);
 }
@@ -29,7 +29,7 @@ int	ft_atoi(const char *nptr)
 	while (is_space(nptr[index]))
 		index++;
 	signal = 1;
-	if (nptr[index] == '-' | nptr[index] == '+')
+	if ((nptr[index] == '-') | (nptr[index] == '+'))
 	{
 		if (nptr[index] == '-')
 			signal = -1;
