@@ -10,7 +10,7 @@ OBJECTS_PATH := objects
 OBJECTS_FILES := $(SOURCES:%.c=%.o)
 OBJECTS := $(addprefix $(OBJECTS_PATH)/,$(OBJECTS_FILES))
 
-TESTS := stdin file_0
+TESTS := stdin file_0 file_1 missing_file folder non_regular_file
 TESTS := $(addprefix mandatory_,$(TESTS))
 
 BUFFER_SIZE := $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
@@ -21,12 +21,22 @@ all : | clean mandatory bonus
 mandatory : $(TESTS)
 
 mandatory_file_% : mandatory.out mandatory_file_%.md
-	echo $@
 	./$^
 
 mandatory_stdin : mandatory.out
-	echo $@
 	./$^
+
+mandatory_missing_file : mandatory.out
+	TEST_FILE=file_that_does_not_exist && rm -f $$TEST_FILE && ./$^ $$TEST_FILE
+
+mandatory_folder : mandatory.out mandatory_test_folder
+	./$^ $@
+
+mandatory_non_regular_file : mandatory.out
+	./$^ /dev/null
+	./$^ /dev/empty
+	./$^ /dev/true
+	./$^ mandatory_symbolic
 
 mandatory.out : $(OBJECTS) mandatory.c
 	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g $^ -o $@

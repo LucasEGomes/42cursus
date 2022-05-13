@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:23:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/13 16:19:00 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/13 16:41:54 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	main(int argc, char **argv)
 {
-	int	file_descriptor;
+	int		file_descriptor;
+	ssize_t	read_bytes;
 	
 	file_descriptor = 0;
 	if (argc > 1)
 		file_descriptor = open(argv[1], O_RDONLY);
-	if (file_descriptor < 0)
-		return (EXIT_FAILURE);
-	printf("File opened. Fd: %d.\n", file_descriptor);
+	read_bytes = read(file_descriptor, NULL, 0);
+	printf("File opened. Fd: %d, Read: %ld.\n", file_descriptor, read_bytes);
 	close(file_descriptor);
 	printf("File closed.\n");
 	return (EXIT_SUCCESS);
