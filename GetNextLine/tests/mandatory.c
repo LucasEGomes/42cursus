@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:23:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/13 18:23:08 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/17 23:12:11 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ int	test_first_line(int fd)
 {
 	char	*value;
 	char	*expected;
+	int		result;
 
 	expected = "Alice was beginning to get very tired of sitting by her sister\n";
 	value = get_next_line(fd);
 	if (value == NULL)
 		return (0);
-	return (strncmp(value, expected, 64) == 0);
+	result = strncmp(value, expected, 64) == 0;
+	free(value);
+	return (result);
 }
 
 int	test_nothing_to_be_read(int fd)

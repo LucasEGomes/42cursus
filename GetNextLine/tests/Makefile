@@ -1,29 +1,39 @@
+SHELL := /bin/bash
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-VALGRIND_FLAGS := --leak-check=yes
+VALGRIND_FLAGS := --leak-check=full -s
 
-SOURCE_PATH := ../src #path to get next line source files
-SOURCES := get_next_line.c \
-		   get_next_line_utils.c
+SOURCE_PATH := ../src
+SOURCE_FILES := get_next_line.c \
+				get_next_line_utils.c
+SOURCES := $(addprefix $(SOURCE_PATH)/,$(SOURCE_FILES) get_next_line.h)
 
 OBJECTS_PATH := objects
-OBJECTS_FILES := $(SOURCES:%.c=%.o)
+OBJECTS_FILES := $(SOURCE_FILES:%.c=%.o)
 OBJECTS := $(addprefix $(OBJECTS_PATH)/,$(OBJECTS_FILES))
 
 TESTS := mandatory_1
 # stdin file_0 file_1 missing_file folder non_regular_file
 # TESTS := $(addprefix mandatory_,$(TESTS))
-
+$(info $(SOURCES))
 BUFFER_SIZE := $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
 $(eval $(BUFFER_SIZE):;@:)
 
-all : | clean mandatory bonus
+all : | clean norminette mandatory bonus
+
+norminette : $(SOURCES)
+	norminette $^ | grep -v "OK!" > $@
+	if [[ -n $$(cat ./norminette) ]]; then\
+		echo -e "\e[31mFailed on norminette";\
+		cat norminette | sed "s/^/\t/";\
+		echo -ne "\e[0m";\
+	fi
 
 mandatory : $(TESTS)
 
 mandatory_1 : mandatory.c $(OBJECTS)
 	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=1 $^ -o $@.out
-	./$@.out mandatory_file_0.md
+	valgrind $(VALGRIND_FLAGS) --log-file=mandatory_1.valgrind ./$@.out mandatory_file_0.md
 
 # mandatory_file_% : mandatory.out mandatory_file_%.md
 # 	./$^
@@ -54,4 +64,4 @@ clean :
 
 # $(OBJECTS) : $(SOURCE_PATH)/get_next_line.h
 
-.PHONY : all mandatory bonus clean
+.PHONY : all mandatory bonus clean norminette
