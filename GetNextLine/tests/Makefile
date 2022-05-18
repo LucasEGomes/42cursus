@@ -10,8 +10,9 @@ OBJECTS_PATH := objects
 OBJECTS_FILES := $(SOURCES:%.c=%.o)
 OBJECTS := $(addprefix $(OBJECTS_PATH)/,$(OBJECTS_FILES))
 
-TESTS := stdin file_0 file_1 missing_file folder non_regular_file
-TESTS := $(addprefix mandatory_,$(TESTS))
+TESTS := mandatory_1
+# stdin file_0 file_1 missing_file folder non_regular_file
+# TESTS := $(addprefix mandatory_,$(TESTS))
 
 BUFFER_SIZE := $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
 $(eval $(BUFFER_SIZE):;@:)
@@ -20,29 +21,33 @@ all : | clean mandatory bonus
 
 mandatory : $(TESTS)
 
-mandatory_file_% : mandatory.out mandatory_file_%.md
-	./$^
+mandatory_1 : mandatory.c $(OBJECTS)
+	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=1 $^ -o $@.out
+	./$@.out mandatory_file_0.md
 
-mandatory_stdin : mandatory.out
-	./$^
+# mandatory_file_% : mandatory.out mandatory_file_%.md
+# 	./$^
 
-mandatory_missing_file : mandatory.out
-	TEST_FILE=file_that_does_not_exist && rm -f $$TEST_FILE && ./$^ $$TEST_FILE
+# mandatory_stdin : mandatory.out
+# 	./$^
 
-mandatory_folder : mandatory.out mandatory_test_folder
-	./$^ $@
+# mandatory_missing_file : mandatory.out
+# 	TEST_FILE=file_that_does_not_exist && rm -f $$TEST_FILE && ./$^ $$TEST_FILE
 
-mandatory_non_regular_file : mandatory.out
-	./$^ /dev/null
-	./$^ /dev/empty
-	./$^ /dev/true
-	./$^ mandatory_symbolic
+# mandatory_folder : mandatory.out mandatory_test_folder
+# 	./$^ $@
 
-mandatory.out : $(OBJECTS) mandatory.c
-	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g $^ -o $@
+# mandatory_non_regular_file : mandatory.out
+# 	./$^ /dev/null
+# 	./$^ /dev/empty
+# 	./$^ /dev/true
+# 	./$^ mandatory_symbolic
+
+# mandatory.out : $(OBJECTS) mandatory.c
+# 	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g $^ -o $@
 
 $(OBJECTS_PATH)/%.o : $(wildcard $(SOURCE_PATH))/%.c
-	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -c -g $< -o $@
+	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -D BUFFER_SIZE=1 -c -g $< -o $@
 
 clean :
 	rm -rf $(OBJECTS)
