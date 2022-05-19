@@ -12,7 +12,7 @@ OBJECTS_PATH := objects
 OBJECTS_FILES := $(SOURCE_FILES:%.c=%.o)
 OBJECTS := $(addprefix $(OBJECTS_PATH)/,$(OBJECTS_FILES))
 
-TESTS := mandatory_1
+TESTS := mandatory_1 mandatory_10 mandatory_100
 # stdin file_0 file_1 missing_file folder non_regular_file
 # TESTS := $(addprefix mandatory_,$(TESTS))
 $(info $(SOURCES))
@@ -31,9 +31,20 @@ norminette : $(SOURCES)
 
 mandatory : $(TESTS)
 
-mandatory_1 : mandatory.c $(OBJECTS)
+mandatory_1 : mandatory.c $(SOURCES)
 	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=1 $^ -o $@.out
-	valgrind $(VALGRIND_FLAGS) --log-file=mandatory_1.valgrind ./$@.out mandatory_file_0.md
+	echo -ne "$@\n\t"
+	valgrind $(VALGRIND_FLAGS) --log-file=$@.valgrind ./$@.out mandatory_file_0.md
+
+mandatory_10 : mandatory.c $(SOURCES)
+	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=10 $^ -o $@.out
+	echo -ne "$@\n\t"
+	valgrind $(VALGRIND_FLAGS) --log-file=$@.valgrind ./$@.out mandatory_file_0.md
+
+mandatory_100 : mandatory.c $(SOURCES)
+	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=100 $^ -o $@.out
+	echo -ne "$@\n\t"
+	valgrind $(VALGRIND_FLAGS) --log-file=$@.valgrind ./$@.out mandatory_file_0.md
 
 # mandatory_file_% : mandatory.out mandatory_file_%.md
 # 	./$^
@@ -56,8 +67,8 @@ mandatory_1 : mandatory.c $(OBJECTS)
 # mandatory.out : $(OBJECTS) mandatory.c
 # 	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g $^ -o $@
 
-$(OBJECTS_PATH)/%.o : $(wildcard $(SOURCE_PATH))/%.c
-	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -D BUFFER_SIZE=1 -c -g $< -o $@
+# $(OBJECTS_PATH)/%.o : $(wildcard $(SOURCE_PATH))/%.c
+# 	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -D BUFFER_SIZE=1 -c -g $< -o $@
 
 clean :
 	rm -rf $(OBJECTS)
