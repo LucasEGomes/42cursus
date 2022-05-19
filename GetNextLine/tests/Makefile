@@ -24,7 +24,7 @@ all : | clean norminette mandatory bonus
 norminette : $(SOURCES)
 	norminette $^ | grep -v "OK!" > $@
 	if [[ -n $$(cat ./norminette) ]]; then\
-		echo -e "\e[31mFailed on norminette";\
+		echo -e "Failed on norminette\e[31m";\
 		cat norminette | sed "s/^/\t/";\
 		echo -ne "\e[0m";\
 	fi

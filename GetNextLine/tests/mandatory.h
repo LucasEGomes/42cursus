@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:23:52 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/13 17:31:04 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/18 22:52:10 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,4 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 256
 # endif
-# define TEST_RESULT(value) (value == 0 ? "KO" : "OK")
 #endif

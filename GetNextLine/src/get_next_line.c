@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/18 21:01:55 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/18 22:47:15 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static char	*increase_string(char *string, size_t size)
 	size_t	original_size;
 	size_t	index;
 
+	if (size == 0)
+		return (string);
 	original_size = 0;
 	while (string != NULL && string[original_size] != '\0')
 		original_size++;
@@ -39,12 +41,13 @@ static char	*increase_string(char *string, size_t size)
 	return (string);
 }
 
-static char	*append_buffer(char *string, char *buffer, size_t start, size_t end)
+static char	*pop_buffer(char *string, char *buffer, size_t size)
 {
 	size_t	index;
-	size_t	size;
+	size_t	buffer_index;
 
-	size = end - start;
+	if (buffer[size] == '\n')
+		size++;
 	string = increase_string(string, size);
 	if (string == NULL)
 		return (NULL);
@@ -52,11 +55,17 @@ static char	*append_buffer(char *string, char *buffer, size_t start, size_t end)
 	while (string[index] != '\0')
 		index++;
 	string[index + size] = '\0';
-	while (end > start)
+	buffer_index = size;
+	while (buffer_index > 0)
 	{
-		end--;
-		string[index + end - start] = buffer[end];
-		buffer[end] = '\0';
+		buffer_index--;
+		string[index + buffer_index] = buffer[buffer_index];
+		buffer[buffer_index] = '\0';
+		if (size + buffer_index < BUFFER_SIZE)
+		{
+			buffer[buffer_index] = buffer[buffer_index + size];
+			buffer[buffer_index + size] = '\0';
+		}
 	}
 	return (string);
 }
@@ -66,42 +75,26 @@ char	*get_next_line(int fd)
 	static char	buffer[BUFFER_SIZE];
 	char		*line;
 	ssize_t		index;
-	ssize_t		start;
 	ssize_t		read_bytes;
 
-	index = 0;
-	while (index < BUFFER_SIZE && buffer[index] == '\0')
-		index++;
-	if (index == BUFFER_SIZE)
-	{
+	read_bytes = 0;
+	while (read_bytes < BUFFER_SIZE && buffer[read_bytes] != '\0')
+		read_bytes++;
+	if (read_bytes == 0)
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (read_bytes < 1)
-			return (NULL);
-		start = 0;
-		index = 0;
-	}
-	else
-	{
-		start = index;
-		read_bytes = BUFFER_SIZE;
-	}
+	index = 0;
 	line = NULL;
-	while (read_bytes > 0)
+	while (read_bytes > 0 && buffer[index] != '\n' && buffer[index] != '\0')
 	{
-		if (buffer[index] == '\n')
-			return (append_buffer(line, buffer, start, index + 1));
-		if (buffer[index] == '\0')
-			return (append_buffer(line, buffer, start, index));
 		index++;
 		if (index == read_bytes)
 		{
-			line = append_buffer(line, buffer, start, read_bytes);
+			line = pop_buffer(line, buffer, read_bytes);
 			if (line == NULL)
 				return (NULL);
 			index = 0;
-			start = 0;
 			read_bytes = read(fd, buffer, read_bytes);
 		}
 	}
-	return (line);
+	return (pop_buffer(line, buffer, index));
 }

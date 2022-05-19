@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:23:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/18 21:35:30 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/18 22:52:16 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	log_test(int test_number, char *file, int (*test)(int))
 	if (fd < 0)
 		return (-1);
 	result = test(fd);
-	printf("%d-%s ", test_number, TEST_RESULT(result));
+	if (result)
+		printf("\e[32m%d-OK\e[0m ", test_number);
+	else
+		printf("\e[31m%d-KO\e[0m ", test_number);
 	tear_down(fd);
 	return (result);
 }
@@ -99,6 +102,5 @@ int	main(int argc, char **argv)
 	log_test(2, argv[1], test_second_line);
 	log_test(3, argv[1], test_nothing_to_be_read);
 	printf("\n");
-	// printf("File closed.\n");
 	return (EXIT_SUCCESS);
 }
