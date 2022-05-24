@@ -8,11 +8,25 @@ SOURCE_FILES := get_next_line.c \
 				get_next_line_utils.c
 SOURCES := $(addprefix $(SOURCE_PATH)/,$(SOURCE_FILES) get_next_line.h)
 
-OBJECTS_PATH := objects
-OBJECTS_FILES := $(SOURCE_FILES:%.c=%.o)
-OBJECTS := $(addprefix $(OBJECTS_PATH)/,$(OBJECTS_FILES))
+TEMP_PATH := temp
 
-TESTS := mandatory_1 mandatory_10 mandatory_100
+PROGRESSIVE_TESTS := mandatory_1 \
+					mandatory_10 \
+				   mandatory_100 \
+				  mandatory_1000 \
+				 mandatory_10000
+			# 	mandatory_100000 \
+			#    mandatory_1000000 \
+			#   mandatory_10000000 \
+			#  mandatory_100000000
+# 	mandatory_1000000000 \
+#    mandatory_10000000000
+
+TESTS := max_size \
+		 $(PROGRESSIVE_TESTS)
+
+# TESTS := mandatory_10000000000
+
 # stdin file_0 file_1 missing_file folder non_regular_file
 # TESTS := $(addprefix mandatory_,$(TESTS))
 $(info $(SOURCES))
@@ -31,48 +45,22 @@ norminette : $(SOURCES)
 
 mandatory : $(TESTS)
 
-mandatory_1 : mandatory.c $(SOURCES)
-	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=1 $^ -o $@.out
+$(PROGRESSIVE_TESTS) : mandatory.c $(SOURCES)
+	mkdir -p $(TEMP_PATH)
+	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=$(@:mandatory_%=%) $^ -o $(TEMP_PATH)/$@.out
 	echo -ne "$@\n\t"
-	valgrind $(VALGRIND_FLAGS) --log-file=$@.valgrind ./$@.out mandatory_file_0.md
+	mkdir -p log_valgrind
+	valgrind $(VALGRIND_FLAGS) --log-file=log_valgrind/$@ $(TEMP_PATH)/$@.out mandatory_file_0.md
 
-mandatory_10 : mandatory.c $(SOURCES)
-	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=10 $^ -o $@.out
+max_size : mandatory.c $(SOURCES)
+	mkdir -p $(TEMP_PATH)
+	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=9223372036854775807 $^ -o $(TEMP_PATH)/$@.out
 	echo -ne "$@\n\t"
-	valgrind $(VALGRIND_FLAGS) --log-file=$@.valgrind ./$@.out mandatory_file_0.md
-
-mandatory_100 : mandatory.c $(SOURCES)
-	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=100 $^ -o $@.out
-	echo -ne "$@\n\t"
-	valgrind $(VALGRIND_FLAGS) --log-file=$@.valgrind ./$@.out mandatory_file_0.md
-
-# mandatory_file_% : mandatory.out mandatory_file_%.md
-# 	./$^
-
-# mandatory_stdin : mandatory.out
-# 	./$^
-
-# mandatory_missing_file : mandatory.out
-# 	TEST_FILE=file_that_does_not_exist && rm -f $$TEST_FILE && ./$^ $$TEST_FILE
-
-# mandatory_folder : mandatory.out mandatory_test_folder
-# 	./$^ $@
-
-# mandatory_non_regular_file : mandatory.out
-# 	./$^ /dev/null
-# 	./$^ /dev/empty
-# 	./$^ /dev/true
-# 	./$^ mandatory_symbolic
-
-# mandatory.out : $(OBJECTS) mandatory.c
-# 	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g $^ -o $@
-
-# $(OBJECTS_PATH)/%.o : $(wildcard $(SOURCE_PATH))/%.c
-# 	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -D BUFFER_SIZE=1 -c -g $< -o $@
+	mkdir -p log_valgrind
+	valgrind $(VALGRIND_FLAGS) --log-file=log_valgrind/$@ $(TEMP_PATH)/$@.out mandatory_file_0.md
 
 clean :
-	rm -rf $(OBJECTS)
-
-# $(OBJECTS) : $(SOURCE_PATH)/get_next_line.h
+	rm -rf $(TEMP_PATH)
+	rm -rf log_valgrind/*
 
 .PHONY : all mandatory bonus clean norminette

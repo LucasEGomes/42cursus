@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:23:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/18 22:52:16 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/23 23:15:25 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ int	log_test(int test_number, char *file, int (*test)(int))
 	result = test(fd);
 	if (result)
 		printf("\e[32m%d-OK\e[0m ", test_number);
-	else
+	else if (result == 1)
 		printf("\e[31m%d-KO\e[0m ", test_number);
+	else
+		printf("\e[33m%d-SKIP\e[0m ", test_number);
 	tear_down(fd);
 	return (result);
 }

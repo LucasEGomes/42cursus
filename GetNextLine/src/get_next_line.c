@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/18 22:47:15 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/23 23:33:28 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*pop_buffer(char *string, char *buffer, size_t size)
 	size_t	index;
 	size_t	buffer_index;
 
-	if (buffer[size] == '\n')
+	if (size < BUFFER_SIZE && buffer[size] == '\n')
 		size++;
 	string = increase_string(string, size);
 	if (string == NULL)
@@ -70,24 +70,52 @@ static char	*pop_buffer(char *string, char *buffer, size_t size)
 	return (string);
 }
 
+char	*construct_buffer(char *buffer, int file_descriptor)
+{
+	ssize_t	index;
+
+	if (buffer == NULL)
+	{
+		buffer = malloc(BUFFER_SIZE);
+		if (buffer == NULL)
+			return (NULL);
+		index = 0;
+		while (index < BUFFER_SIZE)
+		{
+			buffer[index] = '\0';
+			index++;
+		}
+	}
+	if (buffer[0] == '\0')
+	{
+		if (read(file_descriptor, buffer, BUFFER_SIZE) == 0)
+		{
+			free(buffer);
+			buffer = NULL;
+			return (NULL);
+		}
+	}
+	return (buffer);
+}
+
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE];
+	static char	*buffer;
 	char		*line;
 	ssize_t		index;
 	ssize_t		read_bytes;
 
+	buffer = construct_buffer(buffer, fd);
+	if (buffer == NULL)
+		return (NULL);
 	read_bytes = 0;
 	while (read_bytes < BUFFER_SIZE && buffer[read_bytes] != '\0')
 		read_bytes++;
-	if (read_bytes == 0)
-		read_bytes = read(fd, buffer, BUFFER_SIZE);
 	index = 0;
 	line = NULL;
 	while (read_bytes > 0 && buffer[index] != '\n' && buffer[index] != '\0')
 	{
-		index++;
-		if (index == read_bytes)
+		if (++index == read_bytes)
 		{
 			line = pop_buffer(line, buffer, read_bytes);
 			if (line == NULL)
