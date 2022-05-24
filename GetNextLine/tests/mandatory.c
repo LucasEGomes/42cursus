@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:23:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/23 23:15:25 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/24 00:02:24 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,27 @@ int	test_nothing_to_be_read(int fd)
 	return(result);
 }
 
+int	test_last_line(int fd)
+{
+	char	*value;
+	char	*previous;
+	char	*expected;
+	int		result;
+
+	value = get_next_line(fd);
+	while (value != NULL)
+	{
+		free(previous);
+		previous = value;
+		value = get_next_line(fd);
+	}
+	free(value);
+	expected = "thought Alice 'without pictures or conversation?'";
+	result = memcmp(previous, expected, 50) == 0;
+	free(previous);
+	return (result);
+}
+
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
@@ -102,7 +123,8 @@ int	main(int argc, char **argv)
 	
 	log_test(1, argv[1], test_first_line);
 	log_test(2, argv[1], test_second_line);
-	log_test(3, argv[1], test_nothing_to_be_read);
+	log_test(3, argv[1], test_last_line);
+	log_test(4, argv[1], test_nothing_to_be_read);
 	printf("\n");
 	return (EXIT_SUCCESS);
 }
