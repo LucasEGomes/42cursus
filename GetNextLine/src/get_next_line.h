@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:38 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/13 18:11:01 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:49:56 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 256
 # endif
+
+typedef struct s_buffer
+{
+	char	*string;
+	ssize_t	size;
+}	t_buffer;
 
 char	*get_next_line(int fd);
 

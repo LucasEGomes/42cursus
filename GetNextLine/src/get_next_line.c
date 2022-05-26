@@ -6,17 +6,17 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/24 22:56:08 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:58:23 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*increase_string(char *string, size_t size)
+static char	*increase_string(char *string, ssize_t size)
 {
 	char	*old_string;
-	size_t	original_size;
-	size_t	index;
+	ssize_t	original_size;
+	ssize_t	index;
 
 	if (size == 0)
 		return (string);
@@ -41,12 +41,12 @@ static char	*increase_string(char *string, size_t size)
 	return (string);
 }
 
-static char	*pop_buffer(char *string, char *buffer, size_t size)
+static char	*pop_buffer(char *string, t_buffer *buffer, ssize_t size)
 {
-	size_t	index;
-	size_t	buffer_index;
+	ssize_t	index;
+	ssize_t	buffer_index;
 
-	if (size < BUFFER_SIZE && buffer[size] == '\n')
+	if (size < BUFFER_SIZE && buffer->string[size] == '\n')
 		size++;
 	string = increase_string(string, size);
 	if (string == NULL)
@@ -58,70 +58,60 @@ static char	*pop_buffer(char *string, char *buffer, size_t size)
 	buffer_index = 0;
 	while (buffer_index < size)
 	{
-		string[index + buffer_index] = buffer[buffer_index];
-		buffer[buffer_index++] = '\0';
+		string[index + buffer_index] = buffer->string[buffer_index];
+		buffer_index++;
 	}
-	while (buffer_index < BUFFER_SIZE && buffer[buffer_index] != '\0')
+	while (buffer_index < buffer->size)
 	{
-		buffer[buffer_index - size] = buffer[buffer_index];
-		buffer[buffer_index++] = '\0';
+		buffer->string[buffer_index - size] = buffer->string[buffer_index];
+		buffer_index++;
 	}
+	buffer->size -= size;
 	return (string);
 }
 
-char	*construct_buffer(char *buffer, int file_descriptor)
+void	construct_buffer(t_buffer *buffer, int file_descriptor)
 {
-	ssize_t	index;
-
-	if (buffer == NULL)
+	if (buffer->string == NULL)
 	{
-		buffer = malloc(BUFFER_SIZE);
+		buffer->string = malloc(sizeof(*(buffer->string)) * BUFFER_SIZE);
+		buffer->size = 0;
 		if (buffer == NULL)
-			return (NULL);
-		index = 0;
-		while (index < BUFFER_SIZE)
-		{
-			buffer[index] = '\0';
-			index++;
-		}
+			return ;
 	}
-	if (buffer[0] == '\0')
+	if (buffer->size == 0)
 	{
-		if (read(file_descriptor, buffer, BUFFER_SIZE) == 0)
+		buffer->size = read(file_descriptor, buffer->string, BUFFER_SIZE);
+		if (buffer->size == 0)
 		{
-			free(buffer);
-			buffer = NULL;
-			return (NULL);
+			free(buffer->string);
+			buffer->string = NULL;
 		}
 	}
-	return (buffer);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
-	char		*line;
-	ssize_t		index;
-	ssize_t		read_bytes;
+	static t_buffer	buffer;
+	char			*line;
+	ssize_t			index;
 
-	buffer = construct_buffer(buffer, fd);
-	if (buffer == NULL)
+	construct_buffer(&buffer, fd);
+	if (buffer.string == NULL)
 		return (NULL);
-	read_bytes = 0;
-	while (read_bytes < BUFFER_SIZE && buffer[read_bytes] != '\0')
-		read_bytes++;
 	index = 0;
 	line = NULL;
-	while (read_bytes > 0 && buffer[index] != '\n' && buffer[index] != '\0')
+	while (buffer.size > 0 && \
+		buffer.string[index] != '\n' && buffer.string[index] != '\0')
 	{
-		if (++index == read_bytes)
+		if (++index == buffer.size)
 		{
-			line = pop_buffer(line, buffer, read_bytes);
+			line = pop_buffer(line, &buffer, index);
 			if (line == NULL)
 				return (NULL);
 			index = 0;
-			read_bytes = read(fd, buffer, read_bytes);
+			buffer.size = read(fd, buffer.string, BUFFER_SIZE);
 		}
 	}
-	return (pop_buffer(line, buffer, index));
+	return (pop_buffer(line, &buffer, index));
 }
