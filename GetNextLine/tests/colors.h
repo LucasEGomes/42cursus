@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandatory.h                                        :+:      :+:    :+:   */
+/*   colors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 12:23:52 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/24 21:48:24 by luceduar         ###   ########.fr       */
+/*   Created: 2022/05/24 19:41:10 by luceduar          #+#    #+#             */
+/*   Updated: 2022/05/24 19:48:34 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MANDATORY_H
-# define MANDATORY_H
-# include "src/get_next_line.h"
-# include "libft/libft.h"
-# include "colors.h"
-# include <fcntl.h>
-# include <stdio.h>
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 256
-# endif
+#ifndef COLORS_H
+# define COLORS_H
+
+# define FG_RED    "\e[0;31m"
+# define FG_GREEN  "\e[0;32m"
+# define FG_YELLOW "\e[0;33m"
+# define FG_RESET "\e[0;0m"
 #endif

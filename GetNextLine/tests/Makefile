@@ -1,8 +1,15 @@
 SHELL := /bin/bash
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -I ../
+VALGRIND_LOG := log_valgrind
 VALGRIND_FLAGS := --leak-check=full -s
 
+FG_RED := \e[0;31m
+FG_GREEN := \e[0;32m
+FG_YELLOW := \e[0;33m
+COLOR_RESET := \e[0;0m
+
+BUFFER_MAX := 0xfffffffffffffffL
 SOURCE_PATH := ../src
 SOURCE_FILES := get_next_line.c \
 				get_next_line_utils.c
@@ -10,28 +17,26 @@ SOURCES := $(addprefix $(SOURCE_PATH)/,$(SOURCE_FILES) get_next_line.h)
 
 TEMP_PATH := temp
 
-PROGRESSIVE_TESTS := mandatory_1 \
-					mandatory_10 \
-				   mandatory_100 \
-				  mandatory_1000 \
-				 mandatory_10000
-			# 	mandatory_100000 \
-			#    mandatory_1000000 \
-			#   mandatory_10000000 \
-			#  mandatory_100000000
-# 	mandatory_1000000000 \
-#    mandatory_10000000000
+PROGRESSIVE_TESTS := buffer_1 \
+					buffer_10 \
+				   buffer_100 \
+				  buffer_1000 \
+				 buffer_10000
+		# 		buffer_100000 \
+		# 	   buffer_1000000 \
+		# 	  buffer_10000000 \
+		# 	 buffer_100000000 \
+		# 	buffer_1000000000 \
+		#    buffer_10000000000
 
-TESTS := max_size \
+TESTS := buffer_max \
 		 $(PROGRESSIVE_TESTS)
 
-# TESTS := mandatory_10000000000
+TEST_FILES := mandatory_file_0.md mandatory_file_1.md
+export LOG_FOLDER = ""
 
-# stdin file_0 file_1 missing_file folder non_regular_file
-# TESTS := $(addprefix mandatory_,$(TESTS))
-$(info $(SOURCES))
-BUFFER_SIZE := $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
-$(eval $(BUFFER_SIZE):;@:)
+# BUFFER_SIZE := $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
+# $(eval $(BUFFER_SIZE):;@:)
 
 all : | clean norminette mandatory bonus
 
@@ -43,24 +48,47 @@ norminette : $(SOURCES)
 		echo -ne "\e[0m";\
 	fi
 
-mandatory : $(TESTS)
+mandatory : | libft $(TEMP_PATH) $(TEST_FILES)
+
+libft :
+	$(MAKE) -C ../libft
+
+$(TEST_FILES) : $(PROGRESSIVE_TESTS) buffer_max
+	$(eval LOG_FOLDER=log_$(notdir $(basename $@)))
+	mkdir -p $(LOG_FOLDER)
+	echo $(notdir $(basename $@))
+	for _TEST in $^; do \
+		LOG_FILE=$(LOG_FOLDER)/$${_TEST}.log; \
+		VALGRIND_FILE=$(LOG_FOLDER)/$${_TEST}.valgrind; \
+		touch $${LOG_FILE}; \
+		touch $${VALGRIND_FILE}; \
+		valgrind $(VALGRIND_FLAGS) --log-file=$${VALGRIND_FILE} \
+			$(TEMP_PATH)/$${_TEST}.out $@ "$$(cat -e $@)" $${LOG_FILE}; \
+	done
+	echo -n $(RESET)
+
+$(TEMP_PATH) :
+	mkdir -p $(TEMP_PATH)
 
 $(PROGRESSIVE_TESTS) : mandatory.c $(SOURCES)
-	mkdir -p $(TEMP_PATH)
-	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=$(@:mandatory_%=%) $^ -o $(TEMP_PATH)/$@.out
-	echo -ne "$@\n\t"
-	mkdir -p log_valgrind
-	valgrind $(VALGRIND_FLAGS) --log-file=log_valgrind/$@ $(TEMP_PATH)/$@.out mandatory_file_0.md
+	$(CC) $(CFLAGS) -g -D BUFFER_SIZE=$(@:buffer_%=%) $^ -L ../libft -lft \
+		-o $(TEMP_PATH)/$@.out
 
-max_size : mandatory.c $(SOURCES)
-	mkdir -p $(TEMP_PATH)
-	$(CC) $(CFLAGS) -I $(SOURCE_PATH) -g -D BUFFER_SIZE=9223372036854775807 $^ -o $(TEMP_PATH)/$@.out
-	echo -ne "$@\n\t"
-	mkdir -p log_valgrind
-	valgrind $(VALGRIND_FLAGS) --log-file=log_valgrind/$@ $(TEMP_PATH)/$@.out mandatory_file_0.md
+buffer_max : mandatory.c $(SOURCES)
+	$(CC) $(CFLAGS) -g -D BUFFER_SIZE=$(BUFFER_MAX) $^ -L ../libft -lft \
+		-o $(TEMP_PATH)/$@.out
 
 clean :
-	rm -rf $(TEMP_PATH)
-	rm -rf log_valgrind/*
+	rm -rf log_*/
 
-.PHONY : all mandatory bonus clean norminette
+.PHONY : all mandatory bonus clean norminette $(PROGRESSIVE_TESTS) buffer_max
+
+bar :
+	$(eval BUFFER_SIZE=20)
+
+foo : $(PROGRESSIVE_TESTS)
+	for test in $^; \
+	do \
+		echo -n "$${test}-";\
+		echo "OK";\
+	done

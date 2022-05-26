@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/23 23:33:28 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/24 22:56:08 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,16 @@ static char	*pop_buffer(char *string, char *buffer, size_t size)
 	while (string[index] != '\0')
 		index++;
 	string[index + size] = '\0';
-	buffer_index = size;
-	while (buffer_index > 0)
+	buffer_index = 0;
+	while (buffer_index < size)
 	{
-		buffer_index--;
 		string[index + buffer_index] = buffer[buffer_index];
-		buffer[buffer_index] = '\0';
-		if (size + buffer_index < BUFFER_SIZE)
-		{
-			buffer[buffer_index] = buffer[buffer_index + size];
-			buffer[buffer_index + size] = '\0';
-		}
+		buffer[buffer_index++] = '\0';
+	}
+	while (buffer_index < BUFFER_SIZE && buffer[buffer_index] != '\0')
+	{
+		buffer[buffer_index - size] = buffer[buffer_index];
+		buffer[buffer_index++] = '\0';
 	}
 	return (string);
 }
