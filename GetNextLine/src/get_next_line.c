@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/26 18:58:23 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/27 00:10:36 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ static char	*pop_buffer(char *string, t_buffer *buffer, ssize_t size)
 	ssize_t	index;
 	ssize_t	buffer_index;
 
-	if (size < BUFFER_SIZE && buffer->string[size] == '\n')
-		size++;
 	string = increase_string(string, size);
 	if (string == NULL)
 		return (NULL);
@@ -56,14 +54,12 @@ static char	*pop_buffer(char *string, t_buffer *buffer, ssize_t size)
 		index++;
 	string[index + size] = '\0';
 	buffer_index = 0;
-	while (buffer_index < size)
-	{
-		string[index + buffer_index] = buffer->string[buffer_index];
-		buffer_index++;
-	}
 	while (buffer_index < buffer->size)
 	{
-		buffer->string[buffer_index - size] = buffer->string[buffer_index];
+		if (buffer_index < size)
+			string[index + buffer_index] = buffer->string[buffer_index];
+		else
+			buffer->string[buffer_index - size] = buffer->string[buffer_index];
 		buffer_index++;
 	}
 	buffer->size -= size;
@@ -76,7 +72,7 @@ void	construct_buffer(t_buffer *buffer, int file_descriptor)
 	{
 		buffer->string = malloc(sizeof(*(buffer->string)) * BUFFER_SIZE);
 		buffer->size = 0;
-		if (buffer == NULL)
+		if (buffer->string == NULL)
 			return ;
 	}
 	if (buffer->size == 0)
@@ -113,5 +109,7 @@ char	*get_next_line(int fd)
 			buffer.size = read(fd, buffer.string, BUFFER_SIZE);
 		}
 	}
+	if (buffer.string[index] == '\n')
+		return (pop_buffer(line, &buffer, index + 1));
 	return (pop_buffer(line, &buffer, index));
 }
