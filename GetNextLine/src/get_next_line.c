@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/27 00:10:36 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:10:13 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,26 @@ static char	*increase_string(char *string, ssize_t size)
 	return (string);
 }
 
-static char	*pop_buffer(char *string, t_buffer *buffer, ssize_t size)
+static char	*pop_buffer(char *destiny, t_buffer *buffer, ssize_t size)
 {
+	char	*auxiliar;
 	ssize_t	index;
-	ssize_t	buffer_index;
 
-	string = increase_string(string, size);
-	if (string == NULL)
-		return (NULL);
+	auxiliar = destiny;
+	while (*auxiliar != '\0')
+		auxiliar++;
 	index = 0;
-	while (string[index] != '\0')
-		index++;
-	string[index + size] = '\0';
-	buffer_index = 0;
-	while (buffer_index < buffer->size)
+	while (index < buffer->size)
 	{
-		if (buffer_index < size)
-			string[index + buffer_index] = buffer->string[buffer_index];
+		if (index < size)
+			auxiliar[index] = buffer->string[index];
 		else
-			buffer->string[buffer_index - size] = buffer->string[buffer_index];
-		buffer_index++;
+			buffer->string[index - size] = buffer->string[index];
+		index++;
 	}
+	auxiliar[size] = '\0';
 	buffer->size -= size;
-	return (string);
+	return (destiny);
 }
 
 void	construct_buffer(t_buffer *buffer, int file_descriptor)
@@ -86,6 +83,14 @@ void	construct_buffer(t_buffer *buffer, int file_descriptor)
 	}
 }
 
+static char	*append_buffer(char *destiny, t_buffer *buffer, ssize_t size)
+{
+	destiny = increase_string(destiny, size);
+	if (destiny == NULL)
+		return (NULL);
+	return (pop_buffer(destiny, buffer, size));
+}
+
 char	*get_next_line(int fd)
 {
 	static t_buffer	buffer;
@@ -97,12 +102,11 @@ char	*get_next_line(int fd)
 		return (NULL);
 	index = 0;
 	line = NULL;
-	while (buffer.size > 0 && \
-		buffer.string[index] != '\n' && buffer.string[index] != '\0')
+	while (buffer.size > 0 && buffer.string[index] != '\n')
 	{
 		if (++index == buffer.size)
 		{
-			line = pop_buffer(line, &buffer, index);
+			line = append_buffer(line, &buffer, index);
 			if (line == NULL)
 				return (NULL);
 			index = 0;
@@ -110,6 +114,6 @@ char	*get_next_line(int fd)
 		}
 	}
 	if (buffer.string[index] == '\n')
-		return (pop_buffer(line, &buffer, index + 1));
-	return (pop_buffer(line, &buffer, index));
+		index++;
+	return (append_buffer(line, &buffer, index));
 }

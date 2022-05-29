@@ -1,8 +1,8 @@
 SHELL := /bin/bash
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -I ../
+CFLAGS := -Wall -Wextra -Werror -g3
 VALGRIND_LOG := log_valgrind
-VALGRIND_FLAGS := --leak-check=full -s
+VALGRIND_FLAGS := --leak-check=full --show-leak-kinds=all -s --track-origins=yes --error-exitcode=1
 
 FG_RED := \e[0;31m
 FG_GREEN := \e[0;32m
@@ -14,6 +14,8 @@ SOURCE_PATH := ../src
 SOURCE_FILES := get_next_line.c \
 				get_next_line_utils.c
 SOURCES := $(addprefix $(SOURCE_PATH)/,$(SOURCE_FILES) get_next_line.h)
+
+TEST_SOURCES := utils.c check.c
 
 TEMP_PATH := temp
 
@@ -32,7 +34,7 @@ PROGRESSIVE_TESTS := buffer_1 \
 TESTS := buffer_max \
 		 $(PROGRESSIVE_TESTS)
 
-TEST_FILES := mandatory_file_0.md mandatory_file_1.md
+TEST_FILES := $(sort $(wildcard files/test_*))
 export LOG_FOLDER = ""
 
 # BUFFER_SIZE := $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
@@ -48,13 +50,13 @@ norminette : $(SOURCES)
 		echo -ne "\e[0m";\
 	fi
 
-mandatory : | libft $(TEMP_PATH) $(TEST_FILES)
+mandatory : | libft $(TEMP_PATH) $(TEST_FILES) test_alice_in_wonderland
 
 libft :
 	$(MAKE) -C ../libft
 
-$(TEST_FILES) : $(PROGRESSIVE_TESTS) buffer_max
-	$(eval LOG_FOLDER=log_$(notdir $(basename $@)))
+$(TEST_FILES) : $(PROGRESSIVE_TESTS) buffer_max | program_per_buffer
+	$(eval LOG_FOLDER=log/log_$(notdir $(basename $@)))
 	mkdir -p $(LOG_FOLDER)
 	echo $(notdir $(basename $@))
 	for _TEST in $^; do \
@@ -64,31 +66,66 @@ $(TEST_FILES) : $(PROGRESSIVE_TESTS) buffer_max
 		touch $${VALGRIND_FILE}; \
 		valgrind $(VALGRIND_FLAGS) --log-file=$${VALGRIND_FILE} \
 			$(TEMP_PATH)/$${_TEST}.out $@ "$$(cat -e $@)" $${LOG_FILE}; \
+		if [[ $$? -eq 1 ]]; then \
+			echo -e " | $(FG_RED)valgrind-KO$(COLOR_RESET)"; \
+		else \
+			echo -e " | $(FG_GREEN)valgrind-OK$(COLOR_RESET)"; \
+		fi; \
+	done
+	echo -n $(RESET)
+
+program_per_buffer : $(PROGRESSIVE_TESTS) buffer_max | mandatory.c
+	for _TEST in $^; do \
+		$(CC) $(CFLAGS) -I ../ mandatory.c $(TEST_SOURCES) \
+			$(TEMP_PATH)/$${_TEST}.o $(TEMP_PATH)/$${_TEST}_utils.o \
+			-L ../libft -lft \
+			-o $(TEMP_PATH)/$${_TEST}.out; \
+	done
+
+test_alice_in_wonderland : $(PROGRESSIVE_TESTS) buffer_max | test_alice_in_wonderland.c
+	$(eval LOG_FOLDER=log/log_$@)
+	mkdir -p $(LOG_FOLDER)
+	echo $(notdir $(basename $@))
+	for _TEST in $^; do \
+		LOG_FILE=$(LOG_FOLDER)/$${_TEST}.log; \
+		VALGRIND_FILE=$(LOG_FOLDER)/$${_TEST}.valgrind; \
+		touch $${LOG_FILE}; \
+		touch $${VALGRIND_FILE}; \
+		$(CC) $(CFLAGS) -I ../ $@.c $(TEST_SOURCES) \
+			$(TEMP_PATH)/$${_TEST}.o $(TEMP_PATH)/$${_TEST}_utils.o \
+			-L ../libft -lft \
+			-o $(TEMP_PATH)/alice_$${_TEST}.out; \
+		valgrind $(VALGRIND_FLAGS) --log-file=$${VALGRIND_FILE} \
+			$(TEMP_PATH)/alice_$${_TEST}.out $${LOG_FILE}; \
+		if [[ $$? -eq 1 ]]; then \
+			echo -e " | $(FG_RED)valgrind-KO$(COLOR_RESET)"; \
+		else \
+			echo -e " | $(FG_GREEN)valgrind-OK$(COLOR_RESET)"; \
+		fi; \
 	done
 	echo -n $(RESET)
 
 $(TEMP_PATH) :
 	mkdir -p $(TEMP_PATH)
 
-$(PROGRESSIVE_TESTS) : mandatory.c $(SOURCES)
-	$(CC) $(CFLAGS) -g -D BUFFER_SIZE=$(@:buffer_%=%) $^ -L ../libft -lft \
-		-o $(TEMP_PATH)/$@.out
+$(PROGRESSIVE_TESTS) : $(SOURCES)
+	$(CC) $(CFLAGS) -I ../src -D BUFFER_SIZE=$(@:buffer_%=%) -c $(word 1,$^) \
+		-o $(TEMP_PATH)/$@.o
+	$(CC) $(CFLAGS) -I ../src -D BUFFER_SIZE=$(@:buffer_%=%) -c $(word 2,$^) \
+		-o $(TEMP_PATH)/$@_utils.o
 
-buffer_max : mandatory.c $(SOURCES)
-	$(CC) $(CFLAGS) -g -D BUFFER_SIZE=$(BUFFER_MAX) $^ -L ../libft -lft \
-		-o $(TEMP_PATH)/$@.out
+buffer_max : $(SOURCES)
+	$(CC) $(CFLAGS) -I ../src -D BUFFER_SIZE=$(BUFFER_MAX) -c $(word 1,$^) \
+		-o $(TEMP_PATH)/$@.o
+	$(CC) $(CFLAGS) -I ../src -D BUFFER_SIZE=$(BUFFER_MAX) -c $(word 2,$^) \
+		-o $(TEMP_PATH)/$@_utils.o
 
 clean :
 	rm -rf log_*/
+	rm -rf temp/
 
 .PHONY : all mandatory bonus clean norminette $(PROGRESSIVE_TESTS) buffer_max
 
-bar :
-	$(eval BUFFER_SIZE=20)
-
-foo : $(PROGRESSIVE_TESTS)
-	for test in $^; \
-	do \
-		echo -n "$${test}-";\
-		echo "OK";\
-	done
+foo : $(SOURCES)
+	echo $(word 1,$^)
+	echo $(word 2,$^)
