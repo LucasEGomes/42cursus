@@ -19,7 +19,9 @@ TEST_SOURCES := utils.c check.c
 
 TEMP_PATH := temp
 
-PROGRESSIVE_TESTS := buffer_1 \
+PROGRESSIVE_TESTS := \
+					buffer_-1 \
+					 buffer_1 \
 					buffer_10 \
 				   buffer_100 \
 				  buffer_1000 \
@@ -34,38 +36,42 @@ PROGRESSIVE_TESTS := buffer_1 \
 TESTS := buffer_max \
 		 $(PROGRESSIVE_TESTS)
 
-TEST_FILES := $(sort $(wildcard files/test_*))
-export LOG_FOLDER = ""
+TEST_FILES := $(sort $(wildcard files/test_*)) \
+			  files/this_file_does_not_exist \
+			  files/this_is_a_folder
+
+LOG_FOLDER = log
+export LOG_TEST = ""
 
 # BUFFER_SIZE := $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
 # $(eval $(BUFFER_SIZE):;@:)
 
-all : | clean norminette mandatory bonus
+all : | clean mandatory bonus log/norminette
 
-norminette : $(SOURCES)
-	norminette $^ | grep -v "OK!" > $@
-	if [[ -n $$(cat ./norminette) ]]; then\
+log/norminette : $(SOURCES) $(BONUS_SOURCES)
+	norminette $^ | grep -v "OK!" > $@ || true
+	if [[ -n $$(cat $@) ]]; then\
 		echo -e "Failed on norminette\e[31m";\
-		cat norminette | sed "s/^/\t/";\
+		cat $@ | sed "s/^/\t/";\
 		echo -ne "\e[0m";\
 	fi
 
-mandatory : | libft $(TEMP_PATH) $(TEST_FILES) test_alice_in_wonderland
+mandatory : | libft $(TEMP_PATH) $(LOG_FOLDER) $(TEST_FILES) test_alice_in_wonderland
 
 libft :
 	$(MAKE) -C ../libft
 
 $(TEST_FILES) : $(PROGRESSIVE_TESTS) buffer_max | program_per_buffer
-	$(eval LOG_FOLDER=log/log_$(notdir $(basename $@)))
-	mkdir -p $(LOG_FOLDER)
+	$(eval LOG_TEST=$(LOG_FOLDER)/$(notdir $(basename $@)))
+	mkdir -p $(LOG_TEST)
 	echo $(notdir $(basename $@))
 	for _TEST in $^; do \
-		LOG_FILE=$(LOG_FOLDER)/$${_TEST}.log; \
-		VALGRIND_FILE=$(LOG_FOLDER)/$${_TEST}.valgrind; \
+		LOG_FILE=$(LOG_TEST)/$${_TEST}.log; \
+		VALGRIND_FILE=$(LOG_TEST)/$${_TEST}.valgrind; \
 		touch $${LOG_FILE}; \
 		touch $${VALGRIND_FILE}; \
 		valgrind $(VALGRIND_FLAGS) --log-file=$${VALGRIND_FILE} \
-			$(TEMP_PATH)/$${_TEST}.out $@ "$$(cat -e $@)" $${LOG_FILE}; \
+			$(TEMP_PATH)/$${_TEST}.out $@ "$$(cat -e $@ 2>/dev/null)" $${LOG_FILE}; \
 		if [[ $$? -eq 1 ]]; then \
 			echo -e " | $(FG_RED)valgrind-KO$(COLOR_RESET)"; \
 		else \
@@ -83,12 +89,12 @@ program_per_buffer : $(PROGRESSIVE_TESTS) buffer_max | mandatory.c
 	done
 
 test_alice_in_wonderland : $(PROGRESSIVE_TESTS) buffer_max | test_alice_in_wonderland.c
-	$(eval LOG_FOLDER=log/log_$@)
-	mkdir -p $(LOG_FOLDER)
+	$(eval LOG_TEST=$(LOG_FOLDER)/$@)
+	mkdir -p $(LOG_TEST)
 	echo $(notdir $(basename $@))
 	for _TEST in $^; do \
-		LOG_FILE=$(LOG_FOLDER)/$${_TEST}.log; \
-		VALGRIND_FILE=$(LOG_FOLDER)/$${_TEST}.valgrind; \
+		LOG_FILE=$(LOG_TEST)/$${_TEST}.log; \
+		VALGRIND_FILE=$(LOG_TEST)/$${_TEST}.valgrind; \
 		touch $${LOG_FILE}; \
 		touch $${VALGRIND_FILE}; \
 		$(CC) $(CFLAGS) -I ../ $@.c $(TEST_SOURCES) \
@@ -108,6 +114,9 @@ test_alice_in_wonderland : $(PROGRESSIVE_TESTS) buffer_max | test_alice_in_wonde
 $(TEMP_PATH) :
 	mkdir -p $(TEMP_PATH)
 
+$(LOG_FOLDER) :
+	mkdir -p $@
+
 $(PROGRESSIVE_TESTS) : $(SOURCES)
 	$(CC) $(CFLAGS) -I ../src -D BUFFER_SIZE=$(@:buffer_%=%) -c $(word 1,$^) \
 		-o $(TEMP_PATH)/$@.o
@@ -121,10 +130,10 @@ buffer_max : $(SOURCES)
 		-o $(TEMP_PATH)/$@_utils.o
 
 clean :
-	rm -rf log_*/
+	rm -rf log*/
 	rm -rf temp/
 
-.PHONY : all mandatory bonus clean norminette $(PROGRESSIVE_TESTS) buffer_max
+.PHONY : all mandatory bonus clean log/norminette $(PROGRESSIVE_TESTS) buffer_max
 
 foo : $(SOURCES)
 	echo $(word 1,$^)
