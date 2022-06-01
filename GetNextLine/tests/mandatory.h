@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:23:52 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/28 21:20:09 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/29 21:07:13 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <stdio.h>
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 256
-# endif
 # define TEST_TEMP_FILE "test_temp"
 
 int		check_line_length(char *value, char *expected, ssize_t line, int logger);

@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 00:14:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/29 20:21:29 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/05/31 10:37:12 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,18 @@ int	main(int argc, char **argv)
 		if (expected_0[line_0] != NULL)
 		{
 			value = get_next_line(file_descriptor_0);
-			// if (value == NULL)
-			// {
-			// 	dprintf(logger, 
-			// 		"SKIP: Failed to alloc memory at `get_next_line`.\n");
-			// 	close(file_descriptor_0);
-			// 	close(logger);
-			// 	print_message(argv[0], -1);
-			// 	return (0);
-			// }
+			if (value == NULL)
+			{
+				dprintf(logger, 
+					"SKIP: Failed to alloc memory at `get_next_line`.\n");
+				close(file_descriptor_0);
+				close(file_descriptor_1);
+				close(logger);
+				free_lines(expected_0);
+				free_lines(expected_1);
+				print_message(argv[0], -1);
+				return (0);
+			}
 			failed += check_content(value, expected_0[line_0], line_0 + 1, logger);
 			free(value);
 			line_0++;
@@ -55,15 +58,18 @@ int	main(int argc, char **argv)
 		if (expected_1[line_1] != NULL)
 		{
 			value = get_next_line(file_descriptor_1);
-			// if (value == NULL)
-			// {
-			// 	dprintf(logger, 
-			// 		"SKIP: Failed to alloc memory at `get_next_line`.\n");
-			// 	close(file_descriptor_1);
-			// 	close(logger);
-			// 	print_message(argv[0], -1);
-			// 	return (0);
-			// }
+			if (value == NULL)
+			{
+				dprintf(logger, 
+					"SKIP: Failed to alloc memory at `get_next_line`.\n");
+				close(file_descriptor_0);
+				close(file_descriptor_1);
+				close(logger);
+				free_lines(expected_0);
+				free_lines(expected_1);
+				print_message(argv[0], -1);
+				return (0);
+			}
 			failed += check_content(value, expected_1[line_1], line_1 + 1, logger);
 			free(value);
 			line_1++;

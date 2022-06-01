@@ -21,7 +21,7 @@ BONUSES := $(addprefix $(SUBJECT_PATH)/,$(BONUS_FILES))
 TEST_SOURCES := utils.c check.c
 
 TEMP_PATH := temp
-BUFFER_MAX := 0xfffffffffffffffL
+BUFFER_MAX := 0x7fffffffffffffffL
 PROGRESSIVE_BUFFERS := \
 					buffer_-1 \
 					 buffer_1 \
@@ -127,9 +127,9 @@ bonus : $(BONUS_PROGRESSIVE_BUFFERS) bonus_buffer_max
 		$(CC) $(CFLAGS) -I ../ $@.c $(TEST_SOURCES) \
 			$(TEMP_PATH)/$${_TEST}.o $(TEMP_PATH)/$${_TEST}_utils.o \
 			-L ../libft -lft \
-			-o $(TEMP_PATH)/$@_$${_TEST}.out; \
+			-o $(TEMP_PATH)/$${_TEST}.out; \
 		valgrind $(VALGRIND_FLAGS) --log-file=$${VALGRIND_FILE} \
-			$(TEMP_PATH)/$@_$${_TEST}.out \
+			$(TEMP_PATH)/$${_TEST}.out \
 			$${LOG_FILE} \
 			files/test_file_00 \
 			"$$(cat -e files/test_file_00 2>/dev/null)" \

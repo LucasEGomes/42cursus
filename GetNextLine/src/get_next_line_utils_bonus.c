@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:31 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/29 21:30:51 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:28:06 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*pop_buffer(char *destiny, t_buffer *buffer, ssize_t size)
 {
@@ -74,13 +74,14 @@ char	*append_buffer(char *destiny, t_buffer *buffer, ssize_t size)
 static void	free_buffer(t_buffer *buffer)
 {
 	free(buffer->string);
+	buffer->size = 0;
 	buffer->string = NULL;
 }
 
 void	construct_buffer(t_buffer *buffer, int file_descriptor)
 {
-	if (file_descriptor < 0 || BUFFER_SIZE < 1)
-		return (free_buffer(buffer));
+	if (BUFFER_SIZE < 1 || file_descriptor < 0)
+		return free_buffer(buffer);
 	if (buffer->string == NULL)
 	{
 		buffer->string = malloc(sizeof(*(buffer->string)) * BUFFER_SIZE);
@@ -92,6 +93,6 @@ void	construct_buffer(t_buffer *buffer, int file_descriptor)
 	{
 		buffer->size = read(file_descriptor, buffer->string, BUFFER_SIZE);
 		if (buffer->size <= 0)
-			free_buffer(buffer);
+			free_buffer(&buffer[file_descriptor]);
 	}
 }
