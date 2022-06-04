@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g3
+CFLAGS := -Wall -Wextra -Werror -g3 
 VALGRIND_LOG := log_valgrind
 VALGRIND_FLAGS := --leak-check=full --show-leak-kinds=all -s --track-origins=yes --error-exitcode=1
 

@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:38 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/01 19:36:37 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/04 16:35:11 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,16 @@ typedef struct s_buffer
 	ssize_t	size;
 }	t_buffer;
 
+typedef struct s_node
+{
+	t_buffer	*buffer;
+	struct s_node	*next;
+	int		file_descriptor;
+}	t_node;
+
 char	*get_next_line(int fd);
 char	*append_buffer(char *destiny, t_buffer *buffer, ssize_t size);
 void	construct_buffer(t_buffer *buffers, int file_descriptor);
+void	free_buffer(t_buffer *buffer);
 
 #endif

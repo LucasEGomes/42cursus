@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:31 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/01 19:28:06 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:28:32 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ char	*append_buffer(char *destiny, t_buffer *buffer, ssize_t size)
 	return (pop_buffer(destiny, buffer, size));
 }
 
-static void	free_buffer(t_buffer *buffer)
+void	free_buffer(t_buffer *buffer)
 {
 	free(buffer->string);
-	buffer->size = 0;
 	buffer->string = NULL;
+	buffer->size = 0;
 }
 
 void	construct_buffer(t_buffer *buffer, int file_descriptor)
@@ -93,6 +93,6 @@ void	construct_buffer(t_buffer *buffer, int file_descriptor)
 	{
 		buffer->size = read(file_descriptor, buffer->string, BUFFER_SIZE);
 		if (buffer->size <= 0)
-			free_buffer(&buffer[file_descriptor]);
+			free_buffer(buffer);
 	}
 }
