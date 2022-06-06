@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 12:23:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/01 19:22:54 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/05 21:10:27 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,18 @@ int	main(int argc, char **argv)
 	int		test_file;
 	char	**expected;
 
-	if (argc < 3 || argc > 4)
+	if (argc != 4)
 		return (EXIT_FAILURE);
-	expected = get_lines(argv[2]);
+	logger = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC);
+	expected = get_lines(argv[3]);
 	if (expected == NULL)
 		return (-1);
-	logger = open("/dev/null", O_WRONLY);
-	if (argc == 4)
-		logger = open(argv[3], O_WRONLY | O_CREAT | O_TRUNC);
-	test_file = open(argv[1], O_RDONLY);
-	printf("\t");
-	print_message(argv[0], test_whole_file(test_file, expected, logger));
+	test_file = open(argv[2], O_RDONLY);
+	dprintf(1, "\t");
+	print_message(argv[2], test_whole_file(test_file, expected, logger));
 	close(test_file);
-	printf(" | ");
-	print_message("STDIN", test_read_standard_input(argv[1], expected, logger));
+	dprintf(1, " | ");
+	print_message("STDIN", test_read_standard_input(argv[2], expected, logger));
 	free_lines(expected);
 	close(logger);
 	return (EXIT_SUCCESS);

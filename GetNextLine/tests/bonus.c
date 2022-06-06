@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/29 00:14:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/31 10:37:12 by luceduar         ###   ########.fr       */
+/*   Created: 2022/05/12 12:23:25 by luceduar          #+#    #+#             */
+/*   Updated: 2022/06/05 21:42:29 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,74 +14,23 @@
 
 int	main(int argc, char **argv)
 {
-	int	file_descriptor_0;
-	int	file_descriptor_1;
-	int	logger;
-	char	**expected_0;
-	char	**expected_1;
-	int		line_0;
-	int		line_1;
-	char	*value;
-	int		failed;
+	int		logger;
+	int		test_file;
+	char	**expected;
 
-	(void) argc;
-	file_descriptor_0 = open(argv[2], O_RDONLY);
-	file_descriptor_1 = open(argv[4], O_RDONLY);
-	logger = open(argv[1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-	expected_0 = get_lines(argv[3]);
-	expected_1 = get_lines(argv[5]);
-	line_0 = 0;
-	line_1 = 0;
-	failed = 0;
-	printf("\t");
-	while (expected_0[line_0] != NULL && expected_1[line_1] != NULL)
-	{
-		if (expected_0[line_0] != NULL)
-		{
-			value = get_next_line(file_descriptor_0);
-			if (value == NULL)
-			{
-				dprintf(logger, 
-					"SKIP: Failed to alloc memory at `get_next_line`.\n");
-				close(file_descriptor_0);
-				close(file_descriptor_1);
-				close(logger);
-				free_lines(expected_0);
-				free_lines(expected_1);
-				print_message(argv[0], -1);
-				return (0);
-			}
-			failed += check_content(value, expected_0[line_0], line_0 + 1, logger);
-			free(value);
-			line_0++;
-		}
-		if (expected_1[line_1] != NULL)
-		{
-			value = get_next_line(file_descriptor_1);
-			if (value == NULL)
-			{
-				dprintf(logger, 
-					"SKIP: Failed to alloc memory at `get_next_line`.\n");
-				close(file_descriptor_0);
-				close(file_descriptor_1);
-				close(logger);
-				free_lines(expected_0);
-				free_lines(expected_1);
-				print_message(argv[0], -1);
-				return (0);
-			}
-			failed += check_content(value, expected_1[line_1], line_1 + 1, logger);
-			free(value);
-			line_1++;
-		}
-	}
-	failed += check_end_of_file(file_descriptor_0, logger);
-	failed += check_end_of_file(file_descriptor_1, logger);
-	print_message(argv[0], failed);
-	close(file_descriptor_0);
-	close(file_descriptor_1);
+	if (argc != 4)
+		return (EXIT_FAILURE);
+	logger = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC);
+	expected = get_lines(argv[3]);
+	if (expected == NULL)
+		return (-1);
+	test_file = open(argv[2], O_RDONLY);
+	dprintf(1, "\t");
+	print_message(argv[2], test_whole_file(test_file, expected, logger));
+	close(test_file);
+	dprintf(1, " | ");
+	print_message("STDIN", test_read_standard_input(argv[2], expected, logger));
+	free_lines(expected);
 	close(logger);
-	free_lines(expected_0);
-	free_lines(expected_1);
 	return (EXIT_SUCCESS);
 }

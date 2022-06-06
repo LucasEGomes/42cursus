@@ -1,8 +1,8 @@
 SHELL := /bin/bash
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g3 
-VALGRIND_LOG := log_valgrind
-VALGRIND_FLAGS := --leak-check=full --show-leak-kinds=all -s --track-origins=yes --error-exitcode=1
+CFLAGS := -Wall -Wextra -Werror -g3
+VALGRIND_FLAGS := -s --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1
+LIBFT_FOLDER := ../libft
 
 FG_RED := \e[0;31m
 FG_GREEN := \e[0;32m
@@ -10,49 +10,137 @@ FG_YELLOW := \e[0;33m
 COLOR_RESET := \e[0;0m
 
 SUBJECT_PATH := ../src
+
 SOURCE_FILES := get_next_line.c \
 				get_next_line_utils.c
-SOURCES := $(addprefix $(SUBJECT_PATH)/,$(SOURCE_FILES))
+SOURCE_HEADER := get_next_line.h
+SOURCES := $(addprefix $(SUBJECT_PATH)/,$(SOURCE_FILES) $(SOURCE_HEADER))
 
 BONUS_FILES := get_next_line_bonus.c \
 			   get_next_line_utils_bonus.c
-BONUSES := $(addprefix $(SUBJECT_PATH)/,$(BONUS_FILES))
-
-TEST_SOURCES := utils.c check.c
+BONUS_HEADER := get_next_line_bonus.h
+BONUSES := $(addprefix $(SUBJECT_PATH)/,$(BONUS_FILES) $(BONUS_HEADER))
 
 TEMP_PATH := temp
+LOG_FOLDER := log
+MANDATORY_TEMP := test_mandatory
+BONUS_TEMP := test_bonus
+
 BUFFER_MAX := 0x7fffffffffffffffL
 PROGRESSIVE_BUFFERS := \
-					buffer_-1 \
-					 buffer_1 \
-					buffer_10 \
-				   buffer_100 \
-				  buffer_1000 \
-				 buffer_10000
-		# 		buffer_100000 \
-		# 	   buffer_1000000 \
-		# 	  buffer_10000000 \
-		# 	 buffer_100000000 \
-		# 	buffer_1000000000 \
-		#    buffer_10000000000
-BONUS_PROGRESSIVE_BUFFERS := $(addprefix bonus_,$(PROGRESSIVE_BUFFERS))
+		buffer_-10 \
+		 buffer_-1 \
+		  buffer_0 \
+		  buffer_1 \
+		 buffer_10 \
+		buffer_100 \
+	   buffer_1000 \
+	  buffer_10000
 BUFFERS := buffer_max \
 		 $(PROGRESSIVE_BUFFERS)
-BONUS_BUFFERS := $(addprefix bonus_,$(BUFFERS))
+
+TEST_UTILS := utils.c check.c
 TEST_FILES := $(sort $(wildcard files/test_*)) \
 			  files/this_file_does_not_exist \
 			  files/this_is_a_folder
 
+USE_LIBFT := -I $(LIBFT_FOLDER) -L $(LIBFT_FOLDER) -lft
+MANDATORY_BASENAME := $(TEMP_PATH)/mandatory_
+MANDATORY_SOURCES := $(addprefix $(MANDATORY_TEMP)/,$(SOURCE_FILES) $(SOURCE_HEADER))
+MANDATORY_TESTS := $(addprefix $(MANDATORY_BASENAME),$(BUFFERS))
+MANDATORY_TESTS := $(addsuffix .out,$(MANDATORY_TESTS))
+MANDATORY_LOG := $(foreach BUFFER,$(MANDATORY_TESTS:$(TEMP_PATH)/%.out=%), \
+	$(addprefix $(LOG_FOLDER)/$(BUFFER)/,$(TEST_FILES:files/%=%)))
+MANDATORY_LOG := $(addsuffix .log,$(MANDATORY_LOG))
 
-LOG_FOLDER = log
-export LOG_TEST = ""
+BONUS_BASENAME := $(TEMP_PATH)/bonus_
+BONUS_SOURCES := $(addprefix $(BONUS_TEMP)/,$(BONUS_FILES) $(BONUS_HEADER))
+BONUS_TESTS := $(addprefix $(BONUS_BASENAME),$(BUFFERS))
+BONUS_TESTS := $(addsuffix .out,$(BONUS_TESTS))
+BONUS_LOG := $(foreach BUFFER,$(BONUS_TESTS:$(TEMP_PATH)/%.out=%), \
+	$(addprefix $(LOG_FOLDER)/$(BUFFER)/,$(TEST_FILES:files/%=%)))
+BONUS_LOG := $(addsuffix .log,$(BONUS_LOG))
 
-# BUFFER_SIZE := $(wordlist 2, $(words $(MAKECMDGOALS)), $(MAKECMDGOALS))
-# $(eval $(BUFFER_SIZE):;@:)
+LOG_RECIPES := $(addprefix $(LOG_FOLDER)/mandatory_buffer_%/,\
+	$(addsuffix .log,$(TEST_FILES:files/%=%)))
 
-all : | clean mandatory bonus log/norminette
+mandatory m : | norminette $(MANDATORY_LOG)
+bonus b : $(BONUS_LOG)
+mandatory bonus m b : $(LOG_FOLDER)
+norminette : log/norminette.log
+all : | norminette mandatory bonus
 
-log/norminette : $(SOURCES) $(BONUS_SOURCES)
+clean :
+	rm -rf log temp
+
+fclean : clean
+	rm -rf test_bonus test_mandatory
+
+$(MANDATORY_SOURCES) : $(SOURCES) | $(MANDATORY_TEMP)
+	cp $^ $(MANDATORY_TEMP)/
+
+$(MANDATORY_TESTS) : $(MANDATORY_SOURCES) $(TEST_UTILS) mandatory.c | libft $(TEMP_PATH)
+	$(eval BUFFER_SIZE = $(@:$(MANDATORY_BASENAME)buffer_%.out=%))
+	$(eval BUFFER_SIZE = $(BUFFER_SIZE:max=$(BUFFER_MAX)))
+	$(CC) $(CFLAGS) -I $(MANDATORY_TEMP)/ -I include/ \
+		$^ -o $@ -D BUFFER_SIZE=$(BUFFER_SIZE) \
+		$(USE_LIBFT)
+
+$(MANDATORY_TEMP) $(BONUS_TEMP) $(TEMP_PATH) $(LOG_FOLDER):
+	mkdir -p $@
+
+$(MANDATORY_LOG) : $(MANDATORY_TESTS)
+	$(eval TEST_PROGRAM = $(TEMP_PATH)/$(word 2,$(subst /, ,$@)).out)
+	$(eval TEST_FILE = $(@:$(dir $@)%.log=%))
+	$(eval TEST_FILE = $(addprefix files/,$(TEST_FILE)))
+	if [ ! -d $(dir $@) ]; then \
+		mkdir -p $(dir $@); \
+		echo $(dir $@); \
+	fi
+	valgrind $(VALGRIND_FLAGS) \
+		--log-file=$(@:.log=.valgrind) \
+		$(TEST_PROGRAM) \
+		$@ \
+		$(TEST_FILE) \
+		"$$(cat -e $(TEST_FILE) 2>/dev/null)"
+	if [[ $$? -eq 1 ]]; then \
+		echo -e " | $(FG_RED)valgrind-KO$(COLOR_RESET)"; \
+	else \
+		echo -e " | $(FG_GREEN)valgrind-OK$(COLOR_RESET)"; \
+	fi
+
+
+$(BONUS_SOURCES) : $(BONUSES) | $(BONUS_TEMP)
+	cp $^ $(BONUS_TEMP)/
+
+$(BONUS_TESTS) : $(BONUS_SOURCES) $(TEST_UTILS) bonus.c | libft $(TEMP_PATH)
+	$(eval BUFFER_SIZE = $(@:$(BONUS_BASENAME)buffer_%.out=%))
+	$(eval BUFFER_SIZE = $(BUFFER_SIZE:max=$(BUFFER_MAX)))
+	$(CC) $(CFLAGS) -I $(BONUS_TEMP)/ -I include/ \
+		$^ -o $@ -D BUFFER_SIZE=$(BUFFER_SIZE) \
+		$(USE_LIBFT)
+
+$(BONUS_LOG) : $(BONUS_TESTS)
+	$(eval TEST_PROGRAM = $(TEMP_PATH)/$(word 2,$(subst /, ,$@)).out)
+	$(eval TEST_FILE = $(@:$(dir $@)%.log=%))
+	$(eval TEST_FILE = $(addprefix files/,$(TEST_FILE)))
+	if [ ! -d $(dir $@) ]; then \
+		mkdir -p $(dir $@); \
+		echo $(dir $@); \
+	fi
+	valgrind $(VALGRIND_FLAGS) \
+		--log-file=$(@:.log=.valgrind) \
+		$(TEST_PROGRAM) \
+		$@ \
+		$(TEST_FILE) \
+		"$$(cat -e $(TEST_FILE) 2>/dev/null)"
+	if [[ $$? -eq 1 ]]; then \
+		echo -e " | $(FG_RED)valgrind-KO$(COLOR_RESET)"; \
+	else \
+		echo -e " | $(FG_GREEN)valgrind-OK$(COLOR_RESET)"; \
+	fi
+
+log/norminette.log : $(SOURCES) $(BONUSES) | $(LOG_FOLDER)
 	norminette $^ | grep -v "OK!" > $@ || true
 	if [[ -n $$(cat $@) ]]; then\
 		echo -e "Failed on norminette\e[31m";\
@@ -60,133 +148,7 @@ log/norminette : $(SOURCES) $(BONUS_SOURCES)
 		echo -ne "\e[0m";\
 	fi
 
-mandatory : | libft $(TEMP_PATH) $(LOG_FOLDER) $(TEST_FILES) test_alice_in_wonderland
-
 libft :
 	$(MAKE) -C ../libft
 
-$(TEST_FILES) : $(PROGRESSIVE_BUFFERS) buffer_max | program_per_buffer
-	$(eval LOG_TEST=$(LOG_FOLDER)/$(notdir $(basename $@)))
-	mkdir -p $(LOG_TEST)
-	echo $(notdir $(basename $@))
-	for _TEST in $^; do \
-		LOG_FILE=$(LOG_TEST)/$${_TEST}.log; \
-		VALGRIND_FILE=$(LOG_TEST)/$${_TEST}.valgrind; \
-		touch $${LOG_FILE}; \
-		touch $${VALGRIND_FILE}; \
-		valgrind $(VALGRIND_FLAGS) --log-file=$${VALGRIND_FILE} \
-			$(TEMP_PATH)/$${_TEST}.out $@ "$$(cat -e $@ 2>/dev/null)" $${LOG_FILE}; \
-		if [[ $$? -eq 1 ]]; then \
-			echo -e " | $(FG_RED)valgrind-KO$(COLOR_RESET)"; \
-		else \
-			echo -e " | $(FG_GREEN)valgrind-OK$(COLOR_RESET)"; \
-		fi; \
-	done
-	echo -n $(RESET)
-
-program_per_buffer : $(PROGRESSIVE_BUFFERS) buffer_max | mandatory.c
-	for _TEST in $^; do \
-		$(CC) $(CFLAGS) -I ../ mandatory.c $(TEST_SOURCES) \
-			$(TEMP_PATH)/$${_TEST}.o $(TEMP_PATH)/$${_TEST}_utils.o \
-			-L ../libft -lft \
-			-o $(TEMP_PATH)/$${_TEST}.out; \
-	done
-
-test_alice_in_wonderland : $(PROGRESSIVE_BUFFERS) buffer_max | test_alice_in_wonderland.c
-	$(eval LOG_TEST=$(LOG_FOLDER)/$@)
-	mkdir -p $(LOG_TEST)
-	echo $(notdir $(basename $@))
-	for _TEST in $^; do \
-		LOG_FILE=$(LOG_TEST)/$${_TEST}.log; \
-		VALGRIND_FILE=$(LOG_TEST)/$${_TEST}.valgrind; \
-		touch $${LOG_FILE}; \
-		touch $${VALGRIND_FILE}; \
-		$(CC) $(CFLAGS) -I ../ $@.c $(TEST_SOURCES) \
-			$(TEMP_PATH)/$${_TEST}.o $(TEMP_PATH)/$${_TEST}_utils.o \
-			-L ../libft -lft \
-			-o $(TEMP_PATH)/alice_$${_TEST}.out; \
-		valgrind $(VALGRIND_FLAGS) --log-file=$${VALGRIND_FILE} \
-			$(TEMP_PATH)/alice_$${_TEST}.out $${LOG_FILE}; \
-		if [[ $$? -eq 1 ]]; then \
-			echo -e " | $(FG_RED)valgrind-KO$(COLOR_RESET)"; \
-		else \
-			echo -e " | $(FG_GREEN)valgrind-OK$(COLOR_RESET)"; \
-		fi; \
-	done
-	echo -n $(RESET)
-
-bonus : $(BONUS_PROGRESSIVE_BUFFERS) bonus_buffer_max
-	$(eval LOG_TEST=$(LOG_FOLDER)/$@)
-	mkdir -p $(LOG_TEST)
-	echo $(notdir $(basename $@))
-	for _TEST in $^; do \
-		LOG_FILE=$(LOG_TEST)/$${_TEST}.log; \
-		VALGRIND_FILE=$(LOG_TEST)/$${_TEST}.valgrind; \
-		touch $${LOG_FILE}; \
-		touch $${VALGRIND_FILE}; \
-		$(CC) $(CFLAGS) -I ../ $@.c $(TEST_SOURCES) \
-			$(TEMP_PATH)/$${_TEST}.o $(TEMP_PATH)/$${_TEST}_utils.o \
-			-L ../libft -lft \
-			-o $(TEMP_PATH)/$${_TEST}.out; \
-		valgrind $(VALGRIND_FLAGS) --log-file=$${VALGRIND_FILE} \
-			$(TEMP_PATH)/$${_TEST}.out \
-			$${LOG_FILE} \
-			files/test_file_00 \
-			"$$(cat -e files/test_file_00 2>/dev/null)" \
-			files/test_file_01 \
-			"$$(cat -e files/test_file_01 2>/dev/null)"; \
-		if [[ $$? -eq 1 ]]; then \
-			echo -e " | $(FG_RED)valgrind-KO$(COLOR_RESET)"; \
-		else \
-			echo -e " | $(FG_GREEN)valgrind-OK$(COLOR_RESET)"; \
-		fi; \
-	done
-	echo -n $(RESET)
-
-$(TEMP_PATH) :
-	mkdir -p $(TEMP_PATH)
-
-$(LOG_FOLDER) :
-	mkdir -p $@
-
-include_mandatory/get_next_line.h : $(SUBJECT_PATH)/get_next_line.h
-	mkdir -p include_mandatory
-	cp $< ./include_mandatory
-
-$(PROGRESSIVE_BUFFERS) : $(SOURCES) | include_mandatory/get_next_line.h
-	$(CC) $(CFLAGS) -I ./include_mandatory -D BUFFER_SIZE=$(@:buffer_%=%) -c $(word 1,$^) \
-		-o $(TEMP_PATH)/$@.o
-	$(CC) $(CFLAGS) -I ./include_mandatory -D BUFFER_SIZE=$(@:buffer_%=%) -c $(word 2,$^) \
-		-o $(TEMP_PATH)/$@_utils.o
-
-buffer_max : $(SOURCES) | include_mandatory/get_next_line.h
-	$(CC) $(CFLAGS) -I ./include_mandatory -D BUFFER_SIZE=$(BUFFER_MAX) -c $(word 1,$^) \
-		-o $(TEMP_PATH)/$@.o
-	$(CC) $(CFLAGS) -I ./include_mandatory -D BUFFER_SIZE=$(BUFFER_MAX) -c $(word 2,$^) \
-		-o $(TEMP_PATH)/$@_utils.o
-
-include_bonus/get_next_line_bonus.h : $(SUBJECT_PATH)/get_next_line_bonus.h
-	mkdir -p include_bonus
-	cp $< ./include_bonus
-
-$(BONUS_PROGRESSIVE_BUFFERS) : $(BONUSES) | include_bonus/get_next_line_bonus.h
-	$(CC) $(CFLAGS) -I ./include_bonus -D BUFFER_SIZE=$(@:bonus_buffer_%=%) -c $(word 1,$^) \
-		-o $(TEMP_PATH)/$@.o
-	$(CC) $(CFLAGS) -I ./include_bonus -D BUFFER_SIZE=$(@:bonus_buffer_%=%) -c $(word 2,$^) \
-		-o $(TEMP_PATH)/$@_utils.o
-
-bonus_buffer_max : $(BONUSES) | include_bonus/get_next_line_bonus.h
-	$(CC) $(CFLAGS) -I ./include_bonus -D BUFFER_SIZE=$(BUFFER_MAX) -c $(word 1,$^) \
-		-o $(TEMP_PATH)/$@.o
-	$(CC) $(CFLAGS) -I ./include_bonus -D BUFFER_SIZE=$(BUFFER_MAX) -c $(word 2,$^) \
-		-o $(TEMP_PATH)/$@_utils.o
-
-clean :
-	rm -rf log*/
-	rm -rf temp/
-
-.PHONY : all mandatory bonus clean log/norminette $(PROGRESSIVE_BUFFERS) buffer_max
-
-foo : $(SOURCES)
-	echo $(word 1,$^)
-	echo $(word 2,$^)
+.PHONY : mandatory m bonus b all libft clean fclean

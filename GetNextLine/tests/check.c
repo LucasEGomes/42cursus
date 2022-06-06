@@ -6,11 +6,11 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 21:00:56 by luceduar          #+#    #+#             */
-/*   Updated: 2022/05/31 10:14:53 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:08:16 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mandatory.h"
+#include "check.h"
 
 int	check_line_length(char *value, char *expected, ssize_t line, int logger)
 {

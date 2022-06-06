@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:31 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/04 17:28:32 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:17:14 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	free_buffer(t_buffer *buffer)
 void	construct_buffer(t_buffer *buffer, int file_descriptor)
 {
 	if (BUFFER_SIZE < 1 || file_descriptor < 0)
-		return free_buffer(buffer);
+		return (free_buffer(buffer));
 	if (buffer->string == NULL)
 	{
 		buffer->string = malloc(sizeof(*(buffer->string)) * BUFFER_SIZE);

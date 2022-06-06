@@ -6,13 +6,13 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/04 17:26:50 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:28:23 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-t_node	*new_node(int	file_descriptor)
+t_node	*new_node(int file_descriptor)
 {
 	t_node		*node;
 	t_buffer	*buffer;

@@ -6,11 +6,11 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 20:19:08 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/01 19:21:40 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/05 21:45:18 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mandatory.h"
+#include "utils.h"
 
 void	*free_lines(char **lines)
 {
@@ -26,7 +26,7 @@ void	*free_lines(char **lines)
 	return (NULL);
 }
 
-static char	**alloc_lines(char *text)
+char	**alloc_lines(char *text)
 {
 	ssize_t	count;
 	ssize_t	index;
@@ -101,14 +101,14 @@ void	print_message(char *filename, int result)
 	char	*message;
 	char	*file;
 
-	message = FG_GREEN "%s-OK" FG_RESET;
+	message = FG_GREEN "%s-OK  " FG_RESET;
 	if (result < 0)
 		message = FG_YELLOW "%s-SKIP" FG_RESET;
 	if (result > 0)
-		message = FG_RED "%s-KO" FG_RESET;
+		message = FG_RED "%s-KO  " FG_RESET;
 	file = ft_strchr(filename, '/');
 	if (file == NULL)
-		printf(message, filename);
+		dprintf(1, message, filename);
 	else
-		printf(message, file + 1);
+		dprintf(1, message, file + 1);
 }

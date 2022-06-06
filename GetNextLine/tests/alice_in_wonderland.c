@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 19:17:46 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/01 19:22:50 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:33:07 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -3631,7 +3631,7 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	failed = 0;
 	index = 0;
-	printf("\t");
+	dprintf(1, "\t");
 	while (expected[index] != NULL)
 	{
 		value = get_next_line(file_descriptor);
