@@ -1,16 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_alice_in_wonderland.c                         :+:      :+:    :+:   */
+/*   alice_in_wonderland.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 19:17:46 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/04 18:33:07 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/05 23:55:57 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mandatory.h"
+#ifndef TEST_BONUS
+# include "mandatory.h"
+#else
+# include "bonus.h"
+#endif
 
 int	main(int argc, char **argv)
 {
@@ -3641,7 +3645,7 @@ int	main(int argc, char **argv)
 				"SKIP: Failed to alloc memory at `get_next_line`.\n");
 			close(file_descriptor);
 			close(logger);
-			print_message(argv[0], -1);
+			print_message(argv[1], -1);
 			return (0);
 		}
 		failed += check_line_length(value, expected[index], index + 1, logger);
@@ -3652,6 +3656,6 @@ int	main(int argc, char **argv)
 	failed += check_end_of_file(file_descriptor, logger);
 	close(file_descriptor);
 	close(logger);
-	print_message(argv[0], failed);
+	print_message(argv[1], failed);
 	return (EXIT_SUCCESS);
 }

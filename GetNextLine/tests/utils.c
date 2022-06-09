@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 20:19:08 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/05 21:45:18 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/05 23:56:23 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	print_message(char *filename, int result)
 		message = FG_YELLOW "%s-SKIP" FG_RESET;
 	if (result > 0)
 		message = FG_RED "%s-KO  " FG_RESET;
-	file = ft_strchr(filename, '/');
+	file = ft_strrchr(filename, '/');
 	if (file == NULL)
 		dprintf(1, message, filename);
 	else
