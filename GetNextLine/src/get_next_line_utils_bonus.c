@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 17:27:31 by luceduar          #+#    #+#             */
-/*   Updated: 2022/06/05 20:17:14 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/06/11 14:42:22 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*increase_string(char *string, ssize_t size)
 	return (string);
 }
 
-char	*append_buffer(char *destiny, t_buffer *buffer, ssize_t size)
+static char	*append_buffer(char *destiny, t_buffer *buffer, ssize_t size)
 {
 	destiny = increase_string(destiny, size);
 	if (destiny == NULL)
@@ -71,7 +71,7 @@ char	*append_buffer(char *destiny, t_buffer *buffer, ssize_t size)
 	return (pop_buffer(destiny, buffer, size));
 }
 
-void	free_buffer(t_buffer *buffer)
+static void	free_buffer(t_buffer *buffer)
 {
 	free(buffer->string);
 	buffer->string = NULL;
