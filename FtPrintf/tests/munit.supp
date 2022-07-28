@@ -1,0 +1,28 @@
+# https://github.com/nemequ/munit/issues/57
+{
+   munit_malloc_suppression
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:munit_maybe_concat
+   fun:munit_test_runner_run_test
+   fun:munit_test_runner_run_suite
+   fun:munit_test_runner_run
+   fun:munit_suite_main_custom
+   fun:munit_suite_main
+   fun:main
+}
+{
+   munit_realloc_suppression
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:realloc
+   fun:munit_parameters_add
+   fun:munit_test_runner_run_test
+   fun:munit_test_runner_run_suite
+   fun:munit_test_runner_run
+   fun:munit_suite_main_custom
+   fun:munit_suite_main
+   fun:main
+}
