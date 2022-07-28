@@ -6,14 +6,14 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 22:46:36 by luceduar          #+#    #+#             */
-/*   Updated: 2022/07/27 18:45:37 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/07/28 00:11:41 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "unit_tests.h"
 
 static const MunitSuite test_suite = {
-	"test_ftprintf",
+	"ftprintf",
 	test_suite_conversions,
 	NULL,
 	1,
