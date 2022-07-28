@@ -6,12 +6,11 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:29:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/07/27 21:12:14 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/07/27 22:42:12 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_conversions.h"
-#include <assert.h>
 
 typedef struct s_is_conversion
 {
@@ -22,7 +21,7 @@ typedef struct s_is_conversion
 t_is_conversion	is_conversion_data[] = {
 	{"%c", 0},
 	{"Hello There %c", 12},
-	{"%z", 5},
+	{"%z", 2},
 	{"Hello There %z General %d Kenobi", 23}
 };
 
@@ -34,12 +33,12 @@ t_is_conversion	*is_conversions_test_cases[] = {
 	NULL
 };
 
-static MunitParameterEnum is_conversion_params[] = {
+static MunitParameterEnum	is_conversion_params[] = {
 	{"is_conversion", (void *)is_conversions_test_cases},
 	{NULL, NULL}
 };
 
-MunitResult test_is_conversion(const MunitParameter params[], void* data)
+MunitResult	test_is_conversion(const MunitParameter params[], void *data)
 {
 	ssize_t	index;
 	t_is_conversion	*test_case;
@@ -54,7 +53,24 @@ MunitResult test_is_conversion(const MunitParameter params[], void* data)
 	return (MUNIT_OK);
 }
 
+MunitResult	test_next_conversion(const MunitParameter params[], void *data)
+{
+	char	*input;
+	char	*expected;
+	char	*value;
+
+	(void) params;
+	(void) data;
+	
+	input = "Hello There %c";
+	expected = input + 12;
+	value = next_conversion(input);
+	munit_assert_ptr_equal(expected, value);
+	return (MUNIT_OK);
+}
+
 MunitTest test_suite_conversions[] = {
-	{"/conversions", test_is_conversion, NULL, NULL, 0, is_conversion_params},
+	{"/conversions/is_conversion", test_is_conversion, NULL, NULL, 0, is_conversion_params},
+	{"/conversions/next_conversion", test_next_conversion, NULL, NULL, 0, NULL},
 	{NULL, NULL, NULL, NULL, 0, NULL}
 };
