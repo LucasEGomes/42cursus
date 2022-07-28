@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:19:26 by luceduar          #+#    #+#             */
-/*   Updated: 2022/07/27 22:05:24 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/07/28 00:58:20 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 
 int		is_conversion(char *string);
 char	*next_conversion(char *string);
+int		signed_int_conversion(int number);
 
 #endif
