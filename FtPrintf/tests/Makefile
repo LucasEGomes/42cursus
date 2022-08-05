@@ -30,7 +30,7 @@ TESTS_OBJECTS := $(TESTS:%.c=$(TEMP)/%.o)
 all : $(NAME) $(LOG_DIR)
 	$(VALGRIND) $(VFLAGS) ./$< "$(REPORT_FILE)" "$(ERRORS_FILE)" > /dev/null; \
 		wait
-	./check_memory_leak.sh "$(VALGRIND_FILE)" $(TERMINAL_WIDTH) >> $(REPORT_FILE)
+	scripts/check_memory_leak.sh "$(VALGRIND_FILE)" $(TERMINAL_WIDTH) >> $(REPORT_FILE)
 	cat "$(REPORT_FILE)"
 
 $(SOURCE_OBJECT) :
