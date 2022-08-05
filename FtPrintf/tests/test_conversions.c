@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:29:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/04 23:45:22 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/04 23:53:57 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ int	test_conversions(void)
 	result &= test_print_string("Hello There", 11);
 	result &= test_print_string("General Kenobi", 14);
 	result &= test_print_string("", 0);
+	result &= test_print_string(NULL, 6);
 	return (result);
 }
