@@ -24,6 +24,7 @@ SOURCE_OBJECT := $(SOURCE)/libftprintf.a
 
 TESTS := logger.c \
 	test_conversions.c \
+	test_ft_printf_utils.c \
 	unit_tests.c
 TESTS_OBJECTS := $(TESTS:%.c=$(TEMP)/%.o)
 
@@ -50,7 +51,7 @@ $(TEMP)/%.o : %.c %.h
 
 clean :
 	rm -rf $(TEMP)
-	rm -rf $(REPORT_DIR)
+	rm -rf $(LOG_DIR)
 
 fclean : clean
 	rm -f $(NAME)

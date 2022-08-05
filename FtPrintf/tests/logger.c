@@ -21,6 +21,7 @@ int	g_report_file = STDOUT_FILENO;
 const char *messages[] = {
 	MESSAGE("%p"),
 	MESSAGE("%d"),
+	MESSAGE("%s")
 };
 
 static int _create(char *file, int *fd)
@@ -73,16 +74,30 @@ static int	eq_int(int *expected, int *found)
 	return (*expected == *found);
 }
 
+static int	eq_string(char *expected, char *found)
+{
+	if (expected == NULL)
+		return (expected == found);
+	if (found == NULL)
+		return (0);
+	return (strncmp(expected, found, strlen(expected) + 1) == 0);
+}
+
 const assert_functions functions[] = {
 	eq_pointer,
-	eq_int
+	eq_int,
+	eq_string
 };
 
 int assert(const char *caller, void *expected, void *found, ASSERT_TYPE type)
 {
 	if (!functions[type](expected, found))
 	{
-		dprintf(g_log_file, messages[type], caller, expected, found);
+		if (type == TYPE_INT)
+			dprintf(g_log_file, messages[type],
+				caller, *(int *)expected, *(int *)found);
+		else
+			dprintf(g_log_file, messages[type], caller, expected, found);
 		return (failure(caller));
 	}
 	return (success(caller));

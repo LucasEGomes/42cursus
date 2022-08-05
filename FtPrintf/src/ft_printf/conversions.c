@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:36:17 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/04 23:51:20 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/04 23:59:47 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,10 @@ int	print_string(char *string)
 	}
 	ft_putstr_fd(string, STDOUT_FILENO);
 	return (ft_strlen(string));
+}
+
+int	print_lower_hexadecimal(unsigned int number)
+{
+	(void) number;
+	return (0);
 }

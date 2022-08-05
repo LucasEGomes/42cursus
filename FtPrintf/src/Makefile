@@ -11,6 +11,7 @@ NAME := libftprintf.a
 TEMP := temp
 
 SOURCES := ft_printf/conversions.c \
+	ft_printf/ft_printf_utils.c \
 	ft_printf/ft_printf.c
 HEADERS := $(OBJECTS:%.c=%.h)
 OBJECTS := $(SOURCES:%.c=temp/%.o)

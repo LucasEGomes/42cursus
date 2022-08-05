@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:29:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/04 23:53:57 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/05 00:30:38 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ int	test_print_string(char *input, int expected)
 	return (ASSERT_INT(expected, value));
 }
 
+int	test_print_lower_hexadecimal(unsigned int input, int expected)
+{
+	int	value;
+
+	value = print_lower_hexadecimal(input);
+	return (ASSERT_INT(expected, value));
+}
+
 int	test_conversions(void)
 {
 	int	result;
@@ -88,5 +96,6 @@ int	test_conversions(void)
 	result &= test_print_string("General Kenobi", 14);
 	result &= test_print_string("", 0);
 	result &= test_print_string(NULL, 6);
+	result &= test_print_lower_hexadecimal(42U, 2);
 	return (result);
 }

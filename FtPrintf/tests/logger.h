@@ -19,17 +19,20 @@
 
 # define SUCCESS success(__func__)
 # define FAILURE failure(__func__)
-typedef enum e_assert_type {TYPE_POINTER, TYPE_INT} ASSERT_TYPE;
+typedef enum e_assert_type {TYPE_POINTER, TYPE_INT, TYPE_STRING} ASSERT_TYPE;
 # define ASSERT_POINTER(expected, found) \
 	assert(__func__, expected, found, TYPE_POINTER)
 # define ASSERT_INT(expected, found) \
 	assert(__func__, &expected, &found, TYPE_INT)
+# define ASSERT_STRING(expected, found) \
+	assert(__func__, expected, found, TYPE_STRING)
 
 
 # include "formats.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <string.h>
 # include <stdio.h>
 
 int	open_log_file(char *log_file);
