@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:29:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/04 23:12:50 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/04 23:33:06 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,19 @@ int	test_next_conversion(char *input, size_t index)
 	return (ASSERT_POINTER(expected, value));
 }
 
-int	test_print_signed_int(int	input, int	expected)
+int	test_print_signed_int(int input, int expected)
 {
 	int	value;
 	
 	value = print_signed_int(input);
+	return (ASSERT_INT(expected, value));
+}
+
+int	test_print_char(char input, int expected)
+{
+	int	value;
+
+	value = print_char(input);
 	return (ASSERT_INT(expected, value));
 }
 
@@ -47,5 +55,7 @@ int	test_conversions(void)
 	result &= test_print_signed_int(1, 1);
 	result &= test_print_signed_int(INT_MIN, 11);
 	result &= test_print_signed_int(INT_MAX, 10);
+	result &= test_print_char('a', 1);
+	result &= test_print_char('~', 1);
 	return (result);
 }
