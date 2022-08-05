@@ -6,13 +6,14 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 18:19:26 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/05 00:01:40 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/05 01:18:44 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONVERSIONS_H
 # define CONVERSIONS_H
 # include "libft/libft.h"
+# include "ft_printf_utils.h"
 # define CONVERSIONS "cspdiuxX%"
 
 char	*next_conversion(char *string);

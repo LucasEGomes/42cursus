@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:29:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/05 00:30:38 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/05 01:22:47 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,7 @@ int	test_conversions(void)
 	result &= test_print_string("", 0);
 	result &= test_print_string(NULL, 6);
 	result &= test_print_lower_hexadecimal(42U, 2);
+	result &= test_print_lower_hexadecimal(0U, 1);
+	result &= test_print_lower_hexadecimal(4294967295U, 8);
 	return (result);
 }
