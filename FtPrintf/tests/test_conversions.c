@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:29:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/04 23:33:06 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/04 23:41:22 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,29 @@ int	test_print_char(char input, int expected)
 	return (ASSERT_INT(expected, value));
 }
 
+int	test_print_percent_sign(int expected)
+{
+	int	value;
+
+	value = print_percent_sign();
+	return (ASSERT_INT(expected, value));
+}
+
 int	test_conversions(void)
 {
 	int	result;
 
 	result = 1;
+	result &= test_next_conversion("%c", 0);
+	result &= test_next_conversion("%s", 0);
+	result &= test_next_conversion("%p", 0);
+	result &= test_next_conversion("%d", 0);
+	result &= test_next_conversion("%i", 0);
+	result &= test_next_conversion("%u", 0);
+	result &= test_next_conversion("%x", 0);
+	result &= test_next_conversion("%X", 0);
+	result &= test_next_conversion("%%", 0);
+	result &= test_next_conversion("%A", 2);
 	result &= test_next_conversion("Hello There %c", 12);
 	result &= test_next_conversion("Hello There %z General %d Kenobi", 23);
 	result &= test_print_signed_int(4242, 4);
@@ -57,5 +75,6 @@ int	test_conversions(void)
 	result &= test_print_signed_int(INT_MAX, 10);
 	result &= test_print_char('a', 1);
 	result &= test_print_char('~', 1);
+	result &= test_print_percent_sign(1);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:36:17 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/04 23:33:27 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/04 23:41:51 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,11 @@ int	print_signed_int(int number)
 int	print_char(char c)
 {
 	ft_putchar_fd(c, STDOUT_FILENO);
+	return (1);
+}
+
+int	print_percent_sign(void)
+{
+	ft_putchar_fd('%', STDOUT_FILENO);
 	return (1);
 }
