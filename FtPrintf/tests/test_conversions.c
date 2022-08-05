@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:29:29 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/04 23:41:22 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/04 23:45:22 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ int	test_print_percent_sign(int expected)
 	return (ASSERT_INT(expected, value));
 }
 
+int	test_print_string(char *input, int expected)
+{
+	int	value;
+
+	value = print_string(input);
+	return (ASSERT_INT(expected, value));
+}
+
 int	test_conversions(void)
 {
 	int	result;
@@ -76,5 +84,8 @@ int	test_conversions(void)
 	result &= test_print_char('a', 1);
 	result &= test_print_char('~', 1);
 	result &= test_print_percent_sign(1);
+	result &= test_print_string("Hello There", 11);
+	result &= test_print_string("General Kenobi", 14);
+	result &= test_print_string("", 0);
 	return (result);
 }

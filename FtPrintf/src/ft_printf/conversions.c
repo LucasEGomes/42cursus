@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 08:36:17 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/04 23:41:51 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/04 23:48:03 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,14 @@ char	*next_conversion(char *string)
 
 int	print_signed_int(int number)
 {
-	int	length;
 	char	*text;
 
 	text = ft_itoa(number);
 	if (text == NULL)
 		return (0);
-	length = ft_strlen(text);
 	ft_putstr_fd(text, STDOUT_FILENO);
 	free(text);
-	return (length);
+	return (ft_strlen(text));
 }
 
 int	print_char(char c)
@@ -57,4 +55,10 @@ int	print_percent_sign(void)
 {
 	ft_putchar_fd('%', STDOUT_FILENO);
 	return (1);
+}
+
+int	print_string(char *string)
+{
+	ft_putstr_fd(string, STDOUT_FILENO);
+	return (ft_strlen(string));
 }
