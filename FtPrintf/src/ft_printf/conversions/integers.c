@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conversions.h                                      :+:      :+:    :+:   */
+/*   integers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/25 18:19:26 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/05 01:18:44 by luceduar         ###   ########.fr       */
+/*   Created: 2022/08/05 22:56:30 by luceduar          #+#    #+#             */
+/*   Updated: 2022/08/05 22:56:48 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONVERSIONS_H
-# define CONVERSIONS_H
-# include "libft/libft.h"
-# include "ft_printf_utils.h"
-# define CONVERSIONS "cspdiuxX%"
+#include "conversions.h"
 
-char	*next_conversion(char *string);
-int		print_signed_int(int number);
-int		print_char(char c);
-int		print_percent_sign(void);
-int		print_string(char *string);
-int		print_lower_hexadecimal(unsigned int number);
+int	print_signed_int(int number)
+{
+	char	*text;
+	int		length;
 
-#endif
+	text = ft_itoa(number);
+	if (text == NULL)
+		return (0);
+	length = ft_strlen(text);
+	ft_putstr_fd(text, STDOUT_FILENO);
+	free(text);
+	return (length);
+}
+
+int	print_decimal(va_list ap)
+{
+	return (print_signed_int(va_arg(ap, int)));
+}
+
+int	print_integer(va_list ap)
+{
+	return (print_signed_int(va_arg(ap, int)));
+}

@@ -10,10 +10,14 @@ LIBFT_HEADER := $(LIBFT:%.a=%.h)
 NAME := libftprintf.a
 TEMP := temp
 
-SOURCES := ft_printf/conversions.c \
+SOURCES := ft_printf/ft_printf.c \
 	ft_printf/ft_printf_utils.c \
-	ft_printf/ft_printf.c
-HEADERS := $(OBJECTS:%.c=%.h)
+	ft_printf/conversions/find_conversions.c \
+	ft_printf/conversions/hexadecimals.c \
+	ft_printf/conversions/integers.c \
+	ft_printf/conversions/pointers.c \
+	ft_printf/conversions/texts.c \
+	ft_printf/conversions/unsigned_integers.c
 OBJECTS := $(SOURCES:%.c=temp/%.o)
 
 all : $(NAME)
@@ -33,7 +37,7 @@ $(LIBFT_OBJECT) : | $(LIBFT)
 %.o : %.c
 
 
-$(TEMP)/%.o : %.c %.h
+$(TEMP)/%.o : %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@ -L $(LIBFT) -lft
 

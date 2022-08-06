@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils.h                                  :+:      :+:    :+:   */
+/*   unsigned_integers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/05 00:05:16 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/05 22:14:18 by luceduar         ###   ########.fr       */
+/*   Created: 2022/08/05 22:57:10 by luceduar          #+#    #+#             */
+/*   Updated: 2022/08/05 22:57:18 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_UTILS_H
-# define FT_PRINTF_UTILS_H
-# include "libft/libft.h"
+#include "conversions.h"
 
-char	*ft_uitoa_base(unsigned int number, char *base);
-char	*ft_sizetoa_base(size_t number, char *base);
+int	print_unsigned_decimal(va_list ap)
+{
+	char	*text;
+	int		length;
 
-#endif
+	text = ft_uitoa_base(va_arg(ap, unsigned int), "0123456789");
+	if (text == NULL)
+		return (0);
+	length = ft_strlen(text);
+	ft_putstr_fd(text, STDOUT_FILENO);
+	free(text);
+	return (length);
+}

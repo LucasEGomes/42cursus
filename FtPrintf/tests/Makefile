@@ -11,6 +11,8 @@ TERMINAL_WIDTH := 60
 REPORT_FILE := $(LOG_DIR)/report.txt
 ERRORS_FILE := $(LOG_DIR)/errors.txt
 VALGRIND_FILE := $(LOG_DIR)/valgrind.txt
+ORIGINAL_FILE := $(LOG_DIR)/original.txt
+CUSTOM_FILE := $(LOG_DIR)/ftprintf.txt
 
 VALGRIND := valgrind
 VFLAGS := --leak-check=full \
@@ -27,6 +29,20 @@ TESTS := logger.c \
 	test_ft_printf_utils.c \
 	unit_tests.c
 TESTS_OBJECTS := $(TESTS:%.c=$(TEMP)/%.o)
+
+ft_printf_tests : main.c $(SOURCE_OBJECT)
+	$(CC) $(CFLAGS) $< -L $(SOURCE) -lftprintf -o ./$@.out
+	$(VALGRIND) $(VFLAGS) \
+		./$@.out $(ORIGINAL_FILE) $(CUSTOM_FILE)
+	scripts/check_memory_leak.sh "$(VALGRIND_FILE)" $(TERMINAL_WIDTH) \
+		> $(REPORT_FILE);
+	cat $(REPORT_FILE)
+	norminette $(SOURCE) | grep -v "OK!" && \
+		echo -e "\e[1;31mNORMINETTE FAILED\e[0m" || \
+		echo -e "\e[1;32mNORMINETTE OK\e[0m" 
+	diff $(CUSTOM_FILE) $(ORIGINAL_FILE) && \
+		echo -e "\e[1;32mFT_PRINTF OK\e[0m" \
+		|| echo -e "\e[1;31mFT_PRINTF FAILED\e[0m"
 
 all : $(NAME) $(LOG_DIR)
 	$(VALGRIND) $(VFLAGS) ./$< "$(REPORT_FILE)" "$(ERRORS_FILE)" > /dev/null; \
@@ -60,6 +76,6 @@ re : | fclean all
 
 .PHONY : all clean fclean re $(SOURCE_OBJECT)
 
-# ifndef VERBOSE
-# .SILENT :
-# endif
+ifndef VERBOSE
+.SILENT :
+endif
