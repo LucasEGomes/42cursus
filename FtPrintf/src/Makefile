@@ -10,19 +10,20 @@ LIBFT_HEADER := $(LIBFT:%.a=%.h)
 NAME := libftprintf.a
 TEMP := temp
 
-SOURCES := ft_printf/ft_printf.c \
-	ft_printf/ft_printf_utils.c \
-	ft_printf/conversions/find_conversions.c \
+CONVERSIONS = ft_printf/conversions/find_conversions.c \
 	ft_printf/conversions/hexadecimals.c \
 	ft_printf/conversions/integers.c \
 	ft_printf/conversions/pointers.c \
 	ft_printf/conversions/texts.c \
 	ft_printf/conversions/unsigned_integers.c
+SOURCES := ft_printf/ft_printf.c \
+	ft_printf/ft_printf_utils.c \
+	$(CONVERSIONS)
 OBJECTS := $(SOURCES:%.c=temp/%.o)
 
 all : $(NAME)
 
-$(NAME) : $(OBJECTS) $(LIBFT_OBJECT) libftprintf.h
+$(NAME) : $(LIBFT_OBJECT) $(OBJECTS) libftprintf.h
 	cp $(LIBFT_OBJECT) $@
 	ar -rcs $@ $(OBJECTS)
 
@@ -35,22 +36,21 @@ $(LIBFT_OBJECT) : | $(LIBFT)
 	$(MAKE) -C $(LIBFT)
 
 %.o : %.c
-
+	;
 
 $(TEMP)/%.o : %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@ -L $(LIBFT) -lft
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
+	$(MAKE) -C $(LIBFT) clean
 	rm -rf $(TEMP)
 
 fclean : clean
+	$(MAKE) -C $(LIBFT) fclean
+	sleep 1s
 	rm -f $(NAME)
 
 re : | fclean all
 
 .PHONY : all clean fclean re
-
-# ifndef VERBOSE
-# .SILENT :
-# endif

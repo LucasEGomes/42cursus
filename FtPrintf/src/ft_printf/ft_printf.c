@@ -6,13 +6,11 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:11:01 by luceduar          #+#    #+#             */
-/*   Updated: 2022/08/05 22:52:15 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/08/06 19:59:42 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-typedef int	(*t_conversor)(va_list ap);
 
 void	initialize_conversors(t_conversor *conversors)
 {
