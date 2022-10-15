@@ -1,0 +1,29 @@
+/* XPM */
+static char *ceiling[] = {
+/* columns rows colors chars-per-pixel */
+"20 20 3 1 ",
+"  c #4D220F",
+". c #B95225",
+"X c #D98D6C",
+/* pixels */
+".XXXXXXXXXXXXXXXXXX ",
+"X.XXXXXXXXXXXXXXXX  ",
+"XX.XXXXXXXXXXXXXX   ",
+"XXX.XXXXXXXXXXXX    ",
+"XXXX.XXXXXXXXXX     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXXX..........     ",
+"XXXX           .    ",
+"XXX             .   ",
+"XX               .  ",
+"X                 . ",
+"                   ."
+};

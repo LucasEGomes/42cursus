@@ -1,0 +1,34 @@
+/* XPM */
+static char *idle1[] = {
+/* columns rows colors chars-per-pixel */
+"20 20 8 1 ",
+"  c None",
+". c #4E4B4D",
+"X c #BF080E",
+"o c #2DAA2E",
+"O c #DBDBDA",
+"+ c #EBEEF6",
+"@ c white",
+"= c black",
+/* pixels */
+"                    ",
+"          ==        ",
+"         =@o=       ",
+"        =@ooo=      ",
+"        =oooo=      ",
+"    XXXXX=oo=       ",
+"  XXXX@@@X==        ",
+"   XXX@@@XXO        ",
+"    XX@X@XXO        ",
+"     XXXXX@O        ",
+"      XXXX@O        ",
+"       XXX@O        ",
+"        XX@O        ",
+"         X@O        ",
+"          @O        ",
+"         ====       ",
+"        @++++.      ",
+"        @OOOO=      ",
+"        ======      ",
+"                    "
+};

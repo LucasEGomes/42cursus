@@ -6,12 +6,13 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 23:49:11 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 23:49:11 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/15 02:12:50 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHARED_H
 # define SHARED_H
+# define GRID 20
 
 typedef struct s_map
 {

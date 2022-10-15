@@ -1,0 +1,33 @@
+/* XPM */
+static char *walk2[] = {
+/* columns rows colors chars-per-pixel */
+"20 20 7 1 ",
+"  c None",
+". c #542F29",
+"X c #FE0F17",
+"o c #0770BC",
+"O c #FEB38D",
+"+ c white",
+"@ c black",
+/* pixels */
+"                    ",
+"                    ",
+"                    ",
+"       XXXXX        ",
+"      XXXXXXXXX     ",
+"      ...OO@O       ",
+"     .O.OOO@OOO     ",
+"     .O..OOO@OOO    ",
+"     ..OOOO@@@@     ",
+"       OOOOOOO      ",
+"      XXXXoX +      ",
+"     +XXXXXX+++     ",
+"    ++oXXXXX++      ",
+"    ..ooooooo       ",
+"    .oooooooo       ",
+"   ..ooo ooo        ",
+"   .    ...         ",
+"        ....        ",
+"                    ",
+"                    "
+};
