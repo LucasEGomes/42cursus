@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   gui.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:46:08 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 22:47:41 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/14 22:40:21 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/14 22:40:30 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shared.h"
+#ifndef GUI_H
+# define GUI_H
+# include "shared.h"
 
-void	game_start(t_gui *gui, t_map *map, void *images)
-{
-	(void) gui;
-	(void) map;
-	(void) images;
-}
+t_gui	*load_gui(void);
+void	create_window(t_gui *gui, int width, int height);
+
+#endif

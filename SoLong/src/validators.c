@@ -6,10 +6,11 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:46:06 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 22:18:14 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/14 22:43:29 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "validators.h"
 #include "string_utils.h"
 #include "exceptions.h"
 

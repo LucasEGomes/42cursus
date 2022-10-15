@@ -14,7 +14,10 @@ LIBRARIES := -L . -lmlx -lXext -lX11
 SOURCES := \
 	exceptions.c \
 	game.c \
+	gui.c \
+	images.c \
 	main.c \
+	map.c \
 	print_utils.c \
 	string_utils.c \
 	validators.c

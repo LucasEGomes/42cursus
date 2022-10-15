@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:46:08 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 22:47:41 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/14 22:40:51 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/14 22:42:16 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shared.h"
+#include "map.h"
+#include <stdlib.h>
 
-void	game_start(t_gui *gui, t_map *map, void *images)
+t_map	*load_map(char *filename)
 {
-	(void) gui;
-	(void) map;
-	(void) images;
+	(void) filename;
+	return (NULL);
 }
