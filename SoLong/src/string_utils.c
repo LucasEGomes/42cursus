@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:41:17 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 22:06:06 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/14 22:01:04 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/14 22:01:20 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "game.h"
-#include "validators.h"
-#include "mlx.h"
-
-int	main(int argc, char **argv)
+int	string_ends_with(char *string, char *end)
 {
-	check_arguments(argc, argv);
-	initialize_game(argv[1]);
+	(void) string;
+	(void) end;
 	return (0);
 }

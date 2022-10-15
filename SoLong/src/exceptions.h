@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exceptions.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:41:17 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 22:06:06 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/14 22:03:18 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/14 22:03:18 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "game.h"
-#include "validators.h"
-#include "mlx.h"
+#ifndef EXCEPTIONS_H
+# define EXCEPTIONS_H
 
-int	main(int argc, char **argv)
-{
-	check_arguments(argc, argv);
-	initialize_game(argv[1]);
-	return (0);
-}
+void	raise_exception(char *message);
+
+#endif

@@ -43,9 +43,13 @@ fclean: clean
 re: | fclean all
 
 $(MLX_LIBRARY): $(MLX)
-	$(MAKE) -C $<
+	$(MAKE) -C $< -s
 
 $(MLX):
 	git clone https://github.com/42Paris/minilibx-linux $@
 
-.PHONY: all clean fclean all
+norminette_errors:
+	norminette *.c *.h | grep -v OK! > $@ || true
+	cat $@
+
+.PHONY: all clean fclean all norminette_errors
