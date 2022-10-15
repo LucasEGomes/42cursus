@@ -12,8 +12,11 @@ MLX_LIBRARY := $(MLX)/$(MLX_NAME)
 INCLUDES := -I $(MLX)
 LIBRARIES := -L . -lmlx -lXext -lX11
 SOURCES := \
+	exceptions.c \
 	game.c \
 	main.c \
+	print_utils.c \
+	string_utils.c \
 	validators.c
 OBJECTS_FOLDER := objects
 OBJECTS := $(SOURCES:%.c=$(OBJECTS_FOLDER)/%.o)

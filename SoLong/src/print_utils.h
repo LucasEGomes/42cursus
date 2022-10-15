@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_utils.c                                     :+:      :+:    :+:   */
+/*   print_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 22:01:04 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 22:17:06 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/14 22:17:09 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/14 22:17:10 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef PRINT_UTILS_H
+# define PRINT_UTILS_H
+# include <stdlib.h>
 
-size_t	string_length(char *string)
-{
-	size_t	length;
+ssize_t	print_error(char *message);
 
-	length = 0;
-	while (*string++ != '\0')
-		length++;
-	return (length);
-}
-
-int	string_ends_with(char *string, char *end)
-{
-	(void) string;
-	(void) end;
-	return (0);
-}
+#endif
