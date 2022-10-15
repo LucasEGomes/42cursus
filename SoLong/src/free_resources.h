@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.h                                             :+:      :+:    :+:   */
+/*   free_resources.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 20:45:07 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 23:48:57 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/14 23:38:40 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/14 23:48:24 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GAME_H
-# define GAME_H
+#ifndef FREE_RESOURCES_H
+# define FREE_RESOURCES_H
 # include "shared.h"
 
-void	game_start(t_gui *gui, t_map *map, void *images, \
-	t_resources *resources);
+void	free_resources(t_resources *resources);
 
 #endif

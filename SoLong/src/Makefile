@@ -13,6 +13,7 @@ INCLUDES := -I $(MLX)
 LIBRARIES := -L . -lmlx -lXext -lX11
 SOURCES := \
 	exceptions.c \
+	free_resources.c \
 	game.c \
 	gui.c \
 	images.c \

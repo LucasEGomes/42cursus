@@ -6,21 +6,28 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:39:26 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 22:44:42 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/14 23:50:37 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gui.h"
+#include "mlx.h"
+#include "exceptions.h"
 #include <stdlib.h>
 
-t_gui	*load_gui(void)
+void	create_display(t_gui *gui, t_resources *resources)
 {
-	return (NULL);
+	gui->display = mlx_init();
+	if (gui->display == NULL)
+		raise_exception("Failed to create display.\n", resources);
 }
 
-void	create_window(t_gui *gui, int width, int height)
+void	create_window(t_gui *gui, int width, int height, t_resources *resources)
 {
-	(void) gui;
+	gui->window = mlx_new_window(gui->display, width, height, \
+		"So long, Bowser!");
+	if (gui->window == NULL)
+		raise_exception("Failed to create window.\n", resources);
 	(void) width;
 	(void) height;
 }
