@@ -6,17 +6,15 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:40:51 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 23:48:50 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/15 02:46:14 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include <stdlib.h>
 
-t_map	*load_map(char *filename, t_resources *resources)
+t_map	*load_map(char *filename, t_map *map, t_resources *resources)
 {
-	t_map	*map;
-
 	(void) filename;
 	(void) resources;
 	map = malloc(sizeof(*map));

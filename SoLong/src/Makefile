@@ -12,11 +12,11 @@ MLX_LIBRARY := $(MLX)/$(MLX_NAME)
 INCLUDES := -I $(MLX)
 LIBRARIES := -L . -lmlx -lXext -lX11
 SOURCES := \
+	assets.c \
 	exceptions.c \
 	free_resources.c \
 	game.c \
 	gui.c \
-	images.c \
 	main.c \
 	map.c \
 	print_utils.c \
@@ -41,7 +41,7 @@ $(MLX_NAME): $(MLX_LIBRARY)
 
 clean:
 	$(MAKE) -C $(MLX) clean
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJECTS_FOLDER)
 	rm -f $(MLX_NAME)
 
 fclean: clean
