@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 21:56:55 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/15 02:48:50 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/16 16:57:13 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,11 @@ void	raise_exception(char *message, t_resources	*resources)
 	print_error("Error\n");
 	print_error(message);
 	exit(1);
+}
+
+void	raise_file_exception(char *message, char *content, \
+	t_resources *resources)
+{
+	free(content);
+	raise_exception(message, resources);
 }

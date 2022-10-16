@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:45:01 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:40:23 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/16 13:42:00 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,5 @@ void	load_assets(t_gui *gui, t_asset *assets, t_resources *resources)
 	has_failed += load_frames(gui->display, assets->wall, \
 		WALL_FOLDER, WALL_FRAMES);
 	if (has_failed > 0)
-		raise_exception("Failed to load all assets.\n", resources);
+		raise_exception(EXCEPTION_LOAD_ASSETS, resources);
 }

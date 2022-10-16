@@ -20,6 +20,7 @@ SOURCES := \
 	gui.c \
 	main.c \
 	map.c \
+	map_validators.c \
 	player_move.c \
 	print_utils.c \
 	render.c \
