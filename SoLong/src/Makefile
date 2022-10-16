@@ -14,12 +14,15 @@ LIBRARIES := -L . -lmlx -lXext -lX11
 SOURCES := \
 	assets.c \
 	exceptions.c \
+	file_utils.c \
 	free_resources.c \
 	game.c \
 	gui.c \
 	main.c \
 	map.c \
+	player_move.c \
 	print_utils.c \
+	render.c \
 	string_utils.c \
 	validators.c
 OBJECTS_FOLDER := objects

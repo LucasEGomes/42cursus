@@ -1,35 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   player_move.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 23:38:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:56:54 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/16 00:45:45 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/16 00:46:28 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "free_resources.h"
+#ifndef PLAYER_MOVE_H
+# define PLAYER_MOVE_H
+# include "shared.h"
 
-void	free_map(t_map *map)
-{
-	(void) map;
-}
+int	player_move_up(t_resources *resources);
+int	player_move_left(t_resources *resources);
+int	player_move_down(t_resources *resources);
+int	player_move_right(t_resources *resources);
 
-void	free_assets(t_asset *assets)
-{
-	(void) assets;
-}
-
-void	free_gui(t_gui *gui)
-{
-	(void) gui;
-}
-
-void	free_resources(t_resources *resources)
-{
-	free_map(resources->map);
-	free_assets(resources->assets);
-	free_gui(resources->gui);
-}
+#endif

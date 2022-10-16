@@ -6,20 +6,42 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:40:51 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/15 02:46:14 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/16 01:04:27 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+#include "file_utils.h"
+#include "exceptions.h"
 #include <stdlib.h>
 
-t_map	*load_map(char *filename, t_map *map, t_resources *resources)
+void	check_map_content(char *content, t_resources *resources)
 {
-	(void) filename;
+	(void) content;
 	(void) resources;
-	map = malloc(sizeof(*map));
-	map->width = 400;
-	map->height = 200;
-	map->values = NULL;
-	return (map);
+}
+
+void	configure_map(t_map *map, char *content, t_resources *resources)
+{
+	(void) map;
+	(void) content;
+	(void) resources;
+}
+
+void	validate_map(t_map *map, t_resources *resources)
+{
+	(void) map;
+	(void) resources;
+}
+
+void	load_map(char *filename, t_map *map, t_resources *resources)
+{
+	char	*content;
+
+	content = read_all_file(filename);
+	if (content == NULL)
+		raise_exception("Failed to read map file.\n", resources);
+	check_map_content(content, resources);
+	configure_map(map, content, resources);
+	validate_map(map, resources);
 }

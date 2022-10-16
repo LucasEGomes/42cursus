@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:41:17 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:34:50 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:27:27 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int	main(int argc, char **argv)
 	load_assets(&gui, &assets, &resources);
 	load_map(argv[1], &map, &resources);
 	create_window(&gui, map.width, map.height, &resources);
-	game_start(&gui, &map, &assets, &resources);
+	game_start(&gui, &resources);
 	return (0);
 }

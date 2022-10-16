@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 23:38:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:56:54 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/16 00:51:54 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/16 01:01:35 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "free_resources.h"
+#include "render.h"
 
-void	free_map(t_map *map)
+void	render_game(t_resources *resources)
 {
-	(void) map;
-}
-
-void	free_assets(t_asset *assets)
-{
-	(void) assets;
-}
-
-void	free_gui(t_gui *gui)
-{
-	(void) gui;
-}
-
-void	free_resources(t_resources *resources)
-{
-	free_map(resources->map);
-	free_assets(resources->assets);
-	free_gui(resources->gui);
+	(void) resources;
 }

@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   file_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 23:38:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:56:54 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/16 00:09:10 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/16 01:07:18 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "free_resources.h"
+#include "file_utils.h"
+#include <stdlib.h>
 
-void	free_map(t_map *map)
+char	*read_all_file(char *filename)
 {
-	(void) map;
-}
-
-void	free_assets(t_asset *assets)
-{
-	(void) assets;
-}
-
-void	free_gui(t_gui *gui)
-{
-	(void) gui;
-}
-
-void	free_resources(t_resources *resources)
-{
-	free_map(resources->map);
-	free_assets(resources->assets);
-	free_gui(resources->gui);
+	(void) filename;
+	return (NULL);
 }

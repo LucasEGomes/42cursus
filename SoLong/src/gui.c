@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:39:26 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/14 23:50:37 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:44:10 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,4 @@ void	create_window(t_gui *gui, int width, int height, t_resources *resources)
 		"So long, Bowser!");
 	if (gui->window == NULL)
 		raise_exception("Failed to create window.\n", resources);
-	(void) width;
-	(void) height;
 }
