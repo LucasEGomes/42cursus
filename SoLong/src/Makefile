@@ -73,11 +73,10 @@ norminette_errors:
 	cat $@
 
 enable_debug:
+	rm -rf $(VALGRIND_FOLDER)
 	export SO_LONG_DEBUG=1; $(MAKE) -s all
 
 run_valgrind: | enable_debug $(VALGRIND_FOLDER) $(VALGRIND_LOGS)
-	echo $(MAPS)
-	echo $(VALGRIND_LOGS)
 
 $(VALGRIND_FOLDER):
 	mkdir -p $@

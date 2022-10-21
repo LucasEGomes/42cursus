@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:45:01 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/16 13:42:00 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/20 22:29:36 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ char	*get_frame_file(char *path, int frame)
 	filename = string_join(FRAME_PREFIX, number);
 	if (filename == NULL)
 		return (NULL);
-	filename = string_join(filename, IMAGE_SUFFIX);
-	if (filename == NULL)
-	{
-		free(filename);
+	result = string_join(filename, IMAGE_SUFFIX);
+	free(filename);
+	if (result == NULL)
 		return (NULL);
-	}
+	filename = result;
 	result = string_join(path, filename);
 	free(filename);
 	return (result);
@@ -45,7 +44,7 @@ void	*load_image(void *display, char *file)
 	return (mlx_xpm_file_to_image(display, file, &_, &_));
 }
 
-int	load_frames(void *display, void *array[], char *path, int frames)
+int	load_frames(void *display, void **array, char *path, int frames)
 {
 	int		frame;
 	char	*file;
