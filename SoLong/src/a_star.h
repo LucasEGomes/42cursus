@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_utils.h                                     :+:      :+:    :+:   */
+/*   a_star.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 22:00:23 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/16 18:40:06 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/17 00:18:50 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/17 01:00:15 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRING_UTILS_H
-# define STRING_UTILS_H
-# include <stdlib.h>
+#ifndef A_STAR_H
+# define A_STAR_H
+# include "shared.h"
 
-size_t	string_length(char *string);
-char	*string_join(char *left, char *right);
-int		string_ends_with(char *string, char *end);
+t_map_element	*a_star_search(t_map_element *start, t_map_element *end, \
+	t_map *map, t_resources *resources);
 
 #endif

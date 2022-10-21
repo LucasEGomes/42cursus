@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:46:08 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/16 01:04:53 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/16 19:09:03 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ int	key_handler(int keycode, void *param)
 		delegator[XK_d] = player_move_right;
 		delegator[XK_Escape] = destroy_game;
 	}
-	if (keycode >= 0xFFFF)
+	if (keycode >= 0xFFFF || delegator[keycode] == NULL)
 		return (0);
 	return (delegator[keycode](param));
 }
 
 void	game_start(t_gui *gui, t_resources *resources)
 {
-	mlx_key_hook(gui->display, &key_handler, resources);
+	mlx_hook(gui->window, DestroyNotify, 0, &destroy_game, resources);
 	mlx_loop_hook(gui->display, &loop_handler, resources);
-	mlx_hook(gui->display, DestroyNotify, 0, &destroy_game, resources);
+	mlx_key_hook(gui->window, &key_handler, resources);
 	mlx_loop(gui->display);
 }

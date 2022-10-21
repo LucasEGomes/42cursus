@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 23:49:11 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/15 18:56:42 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/20 21:18:46 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,20 @@
 # define WALL_FOLDER		"assets/xpm/wall"
 # define WALL_FRAMES		1
 
+typedef struct s_map_element
+{
+	long	evaluation;
+	int		x;
+	int		y;
+	char	value;
+	char	visited;
+}	t_map_element;
+
 typedef struct s_map
 {
-	int		width;
-	int		height;
-	char	*values;
+	int				width;
+	int				height;
+	t_map_element	**grid;
 }	t_map;
 
 typedef struct s_gui

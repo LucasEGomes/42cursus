@@ -12,7 +12,9 @@ MLX_LIBRARY := $(MLX)/$(MLX_NAME)
 INCLUDES := -I $(MLX)
 LIBRARIES := -L . -lmlx -lXext -lX11
 SOURCES := \
+	a_star.c \
 	assets.c \
+	double_list.c \
 	exceptions.c \
 	file_utils.c \
 	free_resources.c \
@@ -28,6 +30,13 @@ SOURCES := \
 	validators.c
 OBJECTS_FOLDER := objects
 OBJECTS := $(SOURCES:%.c=$(OBJECTS_FOLDER)/%.o)
+
+MAP_FOLDER := maps
+MAPS := $(shell find $(MAP_FOLDER) -type f -wholename *.ber)
+MAPS := $(MAPS:$(MAP_FOLDER)/%=%)
+VALGRIND_FOLDER := valgrind_logs
+VALGRIND_LOGS := $(MAPS:%.ber=$(VALGRIND_FOLDER)/%.txt)
+VALGRIND_FLAGS := --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all: $(NAME)
 
@@ -62,5 +71,19 @@ $(MLX):
 norminette_errors:
 	norminette *.c *.h | grep -v OK! > $@ || true
 	cat $@
+
+enable_debug:
+	export SO_LONG_DEBUG=1; $(MAKE) -s all
+
+run_valgrind: | enable_debug $(VALGRIND_FOLDER) $(VALGRIND_LOGS)
+	echo $(MAPS)
+	echo $(VALGRIND_LOGS)
+
+$(VALGRIND_FOLDER):
+	mkdir -p $@
+
+$(VALGRIND_FOLDER)/%.txt : $(MAP_FOLDER)/%.ber
+	mkdir -p $(VALGRIND_FOLDER)/$(dir $*)
+	valgrind $(VALGRIND_FLAGS) --log-file=$@ ./$(NAME) $< || true
 
 .PHONY: all clean fclean all norminette_errors

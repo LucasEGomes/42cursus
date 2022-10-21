@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:03:18 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/16 17:20:18 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/17 01:35:33 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,15 @@
  '1' for walls,\
  'C' for collectible,\
  'E' for collectible, and\
- 'P' for starting position."
+ 'P' for starting position.\n"
+# define EXCEPTION_SURROUNDED_BY_WALLS "Map must be surrounded by walls.\n"
+# define EXCEPTION_MAP "Failed to create map elements.\n"
+# define EXCEPTION_EXIT_PATH "Failed to find a valid path from player to\
+ exit.\n"
+# define EXCEPTION_COLLECTIBLE_PATH "Failed to find a valid path from player to\
+ each collectible on the map.\n"
+# define EXCEPTION_SEARCH "Failed to allocate resources to search for a\
+ valid path.\n"
 # include "shared.h"
 
 void	raise_exception(char *message, t_resources *resources) \
