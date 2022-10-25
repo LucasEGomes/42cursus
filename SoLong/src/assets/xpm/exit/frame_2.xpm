@@ -1,0 +1,30 @@
+/* XPM */
+static char *frame_2[] = {
+/* columns rows colors chars-per-pixel */
+"20 20 4 1 ",
+"  c #000307",
+". c #B95225",
+"X c #25A42A",
+"o c #B6DE4A",
+/* pixels */
+"          ..........",
+" oXoooooo         ..",
+" oXXoXoXo oooooooo .",
+" oXoXoXoX oXoXoXoXo ",
+" oXXXXXXX XoXoXoXoX ",
+" oXXXXXXX XXXXXXXXX ",
+" oXXXXXXX XXXXXXXXX ",
+" oXXXXXXX XXXXXXXXX ",
+" oXXXXXXX XXXXXXXXX ",
+" oXXXXXXX XXXXXXXXX ",
+" oXXXXXXX XXXXXXXXX ",
+" oXXXXXXX ooooooooo ",
+" oXoooooo XXXXXXXXX ",
+" oXXXXXXX ooooooooo ",
+" oooooooo ooooooooo ",
+" oooooooo ooooooooo ",
+" oooooooo XXXXXXXXX ",
+" oXXXXXXX oooooooo .",
+" oXoooooo         ..",
+"          .........."
+};

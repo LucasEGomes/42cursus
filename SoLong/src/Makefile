@@ -19,13 +19,17 @@ SOURCES := \
 	file_utils.c \
 	free_resources.c \
 	game.c \
+	game_state.c \
 	gui.c \
 	main.c \
 	map.c \
 	map_validators.c \
 	player_move.c \
+	player_move_utils.c \
 	print_utils.c \
 	render.c \
+	render_utils.c \
+	render_animations.c \
 	string_utils.c \
 	validators.c
 OBJECTS_FOLDER := objects

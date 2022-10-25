@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 23:49:11 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/20 21:18:46 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:59:20 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define COLLECTIBLE_FOLDER	"assets/xpm/collectible"
 # define COLLECTIBLE_FRAMES	1
 # define EXIT_FOLDER		"assets/xpm/exit"
-# define EXIT_FRAMES		2
+# define EXIT_FRAMES		3
 # define EXPLOSION_FOLDER	"assets/xpm/explosion"
 # define EXPLOSION_FRAMES	10
 # define PLAYER_GRAB_FOLDER	"assets/xpm/player/grab"
@@ -42,6 +42,7 @@ typedef struct s_map_element
 	int		x;
 	int		y;
 	char	value;
+	char	original;
 	char	visited;
 }	t_map_element;
 
@@ -49,6 +50,8 @@ typedef struct s_map
 {
 	int				width;
 	int				height;
+	int				remaining_collectibles;
+	int				collectibles;
 	t_map_element	**grid;
 }	t_map;
 
@@ -56,6 +59,10 @@ typedef struct s_gui
 {
 	void	*display;
 	void	*window;
+	int		player_x;
+	int		player_y;
+	int		finished;
+	int		movement_count;
 }	t_gui;
 
 typedef struct s_asset
@@ -70,6 +77,11 @@ typedef struct s_asset
 	void	*floor[FLOOR_FRAMES];
 	void	*platform[PLATFORM_FRAMES];
 	void	*wall[WALL_FRAMES];
+	void	*temp;
+	int		tick;
+	int		cycle;
+	int		end_offset;
+	int		end_cycles;
 }	t_asset;
 
 typedef struct s_resources

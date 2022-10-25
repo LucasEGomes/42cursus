@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 00:19:44 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/20 21:31:03 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/23 01:36:14 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	evaluate_node(t_double_list **head, \
 {
 	t_double_list	*node;
 
-	if (start->value != MAP_WALL && start->visited == 0)
-	{
-		start->evaluation = heuristic(start->x, start->y, end->x, end->y);
-		node = double_list_new_node(start);
-		if (node == NULL)
-			return (FAILURE);
-		double_list_add_back(head, node);
-	}
+	if (start->original == MAP_WALL || start->visited != 0)
+		return (SUCCESS);
+	start->evaluation = heuristic(start->x, start->y, end->x, end->y);
+	start->visited = 1;
+	node = double_list_new_node(start);
+	if (node == NULL)
+		return (FAILURE);
+	double_list_add_back(head, node);
 	return (SUCCESS);
 }
 
@@ -74,16 +74,16 @@ int	evaluate_around_nodes(t_double_list **head, t_map *map, \
 {
 	t_map_element	*element;
 
-	element = map->grid[start->y] + start->x + 1;
+	element = &(map->grid[start->y][start->x + 1]);
 	if (evaluate_node(head, element, end))
 		return (FAILURE);
-	element = map->grid[start->y - 1] + start->x;
+	element = &(map->grid[start->y - 1][start->x]);
 	if (evaluate_node(head, element, end))
 		return (FAILURE);
-	element = map->grid[start->y] + start->x - 1;
+	element = &(map->grid[start->y][start->x - 1]);
 	if (evaluate_node(head, element, end))
 		return (FAILURE);
-	element = map->grid[start->y + 1] + start->x;
+	element = &(map->grid[start->y + 1][start->x]);
 	if (evaluate_node(head, element, end))
 		return (FAILURE);
 	return (SUCCESS);
@@ -100,6 +100,7 @@ t_map_element	*a_star_search(t_map_element *start, t_map_element *end, \
 	head = NULL;
 	element = start;
 	element->evaluation = heuristic(element->x, element->y, end->x, end->y);
+	element->visited = 1;
 	while (element != NULL)
 	{
 		if (element == end)
@@ -107,7 +108,6 @@ t_map_element	*a_star_search(t_map_element *start, t_map_element *end, \
 			double_list_free(head);
 			return (element);
 		}
-		element->visited = 1;
 		if (evaluate_around_nodes(&head, map, element, end))
 		{
 			double_list_free(head);

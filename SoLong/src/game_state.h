@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validators.h                                   :+:      :+:    :+:   */
+/*   game_state.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 01:15:16 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/25 00:26:29 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/22 15:14:03 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/22 15:17:33 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_VALIDATORS_H
-# define MAP_VALIDATORS_H
-# define MAP_MAX_HEIGHT 24
-# define MAP_MAX_WIDTH 48
+#ifndef GAME_STATE_H
+# define GAME_STATE_H
+# define RESTART_GAME_MESSAGE "Restarting the game...\n"
 # include "shared.h"
 
-enum e_map
-{
-	MAP_BACKGROUND = '0',
-	MAP_WALL = '1',
-	MAP_COLLECT = 'C',
-	MAP_EXIT = 'E',
-	MAP_PLAYER = 'P',
-};
-
-void	check_map_surrounded_by_walls(t_map *map, char *content, \
-	t_resources *resources);
-void	find_path_to_exit(t_map *map, t_resources *resources);
-void	find_path_to_collectibles(t_map *map, t_resources *resources);
+void	set_initial_state(t_gui *gui, t_map *map, t_asset *assets);
+int		destroy_game(t_resources *resources);
+int		restart_game(t_resources *resources);
+int		increase_animation_speed(t_resources *resources);
+int		decrease_animation_speed(t_resources *resources);
 
 #endif

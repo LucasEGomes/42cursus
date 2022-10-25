@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validators.h                                   :+:      :+:    :+:   */
+/*   render_animations.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/16 01:15:16 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/25 00:26:29 by luceduar         ###   ########.fr       */
+/*   Created: 2022/10/22 15:56:41 by luceduar          #+#    #+#             */
+/*   Updated: 2022/10/22 15:58:05 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAP_VALIDATORS_H
-# define MAP_VALIDATORS_H
-# define MAP_MAX_HEIGHT 24
-# define MAP_MAX_WIDTH 48
+#ifndef RENDER_ANIMATIONS_H
+# define RENDER_ANIMATIONS_H
 # include "shared.h"
 
-enum e_map
-{
-	MAP_BACKGROUND = '0',
-	MAP_WALL = '1',
-	MAP_COLLECT = 'C',
-	MAP_EXIT = 'E',
-	MAP_PLAYER = 'P',
-};
-
-void	check_map_surrounded_by_walls(t_map *map, char *content, \
-	t_resources *resources);
-void	find_path_to_exit(t_map *map, t_resources *resources);
-void	find_path_to_collectibles(t_map *map, t_resources *resources);
+void	*put_explosion(t_asset *assets, t_map_element *element, t_map *map);
+void	*put_exit(t_asset *assets, t_map_element *element, t_map *map);
+void	*put_player(t_asset *assets, t_map_element *element, t_map *map);
+void	*put_end_game(t_asset *assets, t_map_element *element, t_map *map);
 
 #endif
