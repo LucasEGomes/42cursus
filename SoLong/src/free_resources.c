@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 23:38:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/22 15:59:01 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:35:22 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	free_map(t_map *map)
 {
 	int	row;
 
-	if (map == NULL)
+	if (map == NULL || map->grid == NULL)
 		return ;
 	row = -1;
 	while (++row < map->height)

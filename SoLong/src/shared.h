@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 23:49:11 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/22 15:59:20 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/25 01:42:38 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SHARED_H
 # define SUCCESS	0
 # define FAILURE	1
-# define GRID		20
+# define GRID		40
 # define BACKGROUND_FOLDER	"assets/xpm/background"
 # define BACKGROUND_FRAMES	1
 # define COLLECTIBLE_FOLDER	"assets/xpm/collectible"

@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:13:59 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/23 01:15:57 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:44:29 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	set_initial_state(t_gui *gui, t_map *map, t_asset *assets)
 				gui->finished = 0;
 				map->remaining_collectibles = map->collectibles;
 				assets->tick = 0;
-				assets->cycle = 800;
 				assets->end_cycles = 0;
 				assets->end_offset = 0;
 			}

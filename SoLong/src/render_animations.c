@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:56:55 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/23 01:15:19 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/25 01:41:51 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	*put_end_game(t_asset *assets, t_map_element *element, t_map *map)
 
 	(void) element;
 	(void) map;
-	if (assets->end_offset > 19)
+	if (assets->end_offset > GRID - 1)
 		return (merge_images(assets->background[0], assets->exit[1], \
 			assets->temp, 0));
 	if (assets->end_cycles < 2)

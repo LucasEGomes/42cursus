@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:03:18 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/25 00:26:07 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:35:54 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define EXCEPTION_LOAD_ASSETS "Failed to load all assets.\n"
 # define EXCEPTION_READ_MAP "Failed to read map file.\n"
 # define EXCEPTION_MAP_LARGER_THAN_ALLOWED "Map must have height less or equal\
- than 24 and width less or equal 48"
+ than 24 and width less or equal 48\n"
 # define EXCEPTION_RECTANGULAR "Map must be rectangular.\n"
 # define EXCEPTION_MINIMAL_ELEMENTS "Map must have 1 exit, 1 start position,\
  and at least 1 collectible.\n"
