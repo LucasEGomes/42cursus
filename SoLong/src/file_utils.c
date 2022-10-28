@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 00:09:10 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/16 18:53:32 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/28 01:23:35 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 void	*stop_read(int file_descriptor, char *read_string)
 {
 	free(read_string);
-	close(file_descriptor);
+	if (file_descriptor >= 0)
+		close(file_descriptor);
 	return (NULL);
 }
 
@@ -58,7 +59,7 @@ char	*read_all_file(char *filename)
 			return (stop_read(file_descriptor, result));
 	}
 	close(file_descriptor);
-	if (*result == '\0')
+	if (result == NULL || *result == '\0')
 		return (NULL);
 	return (result);
 }
