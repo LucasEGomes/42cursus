@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:53:09 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/23 00:55:00 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/26 22:52:28 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	*get_frame(void	**array, int frames, int tick, int cycle)
 	frame = tick * frames / cycle;
 	if (frame >= frames)
 		frame = frames - 1;
+	if (frame < 0)
+		frame = 0;
 	return (array[frame]);
 }
 

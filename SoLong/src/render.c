@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 00:51:54 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/23 01:07:37 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/27 00:32:42 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	*put_collectible(t_asset *assets, t_map_element *element, t_map *map)
 	(void) element;
 	(void) map;
 	frame = assets->collectible[0];
-	return (merge_images(assets->background[0], frame, assets->temp, 0));
+	return (merge_images(assets->background[0], frame, assets->temp[4], 0));
 }
 
 void	*put_wall(t_asset *assets, t_map_element *element, t_map *map)

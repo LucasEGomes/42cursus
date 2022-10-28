@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 23:38:35 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/26 21:35:22 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/27 00:30:39 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free_assets(void *display, t_asset *assets)
 	free_asset_array(display, assets->player_grab, PLAYER_GRAB_FRAMES);
 	free_asset_array(display, assets->player_walk, PLAYER_WALK_FRAMES);
 	free_asset_array(display, assets->wall, WALL_FRAMES);
-	free_asset_array(display, &(assets->temp), 1);
+	free_asset_array(display, assets->temp, ANIMATION_ASSETS);
 }
 
 void	free_gui(t_gui *gui)

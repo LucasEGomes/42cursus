@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 20:46:08 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/26 21:55:12 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/27 21:02:07 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,7 @@ int	key_handler(int keycode, void *param)
 
 void	game_start(t_gui *gui, t_resources *resources)
 {
-	resources->assets->temp = mlx_new_image(resources->gui->display, \
-		GRID, GRID);
-	if (resources->assets->temp == NULL)
-		raise_exception(EXCEPTION_LOAD_ASSETS, resources);
-	resources->assets->cycle = 800;
+	resources->assets->cycle = 2000;
 	set_initial_state(resources->gui, resources->map, resources->assets);
 	mlx_hook(gui->window, DestroyNotify, 0, &destroy_game, resources);
 	mlx_loop_hook(gui->display, &loop_handler, resources);

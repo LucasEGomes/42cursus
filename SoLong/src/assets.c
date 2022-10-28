@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 22:45:01 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/20 22:29:36 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/27 21:01:55 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,19 @@ void	load_assets(t_gui *gui, t_asset *assets, t_resources *resources)
 		WALL_FOLDER, WALL_FRAMES);
 	if (has_failed > 0)
 		raise_exception(EXCEPTION_LOAD_ASSETS, resources);
+}
+
+void	allocate_animation_assets(t_gui *gui, t_asset *assets, t_resources \
+	*resources)
+{
+	int	index;
+
+	index = 0;
+	while (index < ANIMATION_ASSETS)
+	{
+		assets->temp[index] = mlx_new_image(gui->display, GRID, GRID);
+		if (assets->temp[index] == NULL)
+			raise_exception(EXCEPTION_LOAD_ASSETS, resources);
+		index++;
+	}
 }

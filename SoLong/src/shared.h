@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 23:49:11 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/25 01:42:38 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/27 00:32:35 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # define SUCCESS	0
 # define FAILURE	1
 # define GRID		40
+# define ANIMATION_ASSETS	5
 # define BACKGROUND_FOLDER	"assets/xpm/background"
 # define BACKGROUND_FRAMES	1
 # define COLLECTIBLE_FOLDER	"assets/xpm/collectible"
@@ -77,7 +78,7 @@ typedef struct s_asset
 	void	*floor[FLOOR_FRAMES];
 	void	*platform[PLATFORM_FRAMES];
 	void	*wall[WALL_FRAMES];
-	void	*temp;
+	void	*temp[ANIMATION_ASSETS];
 	int		tick;
 	int		cycle;
 	int		end_offset;

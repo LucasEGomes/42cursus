@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/22 15:13:59 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/26 21:44:29 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/27 00:40:58 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ int	restart_game(t_resources *resources)
 
 int	increase_animation_speed(t_resources *resources)
 {
-	if (resources->assets->cycle > 40)
-		resources->assets->cycle -= 20;
+	if (resources->assets->cycle > 200)
+		resources->assets->cycle -= 200;
 	return (0);
 }
 
 int	decrease_animation_speed(t_resources *resources)
 {
-	if (resources->assets->cycle < 2000)
-		resources->assets->cycle += 20;
+	if (resources->assets->cycle < 10000)
+		resources->assets->cycle += 200;
 	return (0);
 }
