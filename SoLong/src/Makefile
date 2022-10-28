@@ -52,7 +52,7 @@ MAPS := $(MAPS:$(MAP_FOLDER)/%=%)
 
 VALGRIND_FOLDER := valgrind_logs
 VALGRIND_LOGS := $(MAPS:%.ber=$(VALGRIND_FOLDER)/%.txt)
-VALGRIND_LOGS += $(addprefix $(VALGRIND_FOLDER)/invalid/,file_do_not_exists.txt file_without_permissions.txt)/
+VALGRIND_LOGS += $(addprefix $(VALGRIND_FOLDER)/invalid/,file_do_not_exists.txt file_without_permissions.txt)
 VALGRIND_FLAGS := --leak-check=full --show-leak-kinds=all --track-origins=yes
 NORMINETTE := norminette_errors
 
