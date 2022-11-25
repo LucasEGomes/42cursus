@@ -4,7 +4,7 @@
 #include "ft_strlen.h"
 #include <stdlib.h>
 
-t_deque g_signal_queue;
+t_deque	g_signal_queue;
 
 int	print_pid(void)
 {

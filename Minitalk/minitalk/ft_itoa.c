@@ -29,7 +29,6 @@ char	*ft_itoa(int n)
 	int		is_negative;
 
 	digits = get_digits(n);
-	
 	is_negative = n < 0;
 	number = malloc(sizeof(*number) * (digits + is_negative + 1));
 	if (number == NULL)
