@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 00:19:44 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/23 01:36:14 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/31 20:16:37 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ long	heuristic(long start_x, long start_y, long end_x, long end_y)
 	squared_distance = delta_x * delta_x + delta_y * delta_y;
 	squared_manhattan = delta_x + delta_y;
 	squared_manhattan *= squared_manhattan;
-	return ((squared_distance + squared_manhattan) / 2);
+	(void) squared_manhattan;
+	return (squared_distance);
 }
 
 int	compare_elements(void *left, void *right)

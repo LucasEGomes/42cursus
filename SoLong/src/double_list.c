@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 01:01:40 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/23 13:05:07 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/28 18:56:32 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	double_list_remove_node(t_double_list **head, t_double_list *node)
 	else
 	{
 		node->previous->next = node->next;
-		node->next->previous = node->previous;
+		if (node->next != NULL)
+			node->next->previous = node->previous;
 	}
 	if (*head != NULL)
 		(*head)->previous = NULL;
@@ -62,9 +63,9 @@ void	*double_list_pop_best(t_double_list **head, \
 
 	if (*head == NULL)
 		return (NULL);
-	current = *head;
 	best = *head;
-	while (current->next != NULL)
+	current = best->next;
+	while (current != NULL)
 	{
 		if (compare(best->content, current->content) > 0)
 			best = current;

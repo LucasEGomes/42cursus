@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 23:49:11 by luceduar          #+#    #+#             */
-/*   Updated: 2022/10/27 00:32:35 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/10/31 21:07:11 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define PLAYER_GRAB_FOLDER	"assets/xpm/player/grab"
 # define PLAYER_GRAB_FRAMES	1
 # define PLAYER_WALK_FOLDER	"assets/xpm/player/walk"
-# define PLAYER_WALK_FRAMES	4
+# define PLAYER_WALK_FRAMES	6
 # define CEILING_FOLDER		"assets/xpm/ceiling"
 # define CEILING_FRAMES		1
 # define FLOOR_FOLDER		"assets/xpm/floor"
