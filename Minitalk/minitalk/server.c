@@ -33,15 +33,30 @@ void	initialize_communication_signal_mask(struct sigaction *signal_action)
 	sigaddset(&signal_action->sa_mask, SIGUSR2);
 }
 
-void	add_last(int value)
+void	add_last(int signal_number)
 {
-	(void) value;
-	ft_write(STDOUT_FILENO, "Signal Received\n", 16);
+	static int	index;
+	size_t	new_position;
+
+	if (signal_number == SIGUSR1)
+		g_signal_queue.content[g_signal_queue.last] += 1 << (7 - index);
+	index++;
+	if (index < 8)
+		return ;
+	index = 0;
+	new_position = (g_signal_queue.last + 1) % QUEUE_SIZE;
+	if (new_position == g_signal_queue.first)
+		return ;
+	g_signal_queue.last = new_position;
+	g_signal_queue.content[g_signal_queue.last] = 0;
 }
 
 void	free_resources(int signal_number)
 {
 	(void) signal_number;
+
+	ft_write(STDOUT_FILENO, "\n", 1);
+	ft_write(STDOUT_FILENO, g_signal_queue.content, ft_strlen(g_signal_queue.content));
 	ft_write(STDOUT_FILENO, "\nFreeing resources.\n", 20);
 	free(g_signal_queue.content);
 	exit(1);
@@ -73,7 +88,7 @@ void	setup_interrupt_action(void)
 void	setup_communication_action(void)
 {
 	const int	signals[] = {SIGUSR1, SIGUSR2, 0};
-	setup_action(&free_resources, signals, 0);
+	setup_action(&add_last, signals, 0);
 }
 
 int	main(void)
@@ -85,6 +100,7 @@ int	main(void)
 		return (1);
 	g_signal_queue.first = 0;
 	g_signal_queue.last = 0;
+	g_signal_queue.content[g_signal_queue.last] = 0;
 	while (1)
 		pause();
 }

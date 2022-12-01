@@ -8,7 +8,7 @@
 
 typedef struct s_deque
 {
-	void	*content;
+	char	*content;
 	size_t	first;
 	size_t	last;
 }	t_deque;

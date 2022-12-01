@@ -16,7 +16,8 @@ endif
 OBJECTS_FOLDER := objs
 
 CLIENT_SOURCES := client.c \
-	ft_write.c
+	ft_write.c \
+	ft_atoi.c
 CLIENT_OBJECTS := $(addprefix $(OBJECTS_FOLDER)/,$(CLIENT_SOURCES:%.c=%.o))
 
 SERVER_SOURCES := \
