@@ -37,9 +37,12 @@ void	add_last(int signal_number)
 {
 	static int	index;
 	size_t	new_position;
+	const unsigned char mask = 0b10000000;
 
 	if (signal_number == SIGUSR1)
-		g_signal_queue.content[g_signal_queue.last] += 1 << (7 - index);
+		g_signal_queue.content[g_signal_queue.last] |= (mask >> index);
+	else
+		g_signal_queue.content[g_signal_queue.last] &= ~(mask >> index);
 	index++;
 	if (index < 8)
 		return ;
@@ -51,13 +54,127 @@ void	add_last(int signal_number)
 	g_signal_queue.content[g_signal_queue.last] = 0;
 }
 
+void	initialize_deletion_table(unsigned char *table)
+{
+	int	index;
+
+	index = 0;
+	while (index < 0b100000)
+		table[index++] = 2; // impossible to identify
+	table[0b01101] = 0; // Swap or deletion
+	table[0b10110] = 0; // Swap
+	table[0b01001] = 0; // Swap or deletion
+	table[0b10010] = 0; // Swap
+	table[0b01110] = 0; // OK
+	table[0b10001] = 0; // OK
+	table[0b01100] = 1;
+	table[0b01111] = 1;
+	table[0b11100] = 1;
+	table[0b11101] = 1;
+	table[0b00010] = 1;
+	table[0b00011] = 1;
+	table[0b10000] = 1;
+	table[0b10011] = 1;
+}
+
+void	initialize_lookup_table(unsigned char *table)
+{
+	int	index;
+
+	index = 0;
+	while (index < 0b100000)
+		table[index++] = 2; // impossible to identify
+	table[0b01110] = 0; // Swap or deletion
+	table[0b01100] = 0; // Swap
+	table[0b01101] = 0; // Swap or deletion
+	table[0b01111] = 0; // Swap
+	table[0b10110] = 0; // OK
+	table[0b11100] = 0; // OK
+	table[0b11101] = 0;
+	table[0b10001] = 1;
+	table[0b00010] = 1;
+	table[0b00011] = 1;
+	table[0b01001] = 1;
+	table[0b10000] = 1;
+	table[0b10010] = 1;
+	table[0b10011] = 1;
+}
+
+void	decode(unsigned char *message, size_t limit)
+{
+	size_t					decode_index;
+	size_t					message_index;
+	static unsigned char	is_deletion[0b100000];
+	static unsigned char	lookup[0b100000];
+	unsigned char			temporary;
+	int						decode_bit;
+	int						message_bit;
+
+	if (is_deletion[0b10000] != 1)
+		initialize_deletion_table(is_deletion);
+	if (lookup[0b10001] != 1)
+		initialize_lookup_table(lookup);
+	decode_index = 0;
+	decode_bit = 0;
+	message_index = 0;
+	message_bit = 0;
+	while (decode_index < limit)
+	{
+		temporary = (unsigned char) (message[decode_index] << decode_bit) >> 3;
+		decode_bit = (decode_bit + 5) % 8;
+		if (0 < decode_bit && decode_bit < 5)
+		{
+			decode_index++;
+			temporary += message[decode_index] >> (8 - decode_bit);
+		}
+		if (is_deletion[temporary] == 2)
+			continue;
+		if (is_deletion[temporary] == 1)
+		{
+			if (decode_bit == 0)
+			{
+				decode_bit = 7;
+				decode_index--;
+			}
+			else
+				decode_bit--;
+		}
+		if (lookup[temporary] == 1)
+			message[message_index] |= 0b10000000 >> message_bit;
+		else
+			message[message_index] &= ~(0b10000000 >> message_bit);
+		message_bit = (message_bit + 1) % 8;
+		if (message_bit == 0)
+		{
+			ft_write(1, message + message_index, 1);
+			message_index++;
+		}
+	}
+	ft_write(1, "\n", 1);
+}
+
+void	print_message(void *message)
+{
+	char	*string;
+	size_t	limit;
+
+	limit = g_signal_queue.last;
+	g_signal_queue.content = malloc(QUEUE_SIZE + 1);
+	g_signal_queue.last = 0;
+	decode(message, limit);
+	string = message;
+	ft_write(STDOUT_FILENO, "\n", 1);
+	ft_write(STDOUT_FILENO, string, ft_strlen(string));
+	ft_write(STDOUT_FILENO, "\n", 1);
+	free(message);
+}
+
+
 void	free_resources(int signal_number)
 {
 	(void) signal_number;
-
-	ft_write(STDOUT_FILENO, "\n", 1);
-	ft_write(STDOUT_FILENO, g_signal_queue.content, ft_strlen(g_signal_queue.content));
-	ft_write(STDOUT_FILENO, "\nFreeing resources.\n", 20);
+	
+	print_message(g_signal_queue.content);
 	free(g_signal_queue.content);
 	exit(1);
 }
@@ -93,14 +210,28 @@ void	setup_communication_action(void)
 
 int	main(void)
 {
+	int	tries;
+
 	setup_communication_action();
 	setup_interrupt_action();
-	g_signal_queue.content = malloc(QUEUE_SIZE);
+	g_signal_queue.content = malloc(QUEUE_SIZE + 1);
 	if (print_pid() || g_signal_queue.content == NULL)
 		return (1);
 	g_signal_queue.first = 0;
 	g_signal_queue.last = 0;
 	g_signal_queue.content[g_signal_queue.last] = 0;
 	while (1)
+	{
+		tries = 0;
+		while (tries < 5)
+		{
+			if (g_signal_queue.last != 0 && usleep(1000) == 0)
+			{
+				tries = 0;
+				print_message(g_signal_queue.content);
+			}
+			tries++;
+		}
 		pause();
+	}
 }
