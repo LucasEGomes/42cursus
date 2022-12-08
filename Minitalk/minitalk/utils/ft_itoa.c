@@ -1,26 +1,7 @@
+#include "utils/ft_absolute.h"
+#include "utils/ft_count_digits.h"
 #include <stdlib.h>
 
-static int	get_digits(int n)
-{
-	int	digits;
-	int	temp;
-
-	digits = 1;
-	temp = n;
-	while ((-9 > temp) | (temp > 9))
-	{
-		temp /= 10;
-		digits++;
-	}
-	return (digits);
-}
-
-static int	absolute(int value)
-{
-	if (value < 0)
-		return (-value);
-	return (value);
-}
 
 char	*ft_itoa(int n)
 {
@@ -28,7 +9,7 @@ char	*ft_itoa(int n)
 	int		digits;
 	int		is_negative;
 
-	digits = get_digits(n);
+	digits = ft_count_digits_int(n, 10);
 	is_negative = n < 0;
 	number = malloc(sizeof(*number) * (digits + is_negative + 1));
 	if (number == NULL)
@@ -42,7 +23,7 @@ char	*ft_itoa(int n)
 	while (digits > is_negative)
 	{
 		digits--;
-		number[digits] = "0123456789"[absolute(n % 10)];
+		number[digits] = ft_absolute_int(n % 10) + '0';
 		n = n / 10;
 	}
 	return (number);

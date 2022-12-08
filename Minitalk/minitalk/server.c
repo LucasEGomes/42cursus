@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <signal.h>
 
-t_deque	g_signal_queue;
+t_deque	g_signals;
 
 int	print_pid(void)
 {
@@ -33,25 +33,25 @@ void	initialize_communication_signal_mask(struct sigaction *signal_action)
 	sigaddset(&signal_action->sa_mask, SIGUSR2);
 }
 
-void	add_last(int signal_number)
+void	listener(int signal_number)
 {
 	static int	index;
 	size_t	new_position;
 	const unsigned char mask = 0b10000000;
 
 	if (signal_number == SIGUSR1)
-		g_signal_queue.content[g_signal_queue.last] |= (mask >> index);
+		g_signals.content[g_signals.last] |= (mask >> index);
 	else
-		g_signal_queue.content[g_signal_queue.last] &= ~(mask >> index);
+		g_signals.content[g_signals.last] &= ~(mask >> index);
 	index++;
 	if (index < 8)
 		return ;
 	index = 0;
-	new_position = (g_signal_queue.last + 1) % QUEUE_SIZE;
-	if (new_position == g_signal_queue.first)
+	new_position = (g_signals.last + 1) % QUEUE_SIZE;
+	if (new_position == g_signals.first)
 		return ;
-	g_signal_queue.last = new_position;
-	g_signal_queue.content[g_signal_queue.last] = 0;
+	g_signals.last = new_position;
+	g_signals.content[g_signals.last] = 0;
 }
 
 void	initialize_deletion_table(unsigned char *table)
@@ -158,9 +158,9 @@ void	print_message(void *message)
 	char	*string;
 	size_t	limit;
 
-	limit = g_signal_queue.last;
-	g_signal_queue.content = malloc(QUEUE_SIZE + 1);
-	g_signal_queue.last = 0;
+	limit = g_signals.last;
+	g_signals.content = malloc(QUEUE_SIZE + 1);
+	g_signals.last = 0;
 	decode(message, limit);
 	string = message;
 	ft_write(STDOUT_FILENO, "\n", 1);
@@ -170,16 +170,16 @@ void	print_message(void *message)
 }
 
 
-void	free_resources(int signal_number)
+void	terminator(int signal_number)
 {
 	(void) signal_number;
 	
-	print_message(g_signal_queue.content);
-	free(g_signal_queue.content);
+	print_message(g_signals.content);
+	free(g_signals.content);
 	exit(1);
 }
 
-void	setup_action(void (*action_handler)(int), const int *signals, int action_flags)
+void	action_constructor(void (*action_handler)(int), const int *signals, int action_flags)
 {
 	struct sigaction	action;
 	int	index;
@@ -196,39 +196,39 @@ void	setup_action(void (*action_handler)(int), const int *signals, int action_fl
 	}
 }
 
-void	setup_interrupt_action(void)
+void	setup_interrupter(void)
 {
 	const int	signals[] = {SIGINT, SIGQUIT, SIGTSTP, 0};
-	setup_action(&free_resources, signals, 0);
+	action_constructor(&terminator, signals, 0);
 }
 
-void	setup_communication_action(void)
+void	receiver_constructor(void)
 {
 	const int	signals[] = {SIGUSR1, SIGUSR2, 0};
-	setup_action(&add_last, signals, 0);
+	action_constructor(&listener, signals, 0);
 }
 
 int	main(void)
 {
 	int	tries;
 
-	setup_communication_action();
-	setup_interrupt_action();
-	g_signal_queue.content = malloc(QUEUE_SIZE + 1);
-	if (print_pid() || g_signal_queue.content == NULL)
+	receiver_constructor();
+	setup_interrupter();
+	g_signals.content = malloc(QUEUE_SIZE + 1);
+	if (print_pid() || g_signals.content == NULL)
 		return (1);
-	g_signal_queue.first = 0;
-	g_signal_queue.last = 0;
-	g_signal_queue.content[g_signal_queue.last] = 0;
+	g_signals.first = 0;
+	g_signals.last = 0;
+	g_signals.content[g_signals.last] = 0;
 	while (1)
 	{
 		tries = 0;
 		while (tries < 5)
 		{
-			if (g_signal_queue.last != 0 && usleep(1000) == 0)
+			if (g_signals.last != 0 && usleep(1000) == 0)
 			{
 				tries = 0;
-				print_message(g_signal_queue.content);
+				print_message(g_signals.content);
 			}
 			tries++;
 		}

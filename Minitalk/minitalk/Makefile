@@ -16,17 +16,33 @@ endif
 OBJECTS_FOLDER := objs
 
 CLIENT_SOURCES := client.c \
-	ft_atoi.c \
-	ft_strlen.c \
-	ft_write.c
+	utils/ft_atoi.c \
+	utils/ft_strlen.c \
+	utils/ft_write.c
 CLIENT_OBJECTS := $(addprefix $(OBJECTS_FOLDER)/,$(CLIENT_SOURCES:%.c=%.o))
 
 SERVER_SOURCES := \
 	server.c \
-	ft_itoa.c \
-	ft_strlen.c \
-	ft_write.c
+	utils/ft_itoa.c \
+	utils/ft_strlen.c \
+	utils/ft_write.c
 SERVER_OBJECTS := $(addprefix $(OBJECTS_FOLDER)/,$(SERVER_SOURCES:%.c=%.o))
+
+BONUS_FOLDER := bonus
+
+BONUS_CLIENT_SOURCES := \
+	$(BONUS_FOLDER)/client.c \
+	utils/ft_atoi.c \
+	utils/ft_strlen.c \
+	utils/ft_write.c
+BONUS_CLIENT_OBJECTS := $(addprefix $(OBJECTS_FOLDER)/,$(BONUS_CLIENT_SOURCES:%.c=%.o))
+
+BONUS_SERVER_SOURCES := \
+	$(BONUS_FOLDER)/server.c \
+	utils/ft_itoa.c \
+	utils/ft_strlen.c \
+	utils/ft_write.c
+BONUS_SERVER_OBJECTS := $(addprefix $(OBJECTS_FOLDER)/,$(BONUS_SERVER_SOURCES:%.c=%.o))
 
 all: $(CLIENT) $(SERVER)
 
@@ -34,6 +50,14 @@ $(CLIENT): $(CLIENT_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(SERVER): $(SERVER_OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@
+
+bonus: $(BONUS_CLIENT) $(BONUS_SERVER)
+
+$(BONUS_CLIENT): $(BONUS_CLIENT_OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@
+
+$(BONUS_SERVER): $(BONUS_SERVER_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 $(OBJECTS_FOLDER)/%.o : %.c
@@ -48,4 +72,4 @@ fclean: clean
 
 re: | fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
