@@ -1,7 +1,7 @@
-#include "utils/ft_write.h"
-#include "utils/ft_strlen.h"
 #include "utils/ft_absolute.h"
 #include "utils/ft_count_digits.h"
+#include "utils/ft_strlen.h"
+#include "utils/ft_write.h"
 
 void	ft_print_str(int file_descriptor, void *string)
 {
@@ -25,7 +25,7 @@ void	ft_print_int(int file_descriptor, int number)
 	while (digits > is_negative)
 	{
 		digits--;
-		string[digits] = ft_absolute_int(number % 10) + '0';
+		string[digits] = "0123456789"[ft_absolute_int(number % 10)];
 		number = number / 10;
 	}
 	ft_print_str(file_descriptor, string);

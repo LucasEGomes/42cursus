@@ -1,4 +1,5 @@
-#include "server.h"
+#include "minitalk_bonus.h"
+#include "server_bonus.h"
 #include "utils/ft_write.h"
 #include "utils/ft_itoa.h"
 #include "utils/ft_strlen.h"
@@ -7,11 +8,16 @@
 #include <stdlib.h>
 #include <signal.h>
 
-t_deque	g_signals;
+t_server_metadata	g_metadata;
+
+void	acknowledger_constructor(void);
+void	receiver_constructor(void);
 
 void	print_pid(void)
 {
+	ft_print_str(STDOUT_FILENO, "Server Process ID (PID): ");
 	ft_print_int(STDOUT_FILENO, getpid());
+	ft_write(STDOUT_FILENO, "\n", 1);
 }
 
 unsigned char	set_bit(unsigned char value, int bit_value, int index)
@@ -23,50 +29,35 @@ unsigned char	set_bit(unsigned char value, int bit_value, int index)
 	return (value & ~(mask >> index));
 }
 
-void	receiver(int signal_number, siginfo_t *sender, void *_)
+void	receiver(int signal, siginfo_t *info, void *context)
 {
-	int			current_bit;
-	const int	bits = sizeof(*g_signals.content) * 8;
+	int	bit;
+	unsigned char	byte;
 
-	current_bit = (signal_number == SIGUSR1);
-	set_bit(current_bit, g_signals.bit_index, g_signals.last);
-	g_signals.bit_index = (g_signals.bit_index + 1) % bits;
-	if (g_signals.bit_index == 0)
-		g_signals.last++;
-	kill(sender->si_pid, signal_number);
+	(void) context;
+	bit = (signal == BIT_1);
+	byte = g_metadata.content[g_metadata.content_index];
+	g_metadata.content[g_metadata.content_index] = set_bit(byte , bit, g_metadata.bit_index);
+	g_metadata.bit_index++;
+	if (g_metadata.bit_index >= 8)
+	{
+		if (g_metadata.content[g_metadata.content_index] == '\0' || g_metadata.content_index == QUEUE_SIZE - 1)
+		{
+			ft_print_str(STDOUT_FILENO, g_metadata.content);
+			g_metadata.content_index = -1;
+		}
+		g_metadata.content_index++;
+		g_metadata.bit_index = 0;
+	}
+	kill(info->si_pid, SIGUSR1);
 }
 
-void	print_message(void *message)
-{
-	char	*string;
-	size_t	limit;
-
-	limit = g_signals.last;
-	g_signals.content = malloc(QUEUE_SIZE + 1);
-	g_signals.last = 0;
-	decode(message, limit);
-	string = message;
-	ft_write(STDOUT_FILENO, "\n", 1);
-	ft_write(STDOUT_FILENO, string, ft_strlen(string));
-	ft_write(STDOUT_FILENO, "\n", 1);
-	free(message);
-}
-
-
-void	terminator(int signal_number)
-{
-	(void) signal_number;
-	
-	free(g_signals.content);
-	exit(1);
-}
-
-void	action_constructor(void (*action_handler)(int), const int *signals, int action_flags)
+void	action_constructor(void (*action_handler)(int, siginfo_t *, void *), const int *signals, int action_flags)
 {
 	struct sigaction	action;
 	int	index;
 
-	action.sa_handler = action_handler;
+	action.sa_sigaction = action_handler;
 	action.sa_flags = action_flags;
 	sigemptyset(&action.sa_mask);
 	index = 0;
@@ -78,31 +69,43 @@ void	action_constructor(void (*action_handler)(int), const int *signals, int act
 	}
 }
 
-void	terminator_constructor(void)
-{
-	const int	signals[] = {SIGINT, SIGQUIT, SIGTSTP, 0};
-	action_constructor(&terminator, signals, 0);
-}
-
 void	receiver_constructor(void)
 {
 	const int	signals[] = {SIGUSR1, SIGUSR2, 0};
-	action_constructor(&receiver, signals, 0);
+	action_constructor(&receiver, signals, SA_SIGINFO);
 }
 
-void	queue_constructor(t_deque	*queue, size_t queue_size)
+void	terminator(int signal, siginfo_t *info, void *context)
+{
+	(void) signal;
+	(void) info;
+	(void) context;
+	
+	ft_print_str(STDOUT_FILENO, "\nClosing server...\n");
+	free(g_metadata.content);
+	exit(0);
+}
+
+void	terminator_constructor(void)
+{
+	const int	signals[] = {SIGINT, SIGQUIT, SIGTSTP, 0};
+	action_constructor(&terminator, signals, SA_SIGINFO);
+}
+
+void	queue_constructor(t_server_metadata	*queue, size_t queue_size)
 {
 	queue->content = malloc(queue_size + 1);
 	if (queue->content == NULL)
 		return ;
 	queue->content[queue_size] = '\0';
-	queue->last = 0;
+	queue->content_index = 0;
 }
 
 int	main(void)
 {
-	queue_constructor(&g_signals, QUEUE_SIZE);
-	if (g_signals.content == NULL)
+	ft_print_str(STDOUT_FILENO, "Starting server...\n");
+	queue_constructor(&g_metadata, QUEUE_SIZE);
+	if (g_metadata.content == NULL)
 		return (failed_to_initialize_server());
 	receiver_constructor();
 	terminator_constructor();

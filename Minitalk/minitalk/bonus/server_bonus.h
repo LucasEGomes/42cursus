@@ -3,15 +3,14 @@
 # ifndef QUEUE_SIZE
 #  define QUEUE_SIZE 4096
 # endif
-# define ERROR_FAILED_TO_ALLOCATE_MEMORY "Error: Failed to initialize server.\
-\nUnable to allocate necessary memory."
 # include <unistd.h>
 
-typedef struct s_deque
+typedef struct s_server_metadata
 {
 	unsigned char	*content;
-	size_t			last;
+	size_t			content_index;
 	int				bit_index;
-}	t_deque;
+	unsigned char	value;
+}	t_server_metadata;
 
 #endif

@@ -1,5 +1,7 @@
 client
+client_bonus
 server
+server_bonus
 .vscode/
 compile_commands.json
 objs/

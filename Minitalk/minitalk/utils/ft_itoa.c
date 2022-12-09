@@ -1,5 +1,5 @@
-#include "utils/ft_absolute.h"
-#include "utils/ft_count_digits.h"
+#include "ft_absolute.h"
+#include "ft_count_digits.h"
 #include <stdlib.h>
 
 
@@ -23,7 +23,7 @@ char	*ft_itoa(int n)
 	while (digits > is_negative)
 	{
 		digits--;
-		number[digits] = ft_absolute_int(n % 10) + '0';
+		number[digits] = "0123456789"[ft_absolute_int(n % 10)];
 		n = n / 10;
 	}
 	return (number);
