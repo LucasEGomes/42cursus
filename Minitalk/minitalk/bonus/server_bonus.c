@@ -29,6 +29,12 @@ unsigned char	set_bit(unsigned char value, int bit_value, int index)
 	return (value & ~(mask >> index));
 }
 
+void	reset_server(void)
+{
+	g_metadata.bit_index = 0;
+	g_metadata.content_index = 0;
+}
+
 void	receiver(int signal, siginfo_t *info, void *context)
 {
 	int	bit;
@@ -41,15 +47,18 @@ void	receiver(int signal, siginfo_t *info, void *context)
 	g_metadata.bit_index++;
 	if (g_metadata.bit_index >= 8)
 	{
-		if (g_metadata.content[g_metadata.content_index] == '\0' || g_metadata.content_index == QUEUE_SIZE - 1)
+		g_metadata.content_index++;
+		if (g_metadata.content[g_metadata.content_index - 1] == '\0'
+			|| g_metadata.content_index == QUEUE_SIZE)
 		{
 			ft_print_str(STDOUT_FILENO, g_metadata.content);
-			g_metadata.content_index = -1;
+			reset_server();
 		}
-		g_metadata.content_index++;
 		g_metadata.bit_index = 0;
 	}
-	kill(info->si_pid, SIGUSR1);
+	if (kill(info->si_pid, SIGUSR1) == -1)
+		reset_server();
+
 }
 
 void	action_constructor(void (*action_handler)(int, siginfo_t *, void *), const int *signals, int action_flags)
@@ -99,6 +108,7 @@ void	queue_constructor(t_server_metadata	*queue, size_t queue_size)
 		return ;
 	queue->content[queue_size] = '\0';
 	queue->content_index = 0;
+	queue->bit_index = 0;
 }
 
 int	main(void)
@@ -111,5 +121,7 @@ int	main(void)
 	terminator_constructor();
 	print_pid();
 	while (1)
+	{
 		pause();
+	}
 }
