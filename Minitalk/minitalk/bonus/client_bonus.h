@@ -3,7 +3,7 @@
 # define CLIENT_RESUME 0
 # define CLIENT_WAIT 1
 # define RETRY_LIMIT 3
-# define TIMEOUT_USECONDS 1000000
+# define TIMEOUT 1000000
 #include <signal.h>
 
 typedef struct s_metadata

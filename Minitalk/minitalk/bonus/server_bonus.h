@@ -1,7 +1,7 @@
 #ifndef SERVER_BONUS_H
 # define SERVER_BONUS_H
 # define QUEUE_SIZE 4096
-# define TIMEOUT_USECONDS 1000000
+# define TIMEOUT 1000
 # include <unistd.h>
 # include <signal.h>
 

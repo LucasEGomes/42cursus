@@ -33,13 +33,16 @@ int	wait_acknowledge(int timeout)
 	
 	timed_out = 0;
 	while (g_metadata.status == CLIENT_WAIT && timed_out < timeout)
+	{
+		usleep(1);
 		timed_out++;
+	}
 	if (g_metadata.status == CLIENT_WAIT)
 		return (0);
 	return (1);
 }
 
-void	send_byte(pid_t process_id, unsigned char value, int retry_limit, useconds_t timeout)
+void	send_byte(pid_t process_id, unsigned char value, int retry_limit, int timeout)
 {
 	int	index;
 	int	tries;
@@ -116,7 +119,7 @@ int	main(int argc, char **argv)
 	message = (void *) argv[2];
 	g_metadata.status = CLIENT_RESUME;
 	while (*message != '\0')
-		send_byte(g_metadata.server_pid, *message++, RETRY_LIMIT, TIMEOUT_USECONDS);
-	send_byte(g_metadata.server_pid, '\0', RETRY_LIMIT, TIMEOUT_USECONDS);
+		send_byte(g_metadata.server_pid, *message++, RETRY_LIMIT, TIMEOUT);
+	send_byte(g_metadata.server_pid, '\0', RETRY_LIMIT, TIMEOUT);
 	return (0);
 }

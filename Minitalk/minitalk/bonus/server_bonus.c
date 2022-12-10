@@ -10,7 +10,6 @@
 
 t_server_metadata	g_metadata;
 
-void	acknowledger_constructor(void);
 void	receiver_constructor(void);
 
 void	print_pid(void)
@@ -51,7 +50,7 @@ void	receiver(int signal, siginfo_t *info, void *context)
 		if (g_metadata.content[g_metadata.content_index - 1] == '\0'
 			|| g_metadata.content_index == QUEUE_SIZE)
 		{
-			ft_print_str(STDOUT_FILENO, g_metadata.content);
+			ft_write(STDOUT_FILENO, g_metadata.content, g_metadata.content_index);
 			reset_server();
 		}
 		g_metadata.bit_index = 0;
@@ -121,7 +120,5 @@ int	main(void)
 	terminator_constructor();
 	print_pid();
 	while (1)
-	{
 		pause();
-	}
 }
