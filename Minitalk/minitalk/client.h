@@ -6,7 +6,7 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 08:09:21 by luceduar          #+#    #+#             */
-/*   Updated: 2022/12/10 08:11:21 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/12/10 08:52:20 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 # define TIMEOUT 1000000
 # include <signal.h>
 
-typedef struct s_metadata
+typedef struct s_client_metadata
 {
 	pid_t	server_pid;
 	int		status;
-}	t_metadata;
+}	t_client_metadata;
 
 #endif

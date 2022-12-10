@@ -4,6 +4,7 @@
 
 CLIENT := client
 SERVER := server
+NAME := minitalk
 
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -MMD -I $(abspath .)
@@ -19,8 +20,8 @@ CLIENT_SOURCES := \
 	client.c \
 	action_setter.c \
 	minitalk_errors.c \
-	utils/ft_atoi.c \
 	utils/ft_absolute.c \
+	utils/ft_atoi.c \
 	utils/ft_count_digits.c \
 	utils/ft_print.c \
 	utils/ft_strlen.c \
@@ -67,7 +68,9 @@ BONUS_SERVER_SOURCES := \
 	utils/ft_write.c
 BONUS_SERVER_OBJECTS := $(addprefix $(OBJECTS_FOLDER)/,$(BONUS_SERVER_SOURCES:%.c=%.o))
 
-all: $(CLIENT) $(SERVER)
+all: $(NAME)
+
+$(NAME): $(CLIENT) $(SERVER)
 
 $(CLIENT): $(CLIENT_OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
@@ -95,4 +98,4 @@ fclean: clean
 
 re: | fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus minitalk

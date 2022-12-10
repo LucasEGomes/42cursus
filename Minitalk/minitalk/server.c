@@ -6,18 +6,16 @@
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 08:09:16 by luceduar          #+#    #+#             */
-/*   Updated: 2022/12/10 08:17:51 by luceduar         ###   ########.fr       */
+/*   Updated: 2022/12/10 08:54:14 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 #include "server.h"
 #include "action_setter.h"
-#include "utils/ft_write.h"
-#include "utils/ft_itoa.h"
-#include "utils/ft_strlen.h"
-#include "utils/ft_print.h"
 #include "minitalk_errors.h"
+#include "utils/ft_print.h"
+#include "utils/ft_write.h"
 #include <stdlib.h>
 #include <signal.h>
 
