@@ -1,5 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   client.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/10 08:09:21 by luceduar          #+#    #+#             */
+/*   Updated: 2022/12/10 08:11:21 by luceduar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CLIENT_H
 # define CLIENT_H
-# define ERROR_INVALID_NUMBER_OF_ARGUMENTS "Error: Invalid number of arguments.\
-\n\tExpected 2 arguments: server PID and string to be sent.\n"
+# define CLIENT_RESUME 0
+# define CLIENT_WAIT 1
+# define RETRY_LIMIT 3
+# define TIMEOUT 1000000
+# include <signal.h>
+
+typedef struct s_metadata
+{
+	pid_t	server_pid;
+	int		status;
+}	t_metadata;
+
 #endif

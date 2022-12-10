@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_absolute.h                                      :+:      :+:    :+:   */
+/*   action_setter.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 08:07:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/12/10 08:07:26 by luceduar         ###   ########.fr       */
+/*   Created: 2022/12/10 08:08:56 by luceduar          #+#    #+#             */
+/*   Updated: 2022/12/10 08:13:14 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ABSOLUTE_H
-# define FT_ABSOLUTE_H
+#ifndef ACTION_SETTER_H
+# define ACTION_SETTER_H
+# include <signal.h>
 
-int	ft_absolute_int(int value);
+void	action_setter(void (*action_handler)(int, siginfo_t *, void *), \
+	const int *signals, int action_flags);
 
 #endif

@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap.c                                          :+:      :+:    :+:   */
+/*   action_setter.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 08:06:54 by luceduar          #+#    #+#             */
-/*   Updated: 2022/12/10 08:06:54 by luceduar         ###   ########.fr       */
+/*   Created: 2022/12/10 08:08:58 by luceduar          #+#    #+#             */
+/*   Updated: 2022/12/10 08:12:34 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <signal.h>
 
-void	ft_swap(void *value_1, void *value_2, size_t size)
+void	action_setter(void (*action_handler)(int, siginfo_t *, void *),
+	const int *signals, int action_flags)
 {
-	char	*string_1;
-	char	*string_2;
-	char	temporary;
-	size_t	index;
+	struct sigaction	action;
+	int					index;
 
+	action.sa_sigaction = action_handler;
+	action.sa_flags = action_flags;
+	sigemptyset(&action.sa_mask);
 	index = 0;
-	string_1 = value_1;
-	string_2 = value_2;
-	while (index < size)
+	while (signals[index] != 0)
 	{
-		temporary = string_2[index];
-		string_2[index] = string_1[index];
-		string_1[index] = temporary;
+		sigaddset(&action.sa_mask, signals[index]);
+		sigaction(signals[index], &action, NULL);
 		index++;
 	}
 }

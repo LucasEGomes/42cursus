@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_absolute.h                                      :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 08:07:25 by luceduar          #+#    #+#             */
-/*   Updated: 2022/12/10 08:07:26 by luceduar         ###   ########.fr       */
+/*   Created: 2022/12/10 08:09:18 by luceduar          #+#    #+#             */
+/*   Updated: 2022/12/10 08:12:07 by luceduar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_ABSOLUTE_H
-# define FT_ABSOLUTE_H
+#ifndef MINITALK_H
+# define MINITALK_H
 
-int	ft_absolute_int(int value);
+# define BIT_1 SIGUSR1
+# define BIT_0 SIGUSR2
 
 #endif

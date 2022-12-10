@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minitalk_errors.h                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: luceduar <luceduar@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/10 08:09:04 by luceduar          #+#    #+#             */
+/*   Updated: 2022/12/10 08:09:05 by luceduar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINITALK_ERRORS_H
 # define MINITALK_ERRORS_H
 # define ERROR_FAILED_TO_ALLOCATE_MEMORY "Error: Failed to initialize server.\
